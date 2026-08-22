@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Balloon Blast - Advanced</title>
+
+<style>
+:root{
+    --bg1:#06111f;
+    --bg2:#102d4b;
+    --glass:rgba(10,25,45,.68);
+    --border:rgba(255,255,255,.18);
+    --text:#ffffff;
+    --muted:#b9c7d8;
+    --cyan:#63e6ff;
+    --purple:#a57dff;
+    --gold:#ffd34d;
+    --danger:#ff5277;
+    --green:#63ffb0;
+}
+
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+    margin:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    font-family:Arial,Helvetica,sans-serif;
+    background:
+        radial-gradient(circle at 15% 15%,rgba(99,230,255,.16),transparent 25%),
+        radial-gradient(circle at 85% 20%,rgba(165,125,255,.16),transparent 28%),
+        linear-gradient(135deg,var(--bg1),var(--bg2));
+    color:var(--text);
+}
+
+button{
+    font:inherit;
+    cursor:pointer;
+}
+
+.app{
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:15px;
+}
+
+.game-shell{
+    position:relative;
+    width:min(1100px,100%);
+    height:min(760px,94vh);
+    overflow:hidden;
+    border:1px solid var(--border);
+    border-radius:28px;
+    background:rgba(2,10,20,.48);
+    box-shadow:0 30px 90px rgba(0,0,0,.5);
+}
+
+.screen{
+    position:absolute;
+    inset:0;
+    display:none;
+}
+
+.screen.active{
+    display:flex;
+}
+
+/* HOME */
+
+.home{
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:20px;
+}
+
+.home-card{
+    width:min(500px,100%);
+    padding:40px 25px;
+    border:1px solid var(--border);
+    border-radius:28px;
+    background:var(--glass);
+    backdrop-filter:blur(18px);
+    animation:appear .6s ease;
+}
+
+.logo{
+    margin:0;
+    font-size:clamp(2.6rem,8vw,5rem);
+    text-shadow:0 0 30px rgba(99,230,255,.35);
+}
+
+.tagline{
+    color:var(--muted);
+    letter-spacing:4px;
+    font-size:.8rem;
+    margin:10px 0 25px;
+}
+
+.high-box{
+    margin:20px auto;
+    padding:15px;
+    max-width:300px;
+    border:1px solid var(--border);
+    border-radius:16px;
+    background:rgba(255,255,255,.04);
+}
+
+.high-box strong{
+    display:block;
+    color:var(--cyan);
+    font-size:2rem;
+    margin-top:5px;
+}
+
+/* BUTTON */
+
+.btn{
+    display:block;
+    width:min(340px,100%);
+    margin:10px auto;
+    padding:15px 20px;
+    border:2px solid var(--cyan);
+    border-radius:14px;
+    background:transparent;
+    color:white;
+    font-weight:bold;
+    letter-spacing:1px;
+    transition:.2s;
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+    background:rgba(99,230,255,.1);
+    box-shadow:0 0 25px rgba(99,230,255,.2);
+}
+
+.btn:active{
+    transform:scale(.94);
+}
+
+.btn.purple{
+    border-color:var(--purple);
+}
+
+.btn.red{
+    border-color:var(--danger);
+}
+
+/* GAME */
+
+.game{
+    flex-direction:column;
+}
+
+.hud{
+    position:relative;
+    z-index:30;
+    min-height:75px;
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr 1fr auto;
+    gap:8px;
+    padding:10px;
+    background:rgba(3,10,20,.7);
+    border-bottom:1px solid var(--border);
+    backdrop-filter:blur(10px);
+}
+
+.stat{
+    text-align:center;
+    padding:8px;
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:12px;
+    background:rgba(255,255,255,.04);
+}
+
+.stat small{
+    display:block;
+    color:var(--muted);
+    font-size:.62rem;
+    letter-spacing:1px;
+}
+
+.stat strong{
+    display:block;
+    margin-top:4px;
+    font-size:1rem;
+}
+
+.pause-btn{
+    width:48px;
+    border:2px solid var(--purple);
+    border-radius:12px;
+    background:transparent;
+    color:white;
+    font-size:1.1rem;
+    transition:.2s;
+}
+
+.pause-btn:active{
+    transform:scale(.9);
+}
+
+.game-area{
+    position:relative;
+    flex:1;
+    overflow:hidden;
+    touch-action:manipulation;
+    user-select:none;
+}
+
+/* BALLOONS */
+
+.balloon{
+    position:absolute;
+    width:65px;
+    height:80px;
+    border-radius:50% 50% 48% 48%;
+    cursor:pointer;
+    animation:rise linear forwards;
+    filter:drop-shadow(0 8px 12px rgba(0,0,0,.3));
+}
+
+.balloon::before{
+    content:"";
+    position:absolute;
+    width:16px;
+    height:16px;
+    left:50%;
+    bottom:-7px;
+    transform:translateX(-50%) rotate(45deg);
+    background:inherit;
+}
+
+.balloon::after{
+    content:"";
+    position:absolute;
+    width:3px;
+    height:38px;
+    left:50%;
+    bottom:-42px;
+    background:rgba(255,255,255,.55);
+}
+
+.normal{
+    background:
+        radial-gradient(circle at 35% 25%,rgba(255,255,255,.7),transparent 18%),
+        linear-gradient(135deg,#ff5277,#ff9263);
+}
+
+.golden{
+    background:
+        radial-gradient(circle at 35% 25%,#fffbd1,transparent 20%),
+        linear-gradient(135deg,#ffe25c,#ff9f1a);
+    box-shadow:0 0 30px rgba(255,210,70,.55);
+}
+
+.bomb{
+    background:
+        radial-gradient(circle at 35% 25%,#69717e,transparent 18%),
+        linear-gradient(135deg,#2b3440,#05080d);
+}
+
+.power-magnet{
+    background:
+        radial-gradient(circle at 35% 25%,#fff,transparent 20%),
+        linear-gradient(135deg,#68e9ff,#4777ff);
+    box-shadow:0 0 30px rgba(99,230,255,.5);
+}
+
+.power-slow{
+    background:
+        radial-gradient(circle at 35% 25%,#fff,transparent 20%),
+        linear-gradient(135deg,#a57dff,#663dff);
+    box-shadow:0 0 30px rgba(165,125,255,.5);
+}
+
+.power-mega{
+    background:
+        radial-gradient(circle at 35% 25%,#fff,transparent 20%),
+        linear-gradient(135deg,#63ffb0,#00b87a);
+    box-shadow:0 0 30px rgba(99,255,176,.5);
+}
+
+.icon{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.9rem;
+    z-index:2;
+}
+
+.pop{
+    pointer-events:none;
+    animation:pop .35s ease forwards !important;
+}
+
+/* EFFECTS */
+
+.floating{
+    position:absolute;
+    z-index:20;
+    font-weight:900;
+    font-size:1.15rem;
+    pointer-events:none;
+    animation:floatUp .8s ease forwards;
+}
+
+.particle{
+    position:absolute;
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:15;
+    animation:particle .7s ease forwards;
+}
+
+.combo-popup{
+    position:absolute;
+    left:50%;
+    top:40%;
+    transform:translate(-50%,-50%);
+    z-index:25;
+    font-size:clamp(1.4rem,5vw,2.5rem);
+    font-weight:900;
+    color:var(--gold);
+    text-shadow:0 0 20px rgba(255,211,77,.7);
+    pointer-events:none;
+    opacity:0;
+}
+
+.combo-popup.show{
+    animation:comboShow .8s ease forwards;
+}
+
+.level-message{
+    position:absolute;
+    z-index:26;
+    left:50%;
+    top:45%;
+    transform:translate(-50%,-50%);
+    padding:16px 25px;
+    border:1px solid var(--border);
+    border-radius:18px;
+    background:rgba(5,15,30,.82);
+    font-size:clamp(1.3rem,5vw,2.4rem);
+    font-weight:900;
+    opacity:0;
+    pointer-events:none;
+}
+
+.level-message.show{
+    animation:levelShow 1.5s ease;
+}
+
+.power-message{
+    position:absolute;
+    left:50%;
+    top:55%;
+    transform:translate(-50%,-50%);
+    z-index:28;
+    font-size:1.4rem;
+    font-weight:900;
+    opacity:0;
+    pointer-events:none;
+    text-align:center;
+}
+
+.power-message.show{
+    animation:comboShow 1.3s ease;
+}
+
+.shake{
+    animation:shake .35s ease;
+}
+
+/* OVERLAYS */
+
+.overlay{
+    position:absolute;
+    inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:100;
+    background:rgba(0,5,15,.72);
+    backdrop-filter:blur(10px);
+}
+
+.overlay.active{
+    display:flex;
+}
+
+.panel{
+    width:min(420px,100%);
+    padding:30px 22px;
+    text-align:center;
+    border:1px solid var(--border);
+    border-radius:25px;
+    background:rgba(10,25,45,.9);
+    animation:appear .35s ease;
+}
+
+.panel h2{
+    margin-top:0;
+}
+
+.results{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin:20px 0;
+}
+
+.result{
+    padding:14px;
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:rgba(255,255,255,.04);
+}
+
+.result small{
+    display:block;
+    color:var(--muted);
+}
+
+.result strong{
+    display:block;
+    font-size:1.4rem;
+    margin-top:5px;
+}
+
+/* ANIMATIONS */
+
+@keyframes rise{
+    from{
+        transform:translateY(110px) rotate(-5deg);
+    }
+    to{
+        transform:translateY(-115vh) rotate(6deg);
+    }
+}
+
+@keyframes pop{
+    to{
+        transform:scale(1.8);
+        opacity:0;
+    }
+}
+
+@keyframes floatUp{
+    to{
+        transform:translateY(-70px);
+        opacity:0;
+    }
+}
+
+@keyframes particle{
+    to{
+        transform:translate(var(--x),var(--y)) scale(.1);
+        opacity:0;
+    }
+}
+
+@keyframes appear{
+    from{
+        opacity:0;
+        transform:scale(.9) translateY(15px);
+    }
+    to{
+        opacity:1;
+        transform:scale(1) translateY(0);
+    }
+}
+
+@keyframes comboShow{
+    0%{
+        opacity:0;
+        transform:translate(-50%,-50%) scale(.5);
+    }
+    30%,70%{
+        opacity:1;
+        transform:translate(-50%,-50%) scale(1);
+    }
+    100%{
+        opacity:0;
+        transform:translate(-50%,-70%) scale(1.1);
+    }
+}
+
+@keyframes levelShow{
+    0%{opacity:0;transform:translate(-50%,-30%) scale(.7)}
+    25%,75%{opacity:1;transform:translate(-50%,-50%) scale(1)}
+    100%{opacity:0;transform:translate(-50%,-70%) scale(.8)}
+}
+
+@keyframes shake{
+    0%,100%{transform:translateX(0)}
+    20%{transform:translateX(-10px)}
+    40%{transform:translateX(10px)}
+    60%{transform:translateX(-7px)}
+    80%{transform:translateX(7px)}
+}
+
+@media(max-width:650px){
+
+    .app{
+        padding:0;
+    }
+
+    .game-shell{
+        width:100%;
+        height:100%;
+        border-radius:0;
+        border:none;
+    }
+
+    .hud{
+        min-height:65px;
+        grid-template-columns:1fr 1fr 1fr auto;
+    }
+
+    .hud .stat:nth-child(4){
+        display:none;
+    }
+
+    .stat{
+        padding:6px 3px;
+    }
+
+    .stat strong{
+        font-size:.85rem;
+    }
+
+    .balloon{
+        width:55px;
+        height:68px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+<div class="game-shell" id="gameShell">
+
+<!-- HOME -->
+
+<section class="screen home active" id="homeScreen">
+
+<div class="home-card">
+
+<h1 class="logo">🎈 BALLOON<br>BLAST</h1>
+
+<p class="tagline">POP • COMBO • SURVIVE</p>
+
+<button class="btn" id="playBtn">▶ PLAY GAME</button>
+
+<div class="high-box">
+🏆 HIGH SCORE
+<strong id="homeHigh">0</strong>
+</div>
+
+<button class="btn purple" id="soundBtn">🔊 SOUND: ON</button>
+
+</div>
+</section>
+
+<!-- GAME -->
+
+<section class="screen game" id="gameScreen">
+
+<div class="hud">
+
+<div class="stat">
+<small>SCORE</small>
+<strong id="score">0</strong>
+</div>
+
+<div class="stat">
+<small>LEVEL</small>
+<strong id="level">1</strong>
+</div>
+
+<div class="stat">
+<small>LIVES</small>
+<strong id="lives">❤️❤️❤️</strong>
+</div>
+
+<div class="stat">
+<small>COMBO</small>
+<strong id="combo">x1</strong>
+</div>
+
+<button class="pause-btn" id="pauseBtn">Ⅱ</button>
+
+</div>
+
+<div class="game-area" id="gameArea">
+
+<div class="combo-popup" id="comboPopup"></div>
+<div class="level-message" id="levelMessage"></div>
+<div class="power-message" id="powerMessage"></div>
+
+</div>
+
+</section>
+
+<!-- PAUSE -->
+
+<section class="overlay" id="pauseOverlay">
+
+<div class="panel">
+
+<h2>⏸ PAUSED</h2>
+
+<button class="btn" id="resumeBtn">▶ RESUME</button>
+<button class="btn purple" id="restartBtn">↻ RESTART</button>
+<button class="btn red" id="pauseHomeBtn">⌂ HOME</button>
+
+</div>
+
+</section>
+
+<!-- GAME OVER -->
+
+<section class="overlay" id="gameOverOverlay">
+
+<div class="panel">
+
+<h2>💥 GAME OVER</h2>
+
+<div class="results">
+
+<div class="result">
+<small>FINAL SCORE</small>
+<strong id="finalScore">0</strong>
+</div>
+
+<div class="result">
+<small>HIGH SCORE</small>
+<strong id="finalHigh">0</strong>
+</div>
+
+<div class="result">
+<small>LEVEL</small>
+<strong id="finalLevel">1</strong>
+</div>
+
+<div class="result">
+<small>BEST COMBO</small>
+<strong id="bestCombo">0</strong>
+</div>
+
+</div>
+
+<button class="btn" id="againBtn">↻ PLAY AGAIN</button>
+<button class="btn purple" id="homeBtn">⌂ HOME</button>
+
+</div>
+
+</section>
+
+</div>
+</div>
+
+<script>
+
+const homeScreen=document.getElementById("homeScreen");
+const gameScreen=document.getElementById("gameScreen");
+const gameArea=document.getElementById("gameArea");
+const gameShell=document.getElementById("gameShell");
+
+const scoreEl=document.getElementById("score");
+const levelEl=document.getElementById("level");
+const livesEl=document.getElementById("lives");
+const comboEl=document.getElementById("combo");
+
+const homeHigh=document.getElementById("homeHigh");
+
+const pauseOverlay=document.getElementById("pauseOverlay");
+const gameOverOverlay=document.getElementById("gameOverOverlay");
+
+const comboPopup=document.getElementById("comboPopup");
+const levelMessage=document.getElementById("levelMessage");
+const powerMessage=document.getElementById("powerMessage");
+
+let score=0;
+let level=1;
+let lives=3;
+
+let combo=0;
+let bestCombo=0;
+let multiplier=1;
+
+let running=false;
+let paused=false;
+
+let spawnTimeout=null;
+let levelInterval=null;
+let comboTimeout=null;
+
+let slowActive=false;
+let magnetActive=false;
+
+let soundOn=true;
+
+let highScore=Number(localStorage.getItem("balloonBlastHighScore"))||0;
+
+homeHigh.textContent=highScore;
+
+
+/* SCREEN */
+
+function showScreen(screen){
+
+    homeScreen.classList.remove("active");
+    gameScreen.classList.remove("active");
+
+    screen.classList.add("active");
+}
+
+
+/* HUD */
+
+function updateHUD(){
+
+    scoreEl.textContent=score;
+    levelEl.textContent=level;
+    livesEl.textContent="❤️".repeat(Math.max(0,lives));
+    comboEl.textContent="x"+multiplier;
+
+}
+
+
+/* START GAME */
+
+function startGame(){
+
+    clearEverything();
+
+    score=0;
+    level=1;
+    lives=3;
+
+    combo=0;
+    bestCombo=0;
+    multiplier=1;
+
+    running=true;
+    paused=false;
+
+    slowActive=false;
+    magnetActive=false;
+
+    pauseOverlay.classList.remove("active");
+    gameOverOverlay.classList.remove("active");
+
+    showScreen(gameScreen);
+
+    updateHUD();
+
+    showLevel();
+
+    spawnLoop();
+
+    levelInterval=setInterval(()=>{
+
+        if(!running||paused)return;
+
+        level++;
+
+        updateHUD();
+        showLevel();
+
+    },15000);
+
+}
+
+
+/* SPAWN LOOP */
+
+function spawnLoop(){
+
+    if(!running||paused)return;
+
+    createBalloon();
+
+    let delay=Math.max(350,1000-(level*70));
+
+    if(slowActive){
+        delay*=1.5;
+    }
+
+    spawnTimeout=setTimeout(spawnLoop,delay);
+
+}
+
+
+/* CREATE OBJECT */
+
+function createBalloon(){
+
+    if(!running||paused)return;
+
+    const balloon=document.createElement("div");
+
+    balloon.classList.add("balloon");
+
+    const random=Math.random();
+
+    let type="normal";
+    let icon="";
+
+    if(level>=2 && random<0.08){
+
+        type="gold";
+        balloon.classList.add("golden");
+        icon="⭐";
+
+    }
+    else if(level>=2 && random<0.16){
+
+        type="bomb";
+        balloon.classList.add("bomb");
+        icon="💣";
+
+    }
+    else if(level>=3 && random<0.20){
+
+        type="magnet";
+        balloon.classList.add("power-magnet");
+        icon="🧲";
+
+    }
+    else if(level>=3 && random<0.24){
+
+        type="slow";
+        balloon.classList.add("power-slow");
+        icon="⏱️";
+
+    }
+    else if(level>=4 && random<0.28){
+
+        type="mega";
+        balloon.classList.add("power-mega");
+        icon="💎";
+
+    }
+    else{
+
+        balloon.classList.add("normal");
+
+    }
+
+    if(icon){
+
+        balloon.innerHTML='<div class="icon">'+icon+'</div>';
+
+    }
+
+    const size=50+Math.random()*25;
+
+    let duration=Math.max(
+        2.7,
+        7-(level*.4)+Math.random()*1.5
+    );
+
+    if(slowActive){
+        duration*=1.8;
+    }
+
+    balloon.style.width=size+"px";
+    balloon.style.height=(size*1.22)+"px";
+
+    balloon.style.left=Math.random()*
+        Math.max(10,gameArea.clientWidth-size)+"px";
+
+    balloon.style.bottom="-100px";
+
+    balloon.style.animationDuration=duration+"s";
+
+
+    balloon.addEventListener("pointerdown",(e)=>{
+
+        e.preventDefault();
+
+        hitBalloon(balloon,type);
+
+    });
+
+
+    balloon.addEventListener("animationend",()=>{
+
+        if(balloon.dataset.hit){
+
+            balloon.remove();
+            return;
+
+        }
+
+        if(!running){
+
+            balloon.remove();
+            return;
+
+        }
+
+        if(type==="normal"){
+
+            lives--;
+
+            resetCombo();
+
+            updateHUD();
+
+            showFloating(
+                "MISSED!",
+                gameArea.clientWidth/2,
+                gameArea.clientHeight/2,
+                "#ff5277"
+            );
+
+            if(lives<=0){
+
+                endGame();
+
+            }
+
+        }
+
+        balloon.remove();
+
+    });
+
+
+    gameArea.appendChild(balloon);
+
+}
+
+
+/* HIT */
+
+function hitBalloon(balloon,type){
+
+    if(!running||paused||balloon.dataset.hit)return;
+
+    balloon.dataset.hit="yes";
+
+    const rect=balloon.getBoundingClientRect();
+    const areaRect=gameArea.getBoundingClientRect();
+
+    const x=rect.left-areaRect.left+rect.width/2;
+    const y=rect.top-areaRect.top+rect.height/2;
+
+
+    if(type==="bomb"){
+
+        playSound("bomb");
+
+        lives--;
+        score=Math.max(0,score-20);
+
+        resetCombo();
+
+        explode(x,y,"#ff5277");
+
+        showFloating("💣 -20",x,y,"#ff5277");
+
+        shakeScreen();
+
+        balloon.remove();
+
+        updateHUD();
+
+        if(lives<=0){
+            endGame();
+        }
+
+        return;
+
+    }
+
+
+    if(type==="magnet"){
+
+        activateMagnet();
+
+        balloon.classList.add("pop");
+
+        explode(x,y,"#63e6ff");
+
+        setTimeout(()=>balloon.remove(),350);
+
+        return;
+
+    }
+
+
+    if(type==="slow"){
+
+        activateSlow();
+
+        balloon.classList.add("pop");
+
+        explode(x,y,"#a57dff");
+
+        setTimeout(()=>balloon.remove(),350);
+
+        return;
+
+    }
+
+
+    if(type==="mega"){
+
+        score+=100*multiplier;
+
+        increaseCombo();
+
+        showFloating(
+            "💎 +"+(100*multiplier),
+            x,y,
+            "#63ffb0"
+        );
+
+        playSound("mega");
+
+        balloon.classList.add("pop");
+
+        explode(x,y,"#63ffb0");
+
+        updateHUD();
+
+        setTimeout(()=>balloon.remove(),350);
+
+        return;
+
+    }
+
+
+    let basePoints=type==="gold"?50:10;
+
+    increaseCombo();
+
+    let points=basePoints*multiplier;
+
+    score+=points;
+
+    showFloating(
+        "+"+points,
+        x,y,
+        type==="gold"?"#ffd34d":"#ffffff"
+    );
+
+    playSound(type==="gold"?"gold":"normal");
+
+    balloon.classList.add("pop");
+
+    explode(
+        x,
+        y,
+        type==="gold"?"#ffd34d":"#63e6ff"
+    );
+
+    updateHUD();
+
+    setTimeout(()=>balloon.remove(),350);
+
+}
+
+
+/* COMBO */
+
+function increaseCombo(){
+
+    combo++;
+
+    if(combo>bestCombo){
+        bestCombo=combo;
+    }
+
+    if(combo>=10){
+        multiplier=4;
+    }
+    else if(combo>=5){
+        multiplier=3;
+    }
+    else if(combo>=3){
+        multiplier=2;
+    }
+    else{
+        multiplier=1;
+    }
+
+    if(combo>=3){
+
+        comboPopup.textContent=
+            "🔥 COMBO x"+multiplier+" 🔥";
+
+        comboPopup.classList.remove("show");
+
+        void comboPopup.offsetWidth;
+
+        comboPopup.classList.add("show");
+
+    }
+
+    clearTimeout(comboTimeout);
+
+    comboTimeout=setTimeout(()=>{
+
+        resetCombo();
+
+    },2500);
+
+}
+
+
+/* RESET COMBO */
+
+function resetCombo(){
+
+    combo=0;
+    multiplier=1;
+
+    clearTimeout(comboTimeout);
+
+    updateHUD();
+
+}
+
+
+/* MAGNET */
+
+function activateMagnet(){
+
+    showPower("🧲 MAGNET ACTIVATED!");
+
+    playSound("power");
+
+    const balloons=[
+        ...document.querySelectorAll(".balloon")
+    ];
+
+    balloons.forEach((b,index)=>{
+
+        if(b.dataset.hit)return;
+
+        if(
+            b.classList.contains("bomb") ||
+            b.classList.contains("power-magnet")
+        )return;
+
+        setTimeout(()=>{
+
+            if(!running||b.dataset.hit)return;
+
+            hitBalloon(
+                b,
+                b.classList.contains("golden")
+                    ?"gold"
+                    :"normal"
+            );
+
+        },index*80);
+
+    });
+
+}
+
+
+/* SLOW TIME */
+
+function activateSlow(){
+
+    if(slowActive)return;
+
+    slowActive=true;
+
+    showPower("⏱️ SLOW MOTION!");
+
+    playSound("power");
+
+    document.querySelectorAll(".balloon").forEach(b=>{
+
+        const duration=getComputedStyle(b)
+            .animationDuration;
+
+        if(duration){
+
+            b.style.animationDuration=
+                (parseFloat(duration)*1.8)+"s";
+
+        }
+
+    });
+
+    setTimeout(()=>{
+
+        slowActive=false;
+
+        showPower("NORMAL SPEED");
+
+    },7000);
+
+}
+
+
+/* POWER MESSAGE */
+
+function showPower(text){
+
+    powerMessage.textContent=text;
+
+    powerMessage.classList.remove("show");
+
+    void powerMessage.offsetWidth;
+
+    powerMessage.classList.add("show");
+
+}
+
+
+/* PARTICLES */
+
+function explode(x,y,color){
+
+    for(let i=0;i<14;i++){
+
+        const particle=document.createElement("div");
+
+        particle.className="particle";
+
+        particle.style.left=x+"px";
+        particle.style.top=y+"px";
+        particle.style.background=color;
+
+        const angle=Math.random()*Math.PI*2;
+        const distance=30+Math.random()*90;
+
+        particle.style.setProperty(
+            "--x",
+            Math.cos(angle)*distance+"px"
+        );
+
+        particle.style.setProperty(
+            "--y",
+            Math.sin(angle)*distance+"px"
+        );
+
+        gameArea.appendChild(particle);
+
+        setTimeout(()=>particle.remove(),800);
+
+    }
+
+}
+
+
+/* FLOATING TEXT */
+
+function showFloating(text,x,y,color){
+
+    const item=document.createElement("div");
+
+    item.className="floating";
+
+    item.textContent=text;
+
+    item.style.left=x+"px";
+    item.style.top=y+"px";
+    item.style.color=color;
+
+    gameArea.appendChild(item);
+
+    setTimeout(()=>item.remove(),900);
+
+}
+
+
+/* LEVEL MESSAGE */
+
+function showLevel(){
+
+    levelMessage.textContent=
+        "LEVEL "+level;
+
+    levelMessage.classList.remove("show");
+
+    void levelMessage.offsetWidth;
+
+    levelMessage.classList.add("show");
+
+}
+
+
+/* SHAKE */
+
+function shakeScreen(){
+
+    gameShell.classList.remove("shake");
+
+    void gameShell.offsetWidth;
+
+    gameShell.classList.add("shake");
+
+}
+
+
+/* PAUSE */
+
+function pauseGame(){
+
+    if(!running)return;
+
+    paused=true;
+
+    clearTimeout(spawnTimeout);
+
+    document.querySelectorAll(".balloon").forEach(b=>{
+
+        b.style.animationPlayState="paused";
+
+    });
+
+    pauseOverlay.classList.add("active");
+
+}
+
+
+function resumeGame(){
+
+    if(!running)return;
+
+    paused=false;
+
+    document.querySelectorAll(".balloon").forEach(b=>{
+
+        b.style.animationPlayState="running";
+
+    });
+
+    pauseOverlay.classList.remove("active");
+
+    spawnLoop();
+
+}
+
+
+/* END GAME */
+
+function endGame(){
+
+    running=false;
+
+    clearTimeout(spawnTimeout);
+    clearInterval(levelInterval);
+
+    if(score>highScore){
+
+        highScore=score;
+
+        localStorage.setItem(
+            "balloonBlastHighScore",
+            highScore
+        );
+
+    }
+
+    homeHigh.textContent=highScore;
+
+    document.getElementById("finalScore").textContent=score;
+    document.getElementById("finalHigh").textContent=highScore;
+    document.getElementById("finalLevel").textContent=level;
+    document.getElementById("bestCombo").textContent=bestCombo;
+
+    document.querySelectorAll(".balloon")
+        .forEach(b=>b.remove());
+
+    gameOverOverlay.classList.add("active");
+
+}
+
+
+/* CLEAR */
+
+function clearEverything(){
+
+    clearTimeout(spawnTimeout);
+    clearInterval(levelInterval);
+    clearTimeout(comboTimeout);
+
+    document.querySelectorAll(
+        ".balloon,.particle,.floating"
+    ).forEach(el=>el.remove());
+
+}
+
+
+/* HOME */
+
+function goHome(){
+
+    running=false;
+    paused=false;
+
+    clearEverything();
+
+    pauseOverlay.classList.remove("active");
+    gameOverOverlay.classList.remove("active");
+
+    homeHigh.textContent=highScore;
+
+    showScreen(homeScreen);
+
+}
+
+
+/* SOUND */
+
+function playSound(type){
+
+    if(!soundOn)return;
+
+    try{
+
+        const AudioContextClass=
+            window.AudioContext||
+            window.webkitAudioContext;
+
+        const ctx=new AudioContextClass();
+
+        const oscillator=ctx.createOscillator();
+        const gain=ctx.createGain();
+
+        oscillator.connect(gain);
+        gain.connect(ctx.destination);
+
+        let frequency=400;
+
+        if(type==="gold")frequency=850;
+        if(type==="bomb")frequency=100;
+        if(type==="mega")frequency=1000;
+        if(type==="power")frequency=650;
+
+        oscillator.frequency.value=frequency;
+
+        oscillator.type=
+            type==="bomb"
+                ?"sawtooth"
+                :"sine";
+
+        gain.gain.setValueAtTime(
+            .08,
+            ctx.currentTime
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            .001,
+            ctx.currentTime+.18
+        );
+
+        oscillator.start();
+
+        oscillator.stop(
+            ctx.currentTime+.18
+        );
+
+    }
+    catch(e){}
+
+}
+
+
+/* BUTTON EVENTS */
+
+document.getElementById("playBtn")
+    .addEventListener("click",startGame);
+
+document.getElementById("againBtn")
+    .addEventListener("click",startGame);
+
+document.getElementById("pauseBtn")
+    .addEventListener("click",pauseGame);
+
+document.getElementById("resumeBtn")
+    .addEventListener("click",resumeGame);
+
+document.getElementById("restartBtn")
+    .addEventListener("click",startGame);
+
+document.getElementById("homeBtn")
+    .addEventListener("click",goHome);
+
+document.getElementById("pauseHomeBtn")
+    .addEventListener("click",goHome);
+
+
+document.getElementById("soundBtn")
+.addEventListener("click",function(){
+
+    soundOn=!soundOn;
+
+    this.textContent=
+        soundOn
+            ?"🔊 SOUND: ON"
+            :"🔇 SOUND: OFF";
+
+});
+updateHUD();
+</script>
+</body>
+</html>
