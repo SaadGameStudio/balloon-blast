@@ -2,622 +2,787 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Balloon Blast - Version 2.0 Premium</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Balloon Blast | Saad Game Studio</title>
+
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{
-  margin:0;overflow:hidden;font-family:Arial,Helvetica,sans-serif;
-  background:#07111f;color:#fff;touch-action:manipulation
-}
-button{
-  color:#fff;background:rgba(10,25,45,.8);border:2px solid #5ddcff;
-  border-radius:14px;padding:10px 15px;font-weight:bold;cursor:pointer;
-  transition:.2s;box-shadow:0 0 15px rgba(93,220,255,.2)
-}
-button:hover{transform:translateY(-2px);box-shadow:0 0 22px rgba(93,220,255,.55)}
-button:active{transform:scale(.94)}
-#game{
-  position:relative;width:100vw;height:100vh;overflow:hidden;
-  background:
-  radial-gradient(circle at 20% 20%,rgba(50,130,255,.18),transparent 28%),
-  radial-gradient(circle at 80% 80%,rgba(255,70,160,.15),transparent 30%),
-  linear-gradient(135deg,#07111f,#10264a,#07111f);
-}
-#game:before{
-  content:"";position:absolute;inset:0;pointer-events:none;
-  background-image:radial-gradient(#fff 1px,transparent 1px);
-  background-size:45px 45px;opacity:.12
-}
-#topbar{
-  position:absolute;z-index:20;top:10px;left:50%;transform:translateX(-50%);
-  width:min(96%,900px);display:grid;grid-template-columns:repeat(5,1fr);gap:7px
-}
-.stat{
-  background:rgba(6,17,35,.72);border:1px solid rgba(93,220,255,.45);
-  border-radius:12px;padding:8px;text-align:center;backdrop-filter:blur(8px)
-}
-.stat b{display:block;font-size:11px;color:#8fb4d8}
-.stat span{font-size:17px;font-weight:bold}
-#mission{
-  position:absolute;z-index:10;top:82px;left:50%;transform:translateX(-50%);
-  background:rgba(7,17,31,.78);border:1px solid rgba(255,255,255,.2);
-  border-radius:30px;padding:8px 18px;font-size:13px;text-align:center
-}
-#combo{
-  position:absolute;z-index:10;left:50%;top:125px;transform:translateX(-50%) scale(0);
-  font-size:25px;font-weight:900;text-shadow:0 0 20px #ffcf4a;transition:.2s
-}
-#powerups{
-  position:absolute;z-index:30;bottom:15px;left:50%;transform:translateX(-50%);
-  display:flex;gap:8px;flex-wrap:wrap;justify-content:center
-}
-.power{
-  min-width:52px;padding:9px;border-radius:12px;font-size:20px;
-  background:rgba(5,15,30,.85);border:1px solid #7ce7ff
-}
-#pauseBtn{position:absolute;z-index:40;right:15px;top:15px;font-size:17px}
-.balloon{
-  position:absolute;border-radius:50% 50% 46% 46%;
-  cursor:pointer;touch-action:none;
-  box-shadow:inset -10px -12px 20px rgba(0,0,0,.2),inset 10px 8px 15px rgba(255,255,255,.35),0 8px 25px rgba(0,0,0,.35);
-  animation:floatUp linear forwards;
-}
-.balloon:before{
-  content:"";position:absolute;width:10px;height:13px;background:inherit;
-  left:50%;bottom:-8px;transform:translateX(-50%) rotate(45deg)
-}
-.balloon:after{
-  content:"";position:absolute;width:3px;height:32px;background:rgba(255,255,255,.45);
-  left:50%;bottom:-39px
-}
-.boss{
-  border:4px solid #fff;box-shadow:0 0 30px #ff3e95,inset 0 0 25px rgba(0,0,0,.4);
-  display:flex;align-items:center;justify-content:center;font-size:30px
-}
-.coin{
-  position:absolute;width:34px;height:34px;border-radius:50%;
-  background:radial-gradient(circle at 30% 30%,#fff5a8,#ffd000 45%,#c27a00);
-  border:2px solid #fff0a0;cursor:pointer;z-index:8;
-  animation:coinMove 5s linear forwards
-}
-.powerDrop{
-  position:absolute;width:45px;height:45px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;font-size:23px;
-  background:rgba(10,25,50,.9);border:2px solid #fff;cursor:pointer;z-index:8;
-  animation:dropMove 6s linear forwards
-}
-.particle{
-  position:absolute;width:8px;height:8px;border-radius:50%;pointer-events:none;z-index:25
-}
-@keyframes floatUp{
-  from{transform:translateY(110vh) scale(.9)}
-  to{transform:translateY(-180px) scale(1.12)}
-}
-@keyframes coinMove{
-  from{transform:translateY(105vh) rotate(0)}
-  to{transform:translateY(-100px) rotate(720deg)}
-}
-@keyframes dropMove{
-  from{transform:translateY(105vh)}
-  to{transform:translateY(-100px)}
-}
-.overlay{
-  position:absolute;z-index:100;inset:0;background:rgba(2,8,18,.82);
-  backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:20px
-}
-.card{
-  width:min(94%,460px);text-align:center;padding:28px;border-radius:25px;
-  background:linear-gradient(145deg,rgba(18,42,75,.95),rgba(5,15,30,.95));
-  border:1px solid rgba(100,220,255,.55);box-shadow:0 0 50px rgba(0,0,0,.5)
-}
-.card h1{font-size:clamp(32px,8vw,58px);margin:0 0 8px;text-shadow:0 0 25px #5ddcff}
-.card p{color:#bdd3eb;line-height:1.5}
-.bigBtn{width:100%;margin-top:10px;padding:15px;font-size:17px}
-#shopItems,#achievementList{display:grid;gap:8px;margin-top:15px;max-height:42vh;overflow:auto}
-.shopItem,.achievement{
-  text-align:left;padding:12px;border-radius:12px;background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.13)
-}
-.hidden{display:none!important}
-#toast{
-  position:absolute;z-index:200;top:160px;left:50%;transform:translateX(-50%) translateY(-20px);
-  padding:10px 18px;border-radius:30px;background:#112b4c;border:1px solid #5ddcff;
-  opacity:0;transition:.3s;pointer-events:none
-}
-#bossBar{
-  position:absolute;z-index:15;top:155px;left:50%;transform:translateX(-50%);
-  width:min(70%,500px);display:none
-}
-#bossBar b{display:block;text-align:center;margin-bottom:5px}
-.bar{height:12px;background:#222;border-radius:20px;overflow:hidden;border:1px solid #fff}
-#bossHP{height:100%;width:100%;background:linear-gradient(90deg,#ff314f,#ff9c00);transition:.2s}
-@media(max-width:600px){
-  #topbar{grid-template-columns:repeat(3,1fr)}
-  .stat{padding:6px}
-  #mission{top:112px;font-size:11px}
-  #combo{top:150px}
-  #bossBar{top:180px}
-  #pauseBtn{top:auto;bottom:80px;right:10px}
-}
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+        --bg1: #0f172a;
+        --bg2: #1e1b4b;
+        --panel: rgba(255,255,255,0.12);
+        --border: rgba(255,255,255,0.25);
+        --text: #ffffff;
+        --accent: #facc15;
+        --danger: #fb7185;
+        --success: #4ade80;
+    }
+
+    body {
+        min-height: 100vh;
+        overflow: hidden;
+        font-family: Arial, Helvetica, sans-serif;
+        background:
+            radial-gradient(circle at 20% 20%, rgba(124,58,237,.45), transparent 30%),
+            radial-gradient(circle at 80% 80%, rgba(59,130,246,.35), transparent 30%),
+            linear-gradient(135deg, var(--bg1), var(--bg2));
+        color: var(--text);
+    }
+
+    #game {
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Animated background */
+    .bubble {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        border: 1px solid rgba(255,255,255,.12);
+        border-radius: 50%;
+        animation: floatBg linear infinite;
+        pointer-events: none;
+    }
+
+    @keyframes floatBg {
+        from {
+            transform: translateY(110vh) rotate(0deg);
+            opacity: 0;
+        }
+        10% { opacity: 1; }
+        90% { opacity: .5; }
+        to {
+            transform: translateY(-20vh) rotate(360deg);
+            opacity: 0;
+        }
+    }
+
+    /* Top HUD */
+    .hud {
+        position: absolute;
+        top: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: min(94%, 900px);
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        z-index: 20;
+    }
+
+    .stat {
+        flex: 1;
+        min-width: 0;
+        padding: 12px 10px;
+        text-align: center;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: var(--panel);
+        backdrop-filter: blur(12px);
+        box-shadow: 0 8px 30px rgba(0,0,0,.25);
+    }
+
+    .stat small {
+        display: block;
+        opacity: .7;
+        font-size: 11px;
+        margin-bottom: 4px;
+    }
+
+    .stat strong {
+        font-size: clamp(15px, 3vw, 24px);
+    }
+
+    /* Buttons */
+    .btn {
+        border: 2px solid rgba(255,255,255,.7);
+        background: rgba(255,255,255,.12);
+        color: white;
+        padding: 14px 28px;
+        border-radius: 14px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform .15s ease, background .2s ease, box-shadow .2s ease;
+        box-shadow: 0 0 0 0 rgba(255,255,255,.2);
+    }
+
+    .btn:hover {
+        background: rgba(255,255,255,.22);
+        box-shadow: 0 10px 25px rgba(0,0,0,.25);
+        transform: translateY(-2px);
+    }
+
+    .btn:active {
+        transform: scale(.93);
+    }
+
+    .btn.primary {
+        background: linear-gradient(135deg, #f59e0b, #ef4444);
+        border-color: #fff;
+    }
+
+    .btn.success {
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+    }
+
+    /* Screens */
+    .screen {
+        position: absolute;
+        inset: 0;
+        z-index: 50;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        background: rgba(4,8,24,.55);
+        backdrop-filter: blur(10px);
+    }
+
+    .hidden {
+        display: none !important;
+    }
+
+    .card {
+        width: min(92vw, 470px);
+        padding: 32px 24px;
+        text-align: center;
+        border: 1px solid rgba(255,255,255,.28);
+        border-radius: 28px;
+        background: linear-gradient(
+            135deg,
+            rgba(255,255,255,.16),
+            rgba(255,255,255,.06)
+        );
+        box-shadow: 0 20px 60px rgba(0,0,0,.4);
+        animation: cardIn .5s ease;
+    }
+
+    @keyframes cardIn {
+        from {
+            opacity: 0;
+            transform: scale(.85) translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+
+    .logo {
+        font-size: clamp(42px, 10vw, 75px);
+        margin-bottom: 8px;
+        animation: logoFloat 2s ease-in-out infinite;
+    }
+
+    @keyframes logoFloat {
+        0%, 100% { transform: translateY(0) rotate(-3deg); }
+        50% { transform: translateY(-10px) rotate(3deg); }
+    }
+
+    h1 {
+        font-size: clamp(30px, 7vw, 48px);
+        margin-bottom: 10px;
+        letter-spacing: 1px;
+    }
+
+    .subtitle {
+        color: rgba(255,255,255,.72);
+        line-height: 1.6;
+        margin-bottom: 24px;
+    }
+
+    .developer {
+        margin-top: 22px;
+        font-size: 13px;
+        opacity: .65;
+    }
+
+    .button-row {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    /* Balloon */
+    .balloon {
+        position: absolute;
+        bottom: -160px;
+        width: 72px;
+        height: 90px;
+        border-radius: 50% 50% 48% 48%;
+        cursor: pointer;
+        z-index: 10;
+        animation: rise linear forwards;
+        touch-action: manipulation;
+        box-shadow:
+            inset -10px -12px 18px rgba(0,0,0,.15),
+            inset 12px 12px 18px rgba(255,255,255,.28),
+            0 10px 25px rgba(0,0,0,.25);
+    }
+
+    .balloon::before {
+        content: "";
+        position: absolute;
+        width: 18px;
+        height: 12px;
+        left: 50%;
+        bottom: -8px;
+        transform: translateX(-50%);
+        background: inherit;
+        clip-path: polygon(0 0, 100% 0, 50% 100%);
+    }
+
+    .balloon::after {
+        content: "";
+        position: absolute;
+        width: 2px;
+        height: 55px;
+        left: 50%;
+        top: 96px;
+        background: rgba(255,255,255,.7);
+    }
+
+    .balloon span {
+        position: absolute;
+        top: 14px;
+        left: 16px;
+        width: 16px;
+        height: 28px;
+        border-radius: 50%;
+        background: rgba(255,255,255,.3);
+        transform: rotate(28deg);
+    }
+
+    @keyframes rise {
+        from {
+            transform: translateY(0) rotate(-5deg);
+        }
+        50% {
+            transform: translateY(-55vh) rotate(5deg);
+        }
+        to {
+            transform: translateY(-125vh) rotate(-4deg);
+        }
+    }
+
+    /* Pop effect */
+    .pop {
+        animation: pop .28s ease forwards !important;
+        pointer-events: none;
+    }
+
+    @keyframes pop {
+        0% {
+            transform: scale(1);
+            opacity: 1;
+        }
+        60% {
+            transform: scale(1.5);
+            opacity: .8;
+        }
+        100% {
+            transform: scale(0);
+            opacity: 0;
+        }
+    }
+
+    .points {
+        position: absolute;
+        font-weight: bold;
+        font-size: 22px;
+        color: var(--accent);
+        z-index: 30;
+        pointer-events: none;
+        animation: pointsUp .8s ease forwards;
+        text-shadow: 0 3px 10px rgba(0,0,0,.4);
+    }
+
+    @keyframes pointsUp {
+        from {
+            transform: translateY(0) scale(.7);
+            opacity: 1;
+        }
+        to {
+            transform: translateY(-70px) scale(1.3);
+            opacity: 0;
+        }
+    }
+
+    .pause-btn {
+        position: absolute;
+        right: 3%;
+        bottom: 22px;
+        z-index: 25;
+        padding: 12px 16px;
+        border-radius: 50%;
+        width: 54px;
+        height: 54px;
+    }
+
+    .tip {
+        margin-top: 18px;
+        font-size: 12px;
+        opacity: .55;
+    }
+
+    @media (max-width: 500px) {
+        .hud {
+            top: 10px;
+            gap: 6px;
+        }
+
+        .stat {
+            padding: 9px 5px;
+            border-radius: 14px;
+        }
+
+        .balloon {
+            width: 60px;
+            height: 76px;
+        }
+
+        .balloon::after {
+            top: 82px;
+        }
+
+        .balloon::before {
+            bottom: -7px;
+        }
+
+        .card {
+            padding: 26px 18px;
+        }
+    }
 </style>
 </head>
+
 <body>
 
 <div id="game">
-  <div id="topbar">
-    <div class="stat"><b>SCORE</b><span id="score">0</span></div>
-    <div class="stat"><b>HIGH</b><span id="high">0</span></div>
-    <div class="stat"><b>LEVEL</b><span id="level">1</span></div>
-    <div class="stat"><b>COINS</b><span id="coins">0</span></div>
-    <div class="stat"><b>LIVES</b><span id="lives">❤️❤️❤️</span></div>
-  </div>
 
-  <button id="pauseBtn" onclick="togglePause()">⏸</button>
-  <div id="mission">Mission: Pop 15 balloons</div>
-  <div id="combo">🔥 COMBO x1</div>
+    <!-- Background bubbles -->
+    <div class="bubble" style="left:5%;animation-duration:16s;animation-delay:0s;"></div>
+    <div class="bubble" style="left:20%;width:45px;height:45px;animation-duration:12s;animation-delay:3s;"></div>
+    <div class="bubble" style="left:40%;width:110px;height:110px;animation-duration:20s;animation-delay:6s;"></div>
+    <div class="bubble" style="left:70%;width:60px;height:60px;animation-duration:14s;animation-delay:1s;"></div>
+    <div class="bubble" style="left:88%;width:95px;height:95px;animation-duration:18s;animation-delay:8s;"></div>
 
-  <div id="bossBar">
-    <b>👹 BOSS BALLOON</b>
-    <div class="bar"><div id="bossHP"></div></div>
-  </div>
+    <!-- HUD -->
+    <div class="hud" id="hud">
+        <div class="stat">
+            <small>SCORE</small>
+            <strong id="score">0</strong>
+        </div>
 
-  <div id="powerups">
-    <button class="power" title="Bomb" onclick="usePower('bomb')">💣</button>
-    <button class="power" title="Freeze" onclick="usePower('freeze')">❄️</button>
-    <button class="power" title="Double Score" onclick="usePower('double')">✖️2</button>
-    <button class="power" title="Shield" onclick="usePower('shield')">🛡️</button>
-    <button class="power" title="Magnet" onclick="usePower('magnet')">🧲</button>
-  </div>
+        <div class="stat">
+            <small>LEVEL</small>
+            <strong id="level">1</strong>
+        </div>
 
-  <div id="toast"></div>
+        <div class="stat">
+            <small>BEST</small>
+            <strong id="best">0</strong>
+        </div>
 
-  <div id="startScreen" class="overlay">
-    <div class="card">
-      <h1>🎈 BALLOON<br>BLAST</h1>
-      <h2>VERSION 2.0 PREMIUM</h2>
-      <p>Pop balloons, collect coins, complete missions, defeat boss balloons and unlock achievements.</p>
-      <button class="bigBtn" onclick="startGame()">▶ PLAY NOW</button>
-      <button class="bigBtn" onclick="openShop()">🛒 SHOP</button>
-      <button class="bigBtn" onclick="showAchievements()">🏆 ACHIEVEMENTS</button>
+        <div class="stat">
+            <small>LIVES</small>
+            <strong id="lives">❤️❤️❤️</strong>
+        </div>
     </div>
-  </div>
 
-  <div id="pauseScreen" class="overlay hidden">
-    <div class="card">
-      <h1>⏸ PAUSED</h1>
-      <button class="bigBtn" onclick="togglePause()">▶ RESUME</button>
-      <button class="bigBtn" onclick="endGame()">🏠 MAIN MENU</button>
-    </div>
-  </div>
+    <button class="btn pause-btn hidden" id="pauseBtn">Ⅱ</button>
 
-  <div id="gameOverScreen" class="overlay hidden">
-    <div class="card">
-      <h1 id="gameOverTitle">GAME OVER</h1>
-      <h2 id="finalScore">Score: 0</h2>
-      <p id="gameOverText"></p>
-      <button class="bigBtn" onclick="startGame()">🔄 PLAY AGAIN</button>
-      <button class="bigBtn" onclick="endGame()">🏠 MAIN MENU</button>
-    </div>
-  </div>
+    <!-- Start Screen -->
+    <div class="screen" id="startScreen">
+        <div class="card">
+            <div class="logo">🎈</div>
+            <h1>BALLOON BLAST</h1>
+            <p class="subtitle">
+                Pop the balloons, earn points and survive as the game gets faster!
+            </p>
 
-  <div id="shopScreen" class="overlay hidden">
-    <div class="card">
-      <h1>🛒 SHOP</h1>
-      <p>Your Coins: <b id="shopCoins">0</b></p>
-      <div id="shopItems"></div>
-      <button class="bigBtn" onclick="closeShop()">← BACK</button>
-    </div>
-  </div>
+            <div class="button-row">
+                <button class="btn primary" id="startBtn">▶ START GAME</button>
+            </div>
 
-  <div id="achievementScreen" class="overlay hidden">
-    <div class="card">
-      <h1>🏆 ACHIEVEMENTS</h1>
-      <div id="achievementList"></div>
-      <button class="bigBtn" onclick="closeAchievements()">← BACK</button>
+            <p class="tip">Tap balloons before they escape!</p>
+            <p class="developer">Developed by Saad Game Studio</p>
+        </div>
     </div>
-  </div>
+
+    <!-- Pause Screen -->
+    <div class="screen hidden" id="pauseScreen">
+        <div class="card">
+            <div class="logo">⏸️</div>
+            <h1>GAME PAUSED</h1>
+            <p class="subtitle">Take a break. Your score is safe.</p>
+
+            <div class="button-row">
+                <button class="btn success" id="resumeBtn">▶ RESUME</button>
+                <button class="btn" id="restartFromPause">↻ RESTART</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Over -->
+    <div class="screen hidden" id="gameOverScreen">
+        <div class="card">
+            <div class="logo">💥</div>
+            <h1>GAME OVER</h1>
+            <p class="subtitle">
+                Final Score: <strong id="finalScore">0</strong><br>
+                Level Reached: <strong id="finalLevel">1</strong>
+            </p>
+
+            <div class="button-row">
+                <button class="btn primary" id="restartBtn">↻ PLAY AGAIN</button>
+            </div>
+
+            <p class="developer">Balloon Blast • Saad Game Studio</p>
+        </div>
+    </div>
+
 </div>
 
 <script>
-const game=document.getElementById("game");
-let running=false,paused=false,score=0,level=1,lives=3,combo=0,coins=0,popped=0;
-let target=15,spawnTimer=null,difficulty=1500;
-let freezeUntil=0,doubleUntil=0,shieldUntil=0,magnetUntil=0,bossActive=false,bossHP=0;
+    const game = document.getElementById("game");
 
-const save=JSON.parse(localStorage.getItem("balloonBlastV2")||"{}");
-coins=save.coins||0;
-let high=save.high||0;
-let upgrades=save.upgrades||{bomb:0,freeze:0,double:0,shield:0,magnet:0};
-let achievements=save.achievements||[];
+    const scoreEl = document.getElementById("score");
+    const levelEl = document.getElementById("level");
+    const bestEl = document.getElementById("best");
+    const livesEl = document.getElementById("lives");
 
-const colors=["#ff4b5c","#ffb703","#06d6a0","#4cc9f0","#9b5de5","#ff70a6"];
+    const startScreen = document.getElementById("startScreen");
+    const pauseScreen = document.getElementById("pauseScreen");
+    const gameOverScreen = document.getElementById("gameOverScreen");
 
-function saveData(){
-  localStorage.setItem("balloonBlastV2",JSON.stringify({coins,high,upgrades,achievements}));
-}
+    const pauseBtn = document.getElementById("pauseBtn");
 
-function updateUI(){
-  document.getElementById("score").textContent=score;
-  document.getElementById("high").textContent=high;
-  document.getElementById("level").textContent=level;
-  document.getElementById("coins").textContent=coins;
-  document.getElementById("lives").textContent="❤️".repeat(lives);
-  document.getElementById("mission").textContent=`Mission: Pop ${target} balloons (${popped}/${target})`;
-}
+    const finalScore = document.getElementById("finalScore");
+    const finalLevel = document.getElementById("finalLevel");
 
-function startGame(){
-  document.querySelectorAll(".overlay").forEach(x=>x.classList.add("hidden"));
-  document.querySelectorAll(".balloon,.coin,.powerDrop").forEach(x=>x.remove());
+    let score = 0;
+    let level = 1;
+    let lives = 3;
+    let bestScore = Number(localStorage.getItem("balloonBlastBest")) || 0;
 
-  running=true;paused=false;score=0;level=1;lives=3;combo=0;popped=0;target=15;
-  difficulty=1500;bossActive=false;
-  document.getElementById("bossBar").style.display="none";
-  updateUI();
-  clearInterval(spawnTimer);
-  spawnTimer=setInterval(spawnBalloon,difficulty);
-  spawnBalloon();
-  toast("🎈 Level 1 Started!");
-}
+    let gameRunning = false;
+    let gamePaused = false;
 
-function spawnBalloon(){
-  if(!running||paused||Date.now()<freezeUntil)return;
+    let spawnTimer = null;
+    let levelTimer = null;
 
-  if(bossActive)return;
+    const colors = [
+        "#ef4444",
+        "#f97316",
+        "#facc15",
+        "#22c55e",
+        "#06b6d4",
+        "#3b82f6",
+        "#8b5cf6",
+        "#ec4899"
+    ];
 
-  const b=document.createElement("div");
-  b.className="balloon";
+    bestEl.textContent = bestScore;
 
-  const size=45+Math.random()*50;
-  b.style.width=size+"px";
-  b.style.height=size*1.15+"px";
-  b.style.left=Math.random()*(window.innerWidth-size)+"px";
-  b.style.background=colors[Math.floor(Math.random()*colors.length)];
+    function updateHUD() {
+        scoreEl.textContent = score;
+        levelEl.textContent = level;
+        bestEl.textContent = bestScore;
 
-  const duration=Math.max(3,7-level*.28);
-  b.style.animationDuration=duration+"s";
-
-  b.onclick=()=>popBalloon(b,size);
-
-  b.addEventListener("animationend",()=>{
-    if(!b.isConnected)return;
-    b.remove();
-    if(running&&!paused&&Date.now()>=shieldUntil){
-      lives--;
-      combo=0;
-      updateCombo();
-      updateUI();
-      if(lives<=0)gameOver("GAME OVER","You ran out of lives!");
+        livesEl.textContent = "❤️".repeat(lives) + "🖤".repeat(3 - lives);
     }
-  });
 
-  game.appendChild(b);
+    function playPopSound() {
+        try {
+            const AudioContextClass =
+                window.AudioContext || window.webkitAudioContext;
 
-  if(Math.random()<.10)spawnCoin();
-  if(Math.random()<.055)spawnPowerDrop();
-}
+            const audioContext = new AudioContextClass();
+            const oscillator = audioContext.createOscillator();
+            const gain = audioContext.createGain();
 
-function popBalloon(b,size){
-  if(!running||paused)return;
+            oscillator.connect(gain);
+            gain.connect(audioContext.destination);
 
-  const rect=b.getBoundingClientRect();
-  const x=rect.left+rect.width/2,y=rect.top+rect.height/2;
-  const points=(10+combo*2)*(Date.now()<doubleUntil?2:1);
+            oscillator.frequency.setValueAtTime(250, audioContext.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(
+                700,
+                audioContext.currentTime + 0.08
+            );
 
-  score+=points;
-  popped++;
-  combo++;
+            gain.gain.setValueAtTime(0.08, audioContext.currentTime);
+            gain.gain.exponentialRampToValueAtTime(
+                0.001,
+                audioContext.currentTime + 0.15
+            );
 
-  if(score>high)high=score;
+            oscillator.start();
+            oscillator.stop(audioContext.currentTime + 0.16);
+        } catch (error) {
+            // Sound is optional if browser blocks audio
+        }
+    }
 
-  createParticles(x,y,b.style.background);
-  b.remove();
+    function showPoints(x, y, points) {
+        const text = document.createElement("div");
+        text.className = "points";
+        text.textContent = "+" + points;
+        text.style.left = x + "px";
+        text.style.top = y + "px";
 
-  if(combo>=3)updateCombo();
+        game.appendChild(text);
 
-  if(combo===10)unlock("Combo Master","Get a combo of 10");
-  if(popped===1)unlock("First Blast","Pop your first balloon");
+        setTimeout(() => text.remove(), 800);
+    }
 
-  if(popped>=target){
-    levelComplete();
-  }
+    function createBalloon() {
+        if (!gameRunning || gamePaused) return;
 
-  updateUI();
-  saveData();
-}
+        const balloon = document.createElement("div");
+        balloon.className = "balloon";
 
-function createParticles(x,y,color){
-  for(let i=0;i<14;i++){
-    const p=document.createElement("div");
-    p.className="particle";
-    p.style.background=color;
-    p.style.left=x+"px";p.style.top=y+"px";
-    game.appendChild(p);
+        const shine = document.createElement("span");
+        balloon.appendChild(shine);
 
-    const angle=Math.random()*Math.PI*2;
-    const distance=25+Math.random()*75;
-    p.animate([
-      {transform:"translate(-50%,-50%) scale(1)",opacity:1},
-      {transform:`translate(calc(-50% + ${Math.cos(angle)*distance}px),calc(-50% + ${Math.sin(angle)*distance}px)) scale(0)`,opacity:0}
-    ],{duration:500+Math.random()*350,easing:"ease-out"});
+        const size = Math.max(45, 75 - level * 2);
 
-    setTimeout(()=>p.remove(),900);
-  }
-}
+        balloon.style.width = size + "px";
+        balloon.style.height = Math.round(size * 1.25) + "px";
 
-function updateCombo(){
-  const el=document.getElementById("combo");
-  if(combo>=3){
-    el.textContent=`🔥 COMBO x${combo}`;
-    el.style.transform="translateX(-50%) scale(1)";
-  }else el.style.transform="translateX(-50%) scale(0)";
-}
+        balloon.style.left =
+            Math.random() * (window.innerWidth - size) + "px";
 
-function levelComplete(){
-  coins+=10+level*5;
-  unlock("Level Master","Complete your first level");
-  toast(`🎉 LEVEL ${level} COMPLETE! +${10+level*5} Coins`);
+        balloon.style.background =
+            colors[Math.floor(Math.random() * colors.length)];
 
-  level++;
-  popped=0;
-  target=15+level*5;
-  difficulty=Math.max(500,1500-level*90);
+        const duration = Math.max(
+            2.4,
+            6.5 - level * 0.35 + Math.random() * 1.5
+        );
 
-  clearInterval(spawnTimer);
-  spawnTimer=setInterval(spawnBalloon,difficulty);
+        balloon.style.animationDuration = duration + "s";
 
-  if(level%5===0)setTimeout(spawnBoss,800);
-  updateUI();
-  saveData();
-}
+        let popped = false;
 
-function spawnCoin(){
-  if(!running)return;
-  const c=document.createElement("div");
-  c.className="coin";
-  c.style.left=Math.random()*(window.innerWidth-40)+"px";
-  c.onclick=()=>{
-    coins++;
-    score+=5;
-    if(coins>=50)unlock("Coin Collector","Collect 50 coins");
-    toast("🪙 +1 Coin");
-    c.remove();updateUI();saveData();
-  };
-  game.appendChild(c);
-  setTimeout(()=>c.remove(),5000);
-}
+        function popBalloon(event) {
+            if (
+                !gameRunning ||
+                gamePaused ||
+                popped
+            ) return;
 
-function spawnPowerDrop(){
-  const powers=[
-    {icon:"💣",type:"bomb"},
-    {icon:"❄️",type:"freeze"},
-    {icon:"✖️2",type:"double"},
-    {icon:"🛡️",type:"shield"}
-  ];
-  const item=powers[Math.floor(Math.random()*powers.length)];
-  const p=document.createElement("div");
-  p.className="powerDrop";
-  p.textContent=item.icon;
-  p.style.left=Math.random()*(window.innerWidth-50)+"px";
-  p.onclick=()=>{usePower(item.type);p.remove()};
-  game.appendChild(p);
-  setTimeout(()=>p.remove(),6000);
-}
+            popped = true;
 
-function usePower(type){
-  if(!running||paused)return;
+            const points = 10 * level;
 
-  if(type==="bomb"){
-    document.querySelectorAll(".balloon:not(.boss)").forEach(b=>{
-      if(b.isConnected){
-        const r=b.getBoundingClientRect();
-        score+=5;
-        createParticles(r.left+r.width/2,r.top+r.height/2,b.style.background);
-        b.remove();
-      }
+            score += points;
+
+            if (score > bestScore) {
+                bestScore = score;
+                localStorage.setItem("balloonBlastBest", bestScore);
+            }
+
+            updateHUD();
+            playPopSound();
+
+            const rect = balloon.getBoundingClientRect();
+
+            showPoints(
+                rect.left + rect.width / 2,
+                rect.top,
+                points
+            );
+
+            balloon.classList.add("pop");
+
+            setTimeout(() => balloon.remove(), 300);
+        }
+
+        balloon.addEventListener("pointerdown", popBalloon);
+
+        balloon.addEventListener("animationend", () => {
+            if (
+                !popped &&
+                gameRunning &&
+                !gamePaused
+            ) {
+                balloon.remove();
+                loseLife();
+            }
+        });
+
+        game.appendChild(balloon);
+    }
+
+    function loseLife() {
+        if (!gameRunning) return;
+
+        lives--;
+
+        updateHUD();
+
+        if (lives <= 0) {
+            endGame();
+        }
+    }
+
+    function startSpawning() {
+        clearInterval(spawnTimer);
+
+        const speed = Math.max(
+            450,
+            1300 - (level - 1) * 100
+        );
+
+        spawnTimer = setInterval(() => {
+            if (gameRunning && !gamePaused) {
+                createBalloon();
+
+                if (level >= 4 && Math.random() > 0.55) {
+                    setTimeout(() => {
+                        if (gameRunning && !gamePaused) {
+                            createBalloon();
+                        }
+                    }, 250);
+                }
+
+                if (level >= 7 && Math.random() > 0.65) {
+                    setTimeout(() => {
+                        if (gameRunning && !gamePaused) {
+                            createBalloon();
+                        }
+                    }, 450);
+                }
+            }
+        }, speed);
+    }
+
+    function startLevelSystem() {
+        clearInterval(levelTimer);
+
+        levelTimer = setInterval(() => {
+            if (!gameRunning || gamePaused) return;
+
+            level++;
+
+            updateHUD();
+            startSpawning();
+        }, 20000);
+    }
+
+    function clearBalloons() {
+        document
+            .querySelectorAll(".balloon, .points")
+            .forEach(item => item.remove());
+    }
+
+    function startGame() {
+        clearInterval(spawnTimer);
+        clearInterval(levelTimer);
+
+        clearBalloons();
+
+        score = 0;
+        level = 1;
+        lives = 3;
+
+        gameRunning = true;
+        gamePaused = false;
+
+        updateHUD();
+
+        startScreen.classList.add("hidden");
+        pauseScreen.classList.add("hidden");
+        gameOverScreen.classList.add("hidden");
+
+        pauseBtn.classList.remove("hidden");
+
+        startSpawning();
+        startLevelSystem();
+
+        setTimeout(createBalloon, 300);
+    }
+
+    function pauseGame() {
+        if (!gameRunning || gamePaused) return;
+
+        gamePaused = true;
+
+        document.querySelectorAll(".balloon").forEach(balloon => {
+            balloon.style.animationPlayState = "paused";
+        });
+
+        pauseScreen.classList.remove("hidden");
+    }
+
+    function resumeGame() {
+        if (!gameRunning) return;
+
+        gamePaused = false;
+
+        document.querySelectorAll(".balloon").forEach(balloon => {
+            balloon.style.animationPlayState = "running";
+        });
+
+        pauseScreen.classList.add("hidden");
+    }
+
+    function endGame() {
+        gameRunning = false;
+        gamePaused = false;
+
+        clearInterval(spawnTimer);
+        clearInterval(levelTimer);
+
+        finalScore.textContent = score;
+        finalLevel.textContent = level;
+
+        clearBalloons();
+
+        pauseBtn.classList.add("hidden");
+        gameOverScreen.classList.remove("hidden");
+    }
+
+    document
+        .getElementById("startBtn")
+        .addEventListener("click", startGame);
+
+    document
+        .getElementById("restartBtn")
+        .addEventListener("click", startGame);
+
+    document
+        .getElementById("restartFromPause")
+        .addEventListener("click", startGame);
+
+    pauseBtn.addEventListener("click", pauseGame);
+
+    document
+        .getElementById("resumeBtn")
+        .addEventListener("click", resumeGame);
+
+    document.addEventListener("visibilitychange", () => {
+        if (
+            document.hidden &&
+            gameRunning &&
+            !gamePaused
+        ) {
+            pauseGame();
+        }
     });
-    toast("💣 BALLOON BLAST!");
-  }
-
-  if(type==="freeze"){
-    freezeUntil=Date.now()+5000;
-    toast("❄️ FREEZE: 5 Seconds!");
-  }
-
-  if(type==="double"){
-    doubleUntil=Date.now()+8000;
-    toast("✖️2 DOUBLE SCORE!");
-  }
-
-  if(type==="shield"){
-    shieldUntil=Date.now()+10000;
-    toast("🛡️ SHIELD ACTIVE!");
-  }
-
-  if(type==="magnet"){
-    magnetUntil=Date.now()+5000;
-    document.querySelectorAll(".coin").forEach(c=>c.click());
-    toast("🧲 COIN MAGNET!");
-  }
-
-  updateUI();
-}
-
-function spawnBoss(){
-  if(!running||paused)return;
-
-  bossActive=true;
-  bossHP=20+level*5;
-  document.getElementById("bossBar").style.display="block";
-
-  const b=document.createElement("div");
-  b.className="balloon boss";
-  b.textContent="👹";
-  b.style.width="150px";
-  b.style.height="175px";
-  b.style.left=(window.innerWidth/2-75)+"px";
-  b.style.background="#ff2d55";
-  b.style.animationDuration="14s";
-
-  b.onclick=()=>{
-    bossHP--;
-    score+=20;
-    updateBossBar();
-
-    const r=b.getBoundingClientRect();
-    createParticles(r.left+r.width/2,r.top+r.height/2,"#ff2d55");
-
-    if(bossHP<=0){
-      coins+=25+level*5;
-      score+=500;
-      b.remove();
-      bossActive=false;
-      document.getElementById("bossBar").style.display="none";
-      unlock("Boss Destroyer","Defeat your first boss");
-      toast("👹 BOSS DEFEATED! +500 Score");
-      updateUI();saveData();
-    }
-  };
-
-  b.addEventListener("animationend",()=>{
-    if(b.isConnected){
-      b.remove();bossActive=false;
-      document.getElementById("bossBar").style.display="none";
-      if(Date.now()>=shieldUntil){
-        lives=Math.max(0,lives-2);
-        updateUI();
-        if(lives<=0)gameOver("BOSS ESCAPED!","The boss escaped!");
-      }
-    }
-  });
-
-  game.appendChild(b);
-  updateBossBar();
-  toast("⚠️ BOSS INCOMING!");
-}
-
-function updateBossBar(){
-  const max=20+level*5;
-  document.getElementById("bossHP").style.width=Math.max(0,bossHP/max*100)+"%";
-}
-
-function togglePause(){
-  if(!running)return;
-  paused=!paused;
-  document.getElementById("pauseScreen").classList.toggle("hidden",!paused);
-}
-
-function gameOver(title,text){
-  running=false;
-  clearInterval(spawnTimer);
-  document.querySelectorAll(".balloon,.coin,.powerDrop").forEach(x=>x.remove());
-
-  document.getElementById("gameOverTitle").textContent=title;
-  document.getElementById("finalScore").textContent="Final Score: "+score;
-  document.getElementById("gameOverText").textContent=text;
-  document.getElementById("gameOverScreen").classList.remove("hidden");
-  saveData();
-}
-
-function endGame(){
-  running=false;paused=false;
-  clearInterval(spawnTimer);
-  document.querySelectorAll(".balloon,.coin,.powerDrop").forEach(x=>x.remove());
-  document.querySelectorAll(".overlay").forEach(x=>x.classList.add("hidden"));
-  document.getElementById("startScreen").classList.remove("hidden");
-  document.getElementById("bossBar").style.display="none";
-  updateUI();
-}
-
-const shopData=[
-  {key:"bomb",name:"💣 Mega Bomb",cost:25},
-  {key:"freeze",name:"❄️ Ice Master",cost:35},
-  {key:"double",name:"✖️2 Score Boost",cost:45},
-  {key:"shield",name:"🛡️ Strong Shield",cost:40},
-  {key:"magnet",name:"🧲 Coin Magnet",cost:50}
-];
-
-function openShop(){
-  document.getElementById("shopScreen").classList.remove("hidden");
-  renderShop();
-}
-
-function closeShop(){
-  document.getElementById("shopScreen").classList.add("hidden");
-}
-
-function renderShop(){
-  document.getElementById("shopCoins").textContent=coins;
-  const box=document.getElementById("shopItems");
-  box.innerHTML="";
-
-  shopData.forEach(item=>{
-    const row=document.createElement("div");
-    row.className="shopItem";
-    row.innerHTML=`<b>${item.name}</b><br><small>Cost: 🪙 ${item.cost} | Owned: ${upgrades[item.key]||0}</small><br>`;
-    const btn=document.createElement("button");
-    btn.textContent="BUY";
-    btn.onclick=()=>{
-      if(coins>=item.cost){
-        coins-=item.cost;
-        upgrades[item.key]=(upgrades[item.key]||0)+1;
-        saveData();renderShop();updateUI();
-        toast("✅ Purchased!");
-      }else toast("❌ Not enough coins!");
-    };
-    row.appendChild(btn);
-    box.appendChild(row);
-  });
-}
-
-const achievementData=[
-  {name:"First Blast",desc:"Pop your first balloon"},
-  {name:"Combo Master",desc:"Get a combo of 10"},
-  {name:"Coin Collector",desc:"Collect 50 coins"},
-  {name:"Level Master",desc:"Complete your first level"},
-  {name:"Boss Destroyer",desc:"Defeat your first boss"}
-];
-
-function unlock(name,desc){
-  if(!achievements.includes(name)){
-    achievements.push(name);
-    saveData();
-    toast("🏆 Achievement: "+name);
-  }
-}
-
-function showAchievements(){
-  document.getElementById("achievementScreen").classList.remove("hidden");
-  const box=document.getElementById("achievementList");
-  box.innerHTML="";
-
-  achievementData.forEach(a=>{
-    const unlocked=achievements.includes(a.name);
-    const row=document.createElement("div");
-    row.className="achievement";
-    row.innerHTML=`${unlocked?"🏆":"🔒"} <b>${a.name}</b><br><small>${a.desc}</small>`;
-    box.appendChild(row);
-  });
-}
-
-function closeAchievements(){
-  document.getElementById("achievementScreen").classList.add("hidden");
-}
-
-let toastTimer;
-function toast(msg){
-  const t=document.getElementById("toast");
-  t.textContent=msg;
-  t.style.opacity="1";
-  t.style.transform="translateX(-50%) translateY(0)";
-  clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>{
-    t.style.opacity="0";
-    t.style.transform="translateX(-50%) translateY(-20px)";
-  },1800);
-}
-
-updateUI();
 </script>
+
 </body>
 </html>
