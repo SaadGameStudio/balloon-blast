@@ -2,1551 +2,1250 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#081226">
-<title>Balloon Blast Premium</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Balloon Blast - Premium</title>
 
 <style>
-:root{
-  --bg1:#081226;
-  --bg2:#142952;
-  --card:rgba(10,20,42,.72);
-  --line:rgba(255,255,255,.16);
-  --text:#f7fbff;
-  --muted:#b9c6df;
-  --accent:#00d9ff;
-  --accent2:#7c4dff;
-  --danger:#ff4f72;
-  --success:#35e58b;
-  --gold:#ffd54a;
-}
-
 *{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
 }
 
-html,body{
-  width:100%;
-  min-height:100%;
-  margin:0;
-  overflow-x:hidden;
-  font-family:Arial,Helvetica,sans-serif;
-  color:var(--text);
-  background:
-    radial-gradient(circle at 20% 15%,rgba(0,217,255,.14),transparent 28%),
-    radial-gradient(circle at 80% 80%,rgba(124,77,255,.18),transparent 30%),
-    linear-gradient(135deg,var(--bg1),var(--bg2));
+:root{
+    --accent:#7c3aed;
+    --accent2:#ec4899;
+    --panel:rgba(15,23,42,.82);
+    --text:#f8fafc;
+    --muted:#94a3b8;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    min-height:100vh;
+    background:linear-gradient(135deg,#020617,#111827,#1e1b4b);
+    color:var(--text);
+    overflow-x:hidden;
 }
 
 button{
-  font:inherit;
+    font:inherit;
 }
 
-#app{
-  width:100%;
-  min-height:100vh;
-  position:relative;
-  overflow:hidden;
+button:active{
+    transform:scale(.94);
 }
 
-/* Background stars */
-.star{
-  position:absolute;
-  width:3px;
-  height:3px;
-  background:white;
-  border-radius:50%;
-  opacity:.45;
-  animation:twinkle 2.5s infinite alternate;
+.app{
+    width:min(1100px,100%);
+    min-height:100vh;
+    margin:auto;
+    padding:18px;
 }
 
-@keyframes twinkle{
-  from{opacity:.2;transform:scale(.7)}
-  to{opacity:.9;transform:scale(1.3)}
-}
-
-/* HEADER */
-header{
-  width:min(1200px,94%);
-  margin:auto;
-  padding:14px 0;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  position:relative;
-  z-index:20;
+.header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-bottom:16px;
 }
 
 .logo{
-  font-size:clamp(18px,4vw,28px);
-  font-weight:900;
-  letter-spacing:.5px;
+    display:flex;
+    align-items:center;
+    gap:12px;
 }
 
-.logo span{
-  color:var(--accent);
-  text-shadow:0 0 18px rgba(0,217,255,.7);
+.logoIcon{
+    width:52px;
+    height:52px;
+    display:grid;
+    place-items:center;
+    border:2px solid rgba(255,255,255,.35);
+    border-radius:18px;
+    font-size:27px;
+    background:rgba(255,255,255,.06);
+    box-shadow:0 0 25px rgba(124,58,237,.25);
 }
 
-.top-actions{
-  display:flex;
-  gap:8px;
-  align-items:center;
+.logo h1{
+    font-size:clamp(23px,5vw,38px);
+    letter-spacing:1px;
 }
 
-.icon-btn,
-.primary-btn,
-.secondary-btn,
-.shop-btn{
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.07);
-  color:white;
-  cursor:pointer;
-  border-radius:14px;
-  transition:.2s ease;
-  box-shadow:0 8px 22px rgba(0,0,0,.16);
+.logo p{
+    color:var(--muted);
+    font-size:13px;
+    margin-top:3px;
 }
 
-.icon-btn{
-  width:42px;
-  height:42px;
-  font-size:18px;
+.topActions{
+    display:flex;
+    gap:9px;
 }
 
-.primary-btn,
-.secondary-btn,
-.shop-btn{
-  padding:12px 18px;
-  font-weight:800;
+.outlineBtn{
+    border:2px solid rgba(255,255,255,.3);
+    background:rgba(255,255,255,.05);
+    color:white;
+    border-radius:13px;
+    padding:11px 15px;
+    cursor:pointer;
+    transition:.2s ease;
 }
 
-.primary-btn{
-  background:linear-gradient(135deg,var(--accent),#198cff);
-  border-color:rgba(255,255,255,.32);
-  color:#04101b;
+.outlineBtn:hover{
+    border-color:#a78bfa;
+    background:rgba(124,58,237,.18);
+    transform:translateY(-2px);
 }
 
-.secondary-btn{
-  background:rgba(255,255,255,.08);
-}
-
-.icon-btn:hover,
-.primary-btn:hover,
-.secondary-btn:hover,
-.shop-btn:hover{
-  transform:translateY(-2px);
-  filter:brightness(1.12);
-}
-
-.icon-btn:active,
-.primary-btn:active,
-.secondary-btn:active,
-.shop-btn:active{
-  transform:scale(.94);
-}
-
-/* DASHBOARD */
-.dashboard{
-  width:min(1200px,94%);
-  margin:0 auto 12px;
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:10px;
-  position:relative;
-  z-index:10;
+.stats{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:10px;
+    margin-bottom:15px;
 }
 
 .stat{
-  padding:12px;
-  border:1px solid var(--line);
-  background:var(--card);
-  backdrop-filter:blur(12px);
-  border-radius:16px;
-  min-width:0;
+    min-width:0;
+    padding:13px;
+    border:1px solid rgba(255,255,255,.14);
+    border-radius:16px;
+    background:var(--panel);
+    backdrop-filter:blur(15px);
 }
 
 .stat small{
-  display:block;
-  color:var(--muted);
-  font-size:11px;
-  margin-bottom:5px;
+    display:block;
+    color:var(--muted);
+    font-size:11px;
+    margin-bottom:5px;
 }
 
 .stat strong{
-  display:block;
-  font-size:clamp(16px,3vw,24px);
-  overflow:hidden;
-  text-overflow:ellipsis;
+    font-size:20px;
+    white-space:nowrap;
 }
 
-/* GAME AREA */
-.game-wrap{
-  width:min(1200px,94%);
-  height:min(68vh,680px);
-  min-height:500px;
-  margin:auto;
-  border:1px solid var(--line);
-  border-radius:28px;
-  overflow:hidden;
-  position:relative;
-  background:
-    radial-gradient(circle at 50% 110%,rgba(0,217,255,.14),transparent 40%),
-    linear-gradient(180deg,rgba(255,255,255,.05),rgba(0,0,0,.14));
-  box-shadow:0 25px 80px rgba(0,0,0,.35);
+.gameCard{
+    position:relative;
+    width:100%;
+    height:min(68vh,650px);
+    min-height:460px;
+    overflow:hidden;
+    border:2px solid rgba(255,255,255,.16);
+    border-radius:25px;
+    background:
+        radial-gradient(circle at 20% 20%,rgba(124,58,237,.28),transparent 28%),
+        radial-gradient(circle at 80% 15%,rgba(236,72,153,.2),transparent 25%),
+        linear-gradient(180deg,#172554 0%,#1e1b4b 45%,#0f172a 100%);
+    box-shadow:0 25px 80px rgba(0,0,0,.35);
 }
 
-#game{
-  width:100%;
-  height:100%;
-  position:relative;
-  overflow:hidden;
+.cloud{
+    position:absolute;
+    width:150px;
+    height:42px;
+    border-radius:50px;
+    background:rgba(255,255,255,.08);
+    filter:blur(1px);
+    animation:cloudMove 22s linear infinite;
 }
 
-#game.paused .balloon{
-  animation-play-state:paused!important;
+.cloud:before,
+.cloud:after{
+    content:"";
+    position:absolute;
+    border-radius:50%;
+    background:inherit;
 }
 
-/* TOP GAME MESSAGE */
-.level-banner{
-  position:absolute;
-  top:14px;
-  left:50%;
-  transform:translateX(-50%);
-  padding:9px 16px;
-  border:1px solid var(--line);
-  background:rgba(7,15,31,.72);
-  backdrop-filter:blur(10px);
-  border-radius:999px;
-  font-weight:800;
-  z-index:7;
-  white-space:nowrap;
+.cloud:before{
+    width:65px;
+    height:65px;
+    left:22px;
+    bottom:8px;
 }
 
-/* BALLOON */
+.cloud:after{
+    width:80px;
+    height:80px;
+    right:20px;
+    bottom:5px;
+}
+
+.cloud.one{top:12%;left:-180px;}
+.cloud.two{top:35%;left:-220px;animation-duration:30s;animation-delay:-8s;}
+.cloud.three{top:62%;left:-200px;animation-duration:25s;animation-delay:-15s;}
+
+@keyframes cloudMove{
+    from{transform:translateX(0);}
+    to{transform:translateX(130vw);}
+}
+
+#gameArea{
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+    cursor:crosshair;
+}
+
 .balloon{
-  position:absolute;
-  width:70px;
-  height:88px;
-  border-radius:50% 50% 47% 47%;
-  cursor:pointer;
-  user-select:none;
-  touch-action:manipulation;
-  box-shadow:
-    inset -9px -9px 18px rgba(0,0,0,.14),
-    inset 8px 8px 16px rgba(255,255,255,.35),
-    0 8px 22px rgba(0,0,0,.22);
-  animation-name:floatUp;
-  animation-timing-function:linear;
-  animation-fill-mode:forwards;
+    position:absolute;
+    width:68px;
+    height:84px;
+    border-radius:50% 50% 48% 48%;
+    cursor:pointer;
+    user-select:none;
+    touch-action:manipulation;
+    box-shadow:
+        inset -12px -12px 20px rgba(0,0,0,.18),
+        inset 12px 12px 20px rgba(255,255,255,.22),
+        0 8px 20px rgba(0,0,0,.25);
+    animation:floatUp linear forwards;
+    transition:transform .08s;
 }
 
-.balloon::before{
-  content:"";
-  position:absolute;
-  width:16px;
-  height:14px;
-  left:50%;
-  bottom:-8px;
-  transform:translateX(-50%) rotate(45deg);
-  background:inherit;
-  filter:brightness(.85);
+.balloon:hover{
+    transform:scale(1.08);
 }
 
-.balloon::after{
-  content:"";
-  position:absolute;
-  width:22px;
-  height:42px;
-  border-left:1.5px solid rgba(255,255,255,.75);
-  left:50%;
-  top:84px;
-  transform:translateX(-50%) rotate(7deg);
+.balloon:before{
+    content:"";
+    position:absolute;
+    width:14px;
+    height:10px;
+    background:inherit;
+    bottom:-6px;
+    left:27px;
+    transform:rotate(45deg);
+    border-radius:2px;
 }
 
-.balloon .shine{
-  position:absolute;
-  width:16px;
-  height:28px;
-  border-radius:50%;
-  background:rgba(255,255,255,.36);
-  top:14px;
-  left:15px;
-  transform:rotate(25deg);
-}
-
-.balloon.bomb{
-  background:radial-gradient(circle at 30% 25%,#666,#171717 62%,#000);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:34px;
-  box-shadow:0 0 25px rgba(255,70,70,.45);
-}
-
-.balloon.coin-balloon{
-  background:radial-gradient(circle at 30% 25%,#fff0a0,#ffcf20 45%,#c88900);
+.balloon:after{
+    content:"";
+    position:absolute;
+    width:2px;
+    height:55px;
+    background:rgba(255,255,255,.45);
+    bottom:-58px;
+    left:33px;
 }
 
 @keyframes floatUp{
-  from{
-    transform:translateY(0) rotate(-4deg);
-  }
-  to{
-    transform:translateY(calc(-100vh - 160px)) rotate(7deg);
-  }
+    from{
+        transform:translateY(0) rotate(-4deg);
+    }
+    50%{
+        transform:translateY(-45vh) rotate(5deg);
+    }
+    to{
+        transform:translateY(-95vh) rotate(-3deg);
+    }
 }
 
-.pop{
-  animation:pop .25s ease forwards!important;
+.special{
+    border:3px solid white;
+    box-shadow:0 0 28px rgba(255,255,255,.7);
 }
 
-@keyframes pop{
-  0%{transform:scale(1)}
-  50%{transform:scale(1.45);opacity:1}
-  100%{transform:scale(.1);opacity:0}
+.bomb{
+    background:radial-gradient(circle at 35% 30%,#64748b,#020617 65%);
+    border:2px solid #94a3b8;
 }
 
-/* PARTICLES */
-.particle{
-  position:absolute;
-  width:9px;
-  height:9px;
-  border-radius:50%;
-  pointer-events:none;
-  z-index:15;
-  animation:particle .7s ease-out forwards;
+.power{
+    width:62px;
+    height:62px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    font-size:28px;
+    border:3px solid white;
+    animation:powerUp 5s linear forwards;
 }
 
-@keyframes particle{
-  to{
-    transform:translate(var(--x),var(--y)) scale(.1);
-    opacity:0;
-  }
+@keyframes powerUp{
+    from{transform:translateY(0) rotate(0);}
+    to{transform:translateY(-100vh) rotate(360deg);}
 }
 
-/* COMBO */
-.combo-pop{
-  position:absolute;
-  left:50%;
-  top:45%;
-  transform:translate(-50%,-50%);
-  font-size:clamp(28px,7vw,58px);
-  font-weight:900;
-  color:var(--gold);
-  text-shadow:0 0 25px rgba(255,213,74,.8);
-  pointer-events:none;
-  animation:combo .7s ease forwards;
-  z-index:20;
+.centerScreen{
+    position:absolute;
+    inset:0;
+    z-index:10;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:linear-gradient(rgba(2,6,23,.28),rgba(2,6,23,.58));
 }
 
-@keyframes combo{
-  0%{opacity:0;transform:translate(-50%,-40%) scale(.5)}
-  35%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}
-  100%{opacity:0;transform:translate(-50%,-80%) scale(.9)}
-}
-
-/* PROGRESS */
-.progress-box{
-  position:absolute;
-  left:20px;
-  right:20px;
-  bottom:18px;
-  z-index:8;
-}
-
-.progress-label{
-  display:flex;
-  justify-content:space-between;
-  font-size:12px;
-  margin-bottom:7px;
-  color:var(--muted);
-}
-
-.progress-track{
-  height:11px;
-  border-radius:999px;
-  border:1px solid var(--line);
-  background:rgba(0,0,0,.22);
-  overflow:hidden;
-}
-
-.progress-fill{
-  height:100%;
-  width:0%;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  border-radius:999px;
-  transition:width .25s ease;
-}
-
-/* START SCREEN */
-.screen{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  z-index:30;
-  background:rgba(4,9,20,.62);
-  backdrop-filter:blur(9px);
-}
-
-.panel{
-  width:min(520px,100%);
-  padding:28px;
-  border-radius:28px;
-  border:1px solid var(--line);
-  background:linear-gradient(135deg,rgba(18,35,70,.96),rgba(9,16,35,.96));
-  box-shadow:0 30px 90px rgba(0,0,0,.5);
-  text-align:center;
-}
-
-.panel h1{
-  margin:0 0 10px;
-  font-size:clamp(30px,7vw,52px);
-}
-
-.panel p{
-  color:var(--muted);
-  line-height:1.6;
-}
-
-.player-input{
-  width:100%;
-  padding:14px;
-  margin:12px 0;
-  border-radius:14px;
-  outline:none;
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.07);
-  color:white;
-  font-size:16px;
-}
-
-.big-play{
-  width:100%;
-  margin-top:8px;
-  padding:15px;
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.4);
-  background:linear-gradient(135deg,#00d9ff,#198cff);
-  color:#04101b;
-  font-size:18px;
-  font-weight:900;
-  cursor:pointer;
-  transition:.2s;
-}
-
-.big-play:hover{transform:translateY(-2px)}
-.big-play:active{transform:scale(.96)}
-
-.hidden{
-  display:none!important;
-}
-
-/* MODAL */
 .modal{
-  position:fixed;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:18px;
-  background:rgba(0,0,0,.58);
-  z-index:100;
-  backdrop-filter:blur(8px);
-}
-
-.modal-box{
-  width:min(600px,100%);
-  max-height:85vh;
-  overflow:auto;
-  padding:24px;
-  border-radius:24px;
-  border:1px solid var(--line);
-  background:linear-gradient(135deg,#102044,#0a1126);
-}
-
-.modal-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
+    width:min(500px,100%);
+    padding:28px;
+    text-align:center;
+    border:2px solid rgba(255,255,255,.2);
+    border-radius:28px;
+    background:rgba(15,23,42,.87);
+    backdrop-filter:blur(18px);
+    box-shadow:0 25px 70px rgba(0,0,0,.45);
 }
 
 .modal h2{
-  margin:0 0 14px;
+    font-size:clamp(30px,7vw,52px);
+    margin-bottom:10px;
 }
 
-.close{
-  width:40px;
-  height:40px;
-  border-radius:12px;
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.08);
-  color:white;
-  cursor:pointer;
-  font-size:20px;
+.modal p{
+    color:#cbd5e1;
+    line-height:1.6;
+    margin-bottom:20px;
 }
 
-.shop-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
+.primaryBtn{
+    width:100%;
+    border:2px solid white;
+    color:white;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    border-radius:16px;
+    padding:15px 20px;
+    cursor:pointer;
+    font-size:17px;
+    font-weight:bold;
+    box-shadow:0 10px 30px rgba(124,58,237,.35);
+    transition:.2s;
 }
 
-.shop-item{
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.05);
-  border-radius:18px;
-  padding:15px;
-  text-align:left;
+.primaryBtn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 15px 35px rgba(236,72,153,.35);
 }
 
-.shop-item h3{
-  margin:0 0 6px;
+.hint{
+    margin-top:14px;
+    font-size:12px;
+    color:var(--muted);
 }
 
-.shop-item p{
-  color:var(--muted);
-  font-size:13px;
+.hidden{
+    display:none!important;
 }
 
-.shop-btn{
-  width:100%;
+.bottomPanel{
+    margin-top:15px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
 }
 
-.leaderboard{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-
-.leader-row{
-  display:grid;
-  grid-template-columns:45px 1fr auto;
-  gap:10px;
-  align-items:center;
-  padding:12px;
-  border-radius:14px;
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.08);
-}
-
-.mission{
-  padding:13px;
-  margin:8px 0;
-  border-radius:14px;
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.05);
-}
-
-.mission strong{
-  display:block;
-}
-
-.mission span{
-  color:var(--muted);
-  font-size:13px;
-}
-
-.controls{
-  width:min(1200px,94%);
-  margin:14px auto 25px;
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:10px;
-}
-
-/* THEMES */
-body.theme-neon{
-  --bg1:#06180d;
-  --bg2:#0a4930;
-  --accent:#3cff89;
-  --accent2:#00d9ff;
-}
-
-body.theme-sunset{
-  --bg1:#251007;
-  --bg2:#6a1739;
-  --accent:#ffb02e;
-  --accent2:#ff4f8a;
-}
-
-body.theme-purple{
-  --bg1:#160c2f;
-  --bg2:#37206e;
-  --accent:#d279ff;
-  --accent2:#00d9ff;
-}
-
-/* RESPONSIVE */
-@media(max-width:800px){
-  .dashboard{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .game-wrap{
-    min-height:560px;
-    height:70vh;
+.panel{
+    padding:18px;
+    border:1px solid rgba(255,255,255,.15);
     border-radius:20px;
-  }
-
-  .balloon{
-    width:58px;
-    height:74px;
-  }
-
-  .balloon::after{
-    top:71px;
-  }
-
-  .shop-grid{
-    grid-template-columns:1fr;
-  }
+    background:var(--panel);
 }
 
-@media(max-width:480px){
-  header{
-    width:94%;
-  }
+.panel h3{
+    margin-bottom:13px;
+}
 
-  .dashboard{
-    width:94%;
-    grid-template-columns:repeat(2,1fr);
-  }
+.powerList{
+    display:flex;
+    gap:9px;
+    flex-wrap:wrap;
+}
 
-  .stat:last-child{
-    grid-column:span 2;
-  }
+.powerBadge{
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:12px;
+    padding:9px 11px;
+    font-size:13px;
+    color:#e2e8f0;
+    background:rgba(255,255,255,.04);
+}
 
-  .game-wrap{
-    width:94%;
-    min-height:590px;
-  }
+.shopItems{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+}
 
-  .logo{
-    font-size:18px;
-  }
+.shopItem{
+    padding:12px 7px;
+    border:2px solid rgba(255,255,255,.16);
+    border-radius:13px;
+    background:rgba(255,255,255,.04);
+    color:white;
+    cursor:pointer;
+    transition:.2s;
+    text-align:center;
+    font-size:12px;
+}
 
-  .top-actions{
-    gap:5px;
-  }
+.shopItem:hover{
+    transform:translateY(-3px);
+    border-color:#a78bfa;
+}
 
-  .icon-btn{
-    width:38px;
-    height:38px;
-  }
+.shopItem.locked{
+    opacity:.65;
+}
+
+.shopItem.active{
+    border-color:#fff;
+    box-shadow:0 0 18px rgba(255,255,255,.15);
+}
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:20px;
+    transform:translate(-50%,120px);
+    z-index:100;
+    padding:12px 20px;
+    border:1px solid rgba(255,255,255,.25);
+    border-radius:999px;
+    background:#111827;
+    color:white;
+    transition:.35s;
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+.toast.show{
+    transform:translate(-50%,0);
+}
+
+.pauseOverlay{
+    position:absolute;
+    inset:0;
+    z-index:9;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(2,6,23,.65);
+    backdrop-filter:blur(5px);
+}
+
+.pauseOverlay h2{
+    font-size:40px;
+}
+
+@media(max-width:750px){
+    .app{
+        padding:10px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .stat:last-child{
+        grid-column:span 2;
+    }
+
+    .gameCard{
+        min-height:520px;
+        height:70vh;
+    }
+
+    .bottomPanel{
+        grid-template-columns:1fr;
+    }
+
+    .balloon{
+        width:58px;
+        height:72px;
+    }
+
+    .balloon:before{
+        left:22px;
+    }
+
+    .balloon:after{
+        left:28px;
+    }
+}
+
+@media(max-width:400px){
+    .topActions{
+        width:100%;
+    }
+
+    .outlineBtn{
+        flex:1;
+    }
+
+    .shopItems{
+        grid-template-columns:repeat(2,1fr);
+    }
 }
 </style>
 </head>
 
 <body>
-<div id="app">
 
-  <header>
-    <div class="logo">🎈 BALLOON <span>BLAST</span></div>
+<div class="app">
 
-    <div class="top-actions">
-      <button class="icon-btn" id="soundBtn" title="Sound">🔊</button>
-      <button class="icon-btn" id="leaderBtn" title="Leaderboard">🏆</button>
-      <button class="icon-btn" id="shopOpenBtn" title="Shop">🛒</button>
-    </div>
-  </header>
-
-  <section class="dashboard">
-    <div class="stat">
-      <small>PLAYER</small>
-      <strong id="playerNameDisplay">Guest</strong>
-    </div>
-
-    <div class="stat">
-      <small>SCORE</small>
-      <strong id="score">0</strong>
-    </div>
-
-    <div class="stat">
-      <small>HIGH SCORE</small>
-      <strong id="highScore">0</strong>
-    </div>
-
-    <div class="stat">
-      <small>COINS</small>
-      <strong>🪙 <span id="coins">0</span></strong>
-    </div>
-
-    <div class="stat">
-      <small>COMBO</small>
-      <strong id="combo">x0</strong>
-    </div>
-  </section>
-
-  <main class="game-wrap">
-    <div id="game">
-      <div class="level-banner" id="levelBanner">LEVEL 1 • TARGET 10</div>
-
-      <div class="progress-box">
-        <div class="progress-label">
-          <span id="missionText">Pop balloons to complete the level</span>
-          <span id="progressText">0 / 10</span>
-        </div>
-        <div class="progress-track">
-          <div class="progress-fill" id="progressFill"></div>
-        </div>
-      </div>
-
-      <!-- START SCREEN -->
-      <div class="screen" id="startScreen">
-        <div class="panel">
-          <h1>🎈 Balloon Blast</h1>
-          <p>
-            Pop balloons, build powerful combos, avoid bombs,
-            collect coins and unlock new themes!
-          </p>
-
-          <input
-            class="player-input"
-            id="playerName"
-            maxlength="18"
-            placeholder="Enter your player name"
-          >
-
-          <button class="big-play" id="startBtn">
-            ▶ START PREMIUM GAME
-          </button>
-
-          <p style="font-size:12px;margin-top:14px">
-            Tip: Fast consecutive pops give you higher combo bonuses!
-          </p>
-        </div>
-      </div>
-
-      <!-- GAME OVER -->
-      <div class="screen hidden" id="gameOverScreen">
-        <div class="panel">
-          <h1 id="gameOverTitle">GAME OVER</h1>
-          <p id="gameOverText">Your final score</p>
-
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0">
-            <div class="stat">
-              <small>FINAL SCORE</small>
-              <strong id="finalScore">0</strong>
+    <div class="header">
+        <div class="logo">
+            <div class="logoIcon">🎈</div>
+            <div>
+                <h1>Balloon Blast</h1>
+                <p>Version 3.0 Premium Edition</p>
             </div>
-            <div class="stat">
-              <small>COINS EARNED</small>
-              <strong id="finalCoins">0</strong>
-            </div>
-          </div>
-
-          <button class="big-play" id="restartBtn">🔄 PLAY AGAIN</button>
         </div>
-      </div>
-    </div>
-  </main>
 
-  <section class="controls">
-    <button class="secondary-btn" id="pauseBtn">⏸ PAUSE</button>
-    <button class="secondary-btn" id="missionsBtn">🎯 MISSIONS</button>
-    <button class="secondary-btn" id="resetBtn">♻ RESET SAVE</button>
-  </section>
+        <div class="topActions">
+            <button class="outlineBtn" id="soundBtn">🔊 Sound ON</button>
+            <button class="outlineBtn" id="pauseBtn">⏸ Pause</button>
+        </div>
+    </div>
+
+    <div class="stats">
+        <div class="stat">
+            <small>LEVEL</small>
+            <strong id="level">1</strong>
+        </div>
+        <div class="stat">
+            <small>SCORE</small>
+            <strong id="score">0</strong>
+        </div>
+        <div class="stat">
+            <small>COINS</small>
+            <strong id="coins">0</strong>
+        </div>
+        <div class="stat">
+            <small>LIVES</small>
+            <strong id="lives">❤️❤️❤️</strong>
+        </div>
+        <div class="stat">
+            <small>BEST SCORE</small>
+            <strong id="bestScore">0</strong>
+        </div>
+    </div>
+
+    <div class="gameCard">
+
+        <div class="cloud one"></div>
+        <div class="cloud two"></div>
+        <div class="cloud three"></div>
+
+        <div id="gameArea"></div>
+
+        <div class="centerScreen" id="startScreen">
+            <div class="modal">
+                <h2>🎈 Balloon Blast</h2>
+                <p>
+                    Balloons blast karo, coins collect karo aur levels complete karo.
+                    Special balloons aur power-ups extra rewards denge!
+                </p>
+                <button class="primaryBtn" id="startBtn">START GAME 🚀</button>
+                <div class="hint">Desktop: Mouse Click • Mobile: Touch</div>
+            </div>
+        </div>
+
+        <div class="pauseOverlay hidden" id="pauseOverlay">
+            <div class="modal">
+                <h2>⏸ Paused</h2>
+                <p>Game pause hai. Ready ho to continue karo!</p>
+                <button class="primaryBtn" id="resumeBtn">RESUME GAME ▶</button>
+            </div>
+        </div>
+
+        <div class="centerScreen hidden" id="gameOverScreen">
+            <div class="modal">
+                <h2 id="gameOverTitle">GAME OVER</h2>
+                <p id="gameOverText"></p>
+                <button class="primaryBtn" id="playAgainBtn">PLAY AGAIN 🔥</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="bottomPanel">
+
+        <div class="panel">
+            <h3>⚡ Power-Ups</h3>
+            <div class="powerList">
+                <div class="powerBadge">⏳ Slow Time</div>
+                <div class="powerBadge">✨ Double Score</div>
+                <div class="powerBadge">❤️ Extra Life</div>
+                <div class="powerBadge">💰 Coin Bonus</div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h3>🛒 Theme Shop</h3>
+
+            <div class="shopItems">
+                <button class="shopItem active" data-theme="default" data-cost="0">
+                    🌌 Default<br>FREE
+                </button>
+
+                <button class="shopItem" data-theme="ocean" data-cost="50">
+                    🌊 Ocean<br>50 🪙
+                </button>
+
+                <button class="shopItem" data-theme="sunset" data-cost="100">
+                    🌅 Sunset<br>100 🪙
+                </button>
+
+                <button class="shopItem" data-theme="forest" data-cost="150">
+                    🌲 Forest<br>150 🪙
+                </button>
+
+                <button class="shopItem" data-theme="gold" data-cost="250">
+                    👑 Gold<br>250 🪙
+                </button>
+
+                <button class="shopItem" data-theme="neon" data-cost="400">
+                    💜 Neon<br>400 🪙
+                </button>
+            </div>
+        </div>
+
+    </div>
 
 </div>
 
-<!-- SHOP MODAL -->
-<div class="modal hidden" id="shopModal">
-  <div class="modal-box">
-    <div class="modal-head">
-      <h2>🛒 Theme Shop</h2>
-      <button class="close" data-close="shopModal">×</button>
-    </div>
-
-    <p>Your coins: 🪙 <strong id="shopCoins">0</strong></p>
-
-    <div class="shop-grid">
-      <div class="shop-item">
-        <h3>🌌 Default</h3>
-        <p>Classic premium blue theme.</p>
-        <button class="shop-btn" onclick="selectTheme('default')">USE</button>
-      </div>
-
-      <div class="shop-item">
-        <h3>💚 Neon</h3>
-        <p>Unlock for 50 coins.</p>
-        <button class="shop-btn" onclick="buyTheme('neon',50)">BUY / USE</button>
-      </div>
-
-      <div class="shop-item">
-        <h3>🌅 Sunset</h3>
-        <p>Unlock for 100 coins.</p>
-        <button class="shop-btn" onclick="buyTheme('sunset',100)">BUY / USE</button>
-      </div>
-
-      <div class="shop-item">
-        <h3>💜 Purple Storm</h3>
-        <p>Unlock for 150 coins.</p>
-        <button class="shop-btn" onclick="buyTheme('purple',150)">BUY / USE</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- LEADERBOARD MODAL -->
-<div class="modal hidden" id="leaderModal">
-  <div class="modal-box">
-    <div class="modal-head">
-      <h2>🏆 Leaderboard</h2>
-      <button class="close" data-close="leaderModal">×</button>
-    </div>
-
-    <div class="leaderboard" id="leaderboardList"></div>
-  </div>
-</div>
-
-<!-- MISSIONS MODAL -->
-<div class="modal hidden" id="missionsModal">
-  <div class="modal-box">
-    <div class="modal-head">
-      <h2>🎯 Daily Missions</h2>
-      <button class="close" data-close="missionsModal">×</button>
-    </div>
-
-    <div id="missionsList">
-      <div class="mission">
-        <strong>Balloon Hunter</strong>
-        <span>Pop 25 balloons • Reward: 10 coins</span>
-      </div>
-
-      <div class="mission">
-        <strong>Combo Master</strong>
-        <span>Reach x10 combo • Reward: 20 coins</span>
-      </div>
-
-      <div class="mission">
-        <strong>High Scorer</strong>
-        <span>Score 500 points • Reward: 25 coins</span>
-      </div>
-    </div>
-  </div>
-</div>
+<div class="toast" id="toast"></div>
 
 <script>
-/* =========================================================
-   BALLOON BLAST PREMIUM - SINGLE FILE VERSION
-   ========================================================= */
+const gameArea = document.getElementById("gameArea");
 
-const game = document.getElementById("game");
 const scoreEl = document.getElementById("score");
-const highScoreEl = document.getElementById("highScore");
 const coinsEl = document.getElementById("coins");
-const comboEl = document.getElementById("combo");
-const levelBanner = document.getElementById("levelBanner");
-const progressFill = document.getElementById("progressFill");
-const progressText = document.getElementById("progressText");
-const missionText = document.getElementById("missionText");
+const levelEl = document.getElementById("level");
+const livesEl = document.getElementById("lives");
+const bestScoreEl = document.getElementById("bestScore");
 
 const startScreen = document.getElementById("startScreen");
 const gameOverScreen = document.getElementById("gameOverScreen");
+const pauseOverlay = document.getElementById("pauseOverlay");
+
 const startBtn = document.getElementById("startBtn");
-const restartBtn = document.getElementById("restartBtn");
-const playerInput = document.getElementById("playerName");
-const playerNameDisplay = document.getElementById("playerNameDisplay");
-
-const finalScoreEl = document.getElementById("finalScore");
-const finalCoinsEl = document.getElementById("finalCoins");
-const gameOverTitle = document.getElementById("gameOverTitle");
-const gameOverText = document.getElementById("gameOverText");
-
+const playAgainBtn = document.getElementById("playAgainBtn");
 const pauseBtn = document.getElementById("pauseBtn");
+const resumeBtn = document.getElementById("resumeBtn");
 const soundBtn = document.getElementById("soundBtn");
 
+const toast = document.getElementById("toast");
+
 let score = 0;
-let coins = Number(localStorage.getItem("bbCoins")) || 0;
-let highScore = Number(localStorage.getItem("bbHighScore")) || 0;
-let combo = 0;
+let coins = Number(localStorage.getItem("balloonCoins")) || 0;
 let level = 1;
-let poppedThisLevel = 0;
-let levelTarget = 10;
+let lives = 3;
 let gameRunning = false;
 let paused = false;
 let soundOn = true;
+
+let bestScore = Number(localStorage.getItem("balloonBestScore")) || 0;
+let unlockedThemes = JSON.parse(localStorage.getItem("balloonThemes")) || ["default"];
+let currentTheme = localStorage.getItem("balloonCurrentTheme") || "default";
+
 let spawnTimer = null;
-let comboTimer = null;
-let currentPlayer = localStorage.getItem("bbPlayer") || "Guest";
-let sessionCoins = 0;
+let levelTimer = null;
+let powerTimer = null;
 
-let unlockedThemes = JSON.parse(
-  localStorage.getItem("bbThemes") || '["default"]'
-);
+let doubleScoreActive = false;
+let slowActive = false;
 
-let currentTheme = localStorage.getItem("bbTheme") || "default";
-
-const colors = [
-  "#ff4f72",
-  "#00d9ff",
-  "#7c4dff",
-  "#35e58b",
-  "#ffb52e",
-  "#ff5bc8"
+const balloonColors = [
+    "#ef4444",
+    "#f97316",
+    "#eab308",
+    "#22c55e",
+    "#06b6d4",
+    "#3b82f6",
+    "#8b5cf6",
+    "#ec4899"
 ];
 
-/* ---------- INITIALIZE ---------- */
-function init(){
-  createStars();
-  applyTheme(currentTheme);
-  updateUI();
-  renderPlayer();
+const themes = {
+    default: `
+        radial-gradient(circle at 20% 20%,rgba(124,58,237,.28),transparent 28%),
+        radial-gradient(circle at 80% 15%,rgba(236,72,153,.2),transparent 25%),
+        linear-gradient(180deg,#172554 0%,#1e1b4b 45%,#0f172a 100%)
+    `,
+    ocean: `
+        radial-gradient(circle at 20% 20%,rgba(34,211,238,.3),transparent 30%),
+        linear-gradient(180deg,#0c4a6e,#155e75,#082f49)
+    `,
+    sunset: `
+        radial-gradient(circle at 50% 10%,rgba(251,191,36,.35),transparent 28%),
+        linear-gradient(180deg,#fb7185,#f97316,#7c2d12)
+    `,
+    forest: `
+        radial-gradient(circle at 50% 10%,rgba(74,222,128,.2),transparent 25%),
+        linear-gradient(180deg,#14532d,#166534,#052e16)
+    `,
+    gold: `
+        radial-gradient(circle at 50% 10%,rgba(255,255,255,.25),transparent 20%),
+        linear-gradient(180deg,#92400e,#d97706,#451a03)
+    `,
+    neon: `
+        radial-gradient(circle at 20% 20%,rgba(217,70,239,.4),transparent 25%),
+        radial-gradient(circle at 80% 30%,rgba(34,211,238,.35),transparent 25%),
+        linear-gradient(180deg,#2e1065,#581c87,#0f172a)
+    `
+};
+
+function saveData(){
+    localStorage.setItem("balloonCoins", coins);
+    localStorage.setItem("balloonBestScore", bestScore);
+    localStorage.setItem("balloonThemes", JSON.stringify(unlockedThemes));
+    localStorage.setItem("balloonCurrentTheme", currentTheme);
 }
 
-function createStars(){
-  for(let i = 0; i < 70; i++){
-    const star = document.createElement("div");
-    star.className = "star";
-    star.style.left = Math.random() * 100 + "%";
-    star.style.top = Math.random() * 100 + "%";
-    star.style.animationDelay = Math.random() * 2 + "s";
-    document.getElementById("app").appendChild(star);
-  }
-}
-
-function renderPlayer(){
-  playerNameDisplay.textContent = currentPlayer;
-  playerInput.value = currentPlayer === "Guest" ? "" : currentPlayer;
-}
-
-/* ---------- START ---------- */
-startBtn.addEventListener("click", startGame);
-restartBtn.addEventListener("click", startGame);
-
-function startGame(){
-  const typedName = playerInput.value.trim();
-
-  if(typedName){
-    currentPlayer = typedName;
-    localStorage.setItem("bbPlayer", currentPlayer);
-  }
-
-  score = 0;
-  combo = 0;
-  level = 1;
-  poppedThisLevel = 0;
-  levelTarget = 10;
-  sessionCoins = 0;
-  gameRunning = true;
-  paused = false;
-
-  removeAllBalloons();
-
-  startScreen.classList.add("hidden");
-  gameOverScreen.classList.add("hidden");
-  game.classList.remove("paused");
-
-  pauseBtn.textContent = "⏸ PAUSE";
-
-  updateUI();
-  renderPlayer();
-  startSpawning();
-}
-
-/* ---------- SPAWN ---------- */
-function startSpawning(){
-  clearInterval(spawnTimer);
-
-  const speed = Math.max(520, 1200 - level * 55);
-
-  spawnTimer = setInterval(() => {
-    if(gameRunning && !paused){
-      createBalloon();
-    }
-  }, speed);
-
-  createBalloon();
-}
-
-function createBalloon(){
-  if(!gameRunning || paused) return;
-
-  const balloon = document.createElement("div");
-
-  const bombChance = Math.min(0.06 + level * 0.012, 0.22);
-  const coinChance = 0.08;
-
-  const random = Math.random();
-
-  if(random < bombChance && level >= 2){
-    balloon.className = "balloon bomb";
-    balloon.innerHTML = "💣";
-    balloon.dataset.type = "bomb";
-  }
-  else if(random < bombChance + coinChance){
-    balloon.className = "balloon coin-balloon";
-    balloon.innerHTML = '<div class="shine"></div>';
-    balloon.dataset.type = "coin";
-  }
-  else{
-    balloon.className = "balloon";
-    balloon.style.background = colors[
-      Math.floor(Math.random() * colors.length)
-    ];
-    balloon.innerHTML = '<div class="shine"></div>';
-    balloon.dataset.type = "normal";
-  }
-
-  const size = 48 + Math.random() * 38;
-  balloon.style.width = size + "px";
-  balloon.style.height = (size * 1.27) + "px";
-
-  const maxLeft = Math.max(10, game.clientWidth - size - 10);
-  balloon.style.left = Math.random() * maxLeft + "px";
-
-  balloon.style.bottom = "-120px";
-
-  const duration = Math.max(
-    3.2,
-    7.2 - level * 0.32 - Math.random() * 1.4
-  );
-
-  balloon.style.animationDuration = duration + "s";
-
-  balloon.addEventListener("pointerdown", (e) => {
-    e.preventDefault();
-
-    if(!gameRunning || paused) return;
-
-    hitBalloon(balloon);
-  });
-
-  balloon.addEventListener("animationend", () => {
-    if(!balloon.parentNode) return;
-
-    balloon.remove();
-
-    if(gameRunning && !paused){
-      combo = 0;
-      updateUI();
-
-      if(Math.random() < 0.18){
-        loseLifeEffect();
-      }
-    }
-  });
-
-  game.appendChild(balloon);
-}
-
-/* ---------- HIT BALLOON ---------- */
-function hitBalloon(balloon){
-  const type = balloon.dataset.type;
-
-  if(type === "bomb"){
-    createParticles(balloon, "#ff4f72", 18);
-    balloon.remove();
-    playSound("bomb");
-    endGame(false);
-    return;
-  }
-
-  balloon.classList.add("pop");
-
-  if(type === "coin"){
-    coins += 3;
-    sessionCoins += 3;
-    createParticles(balloon, "#ffd54a", 14);
-    showFloatingText("🪙 +3", balloon);
-    playSound("coin");
-  }
-  else{
-    combo++;
-    poppedThisLevel++;
-
-    let points = 10 + Math.min(combo * 2, 40);
-
-    score += points;
-
-    if(combo > 1 && combo % 5 === 0){
-      score += 25;
-      showCombo(combo);
-    }
-
-    if(Math.random() < 0.22){
-      coins++;
-      sessionCoins++;
-      showFloatingText("🪙 +1", balloon);
-    }
-
-    createParticles(
-      balloon,
-      balloon.style.background || "#00d9ff",
-      12
-    );
-
-    playSound("pop");
-
-    clearTimeout(comboTimer);
-    comboTimer = setTimeout(() => {
-      combo = 0;
-      updateUI();
-    }, 1700);
-
-    checkLevel();
-  }
-
-  updateUI();
-
-  setTimeout(() => {
-    balloon.remove();
-  }, 220);
-}
-
-/* ---------- LEVEL SYSTEM ---------- */
-function checkLevel(){
-  if(poppedThisLevel >= levelTarget){
-    level++;
-
-    poppedThisLevel = 0;
-    levelTarget = 10 + (level - 1) * 6;
-
-    score += level * 50;
-    coins += 5;
-    sessionCoins += 5;
-
-    showLevelUp();
-
-    clearInterval(spawnTimer);
-
-    setTimeout(() => {
-      if(gameRunning){
-        startSpawning();
-      }
-    }, 900);
-  }
-}
-
-function showLevelUp(){
-  const msg = document.createElement("div");
-  msg.className = "combo-pop";
-  msg.innerHTML = "LEVEL " + level + "!<br><span style='font-size:.45em'>+5 🪙</span>";
-
-  game.appendChild(msg);
-
-  playSound("level");
-
-  setTimeout(() => msg.remove(), 900);
-}
-
-/* ---------- GAME OVER ---------- */
-function endGame(levelCompleted){
-  if(!gameRunning) return;
-
-  gameRunning = false;
-
-  clearInterval(spawnTimer);
-  clearTimeout(comboTimer);
-
-  saveGame();
-
-  removeAllBalloons();
-
-  gameOverTitle.textContent = levelCompleted
-    ? "LEVEL COMPLETE!"
-    : "GAME OVER";
-
-  gameOverText.textContent =
-    "Level " + level + " • Player: " + currentPlayer;
-
-  finalScoreEl.textContent = score;
-  finalCoinsEl.textContent = sessionCoins;
-
-  setTimeout(() => {
-    gameOverScreen.classList.remove("hidden");
-  }, 250);
-}
-
-function loseLifeEffect(){
-  game.style.animation = "none";
-  game.offsetHeight;
-  game.style.animation = "shake .25s";
-}
-
-/* ---------- SAVE ---------- */
-function saveGame(){
-  if(score > highScore){
-    highScore = score;
-    localStorage.setItem("bbHighScore", highScore);
-  }
-
-  localStorage.setItem("bbCoins", coins);
-
-  const board = JSON.parse(
-    localStorage.getItem("bbLeaderboard") || "[]"
-  );
-
-  board.push({
-    name: currentPlayer,
-    score: score,
-    date: new Date().toLocaleDateString()
-  });
-
-  board.sort((a,b) => b.score - a.score);
-
-  localStorage.setItem(
-    "bbLeaderboard",
-    JSON.stringify(board.slice(0,10))
-  );
-
-  updateUI();
-}
-
-/* ---------- UI ---------- */
 function updateUI(){
-  scoreEl.textContent = score;
-  highScoreEl.textContent = highScore;
-  coinsEl.textContent = coins;
-  comboEl.textContent = "x" + combo;
+    scoreEl.textContent = score;
+    coinsEl.textContent = coins;
+    levelEl.textContent = level;
+    bestScoreEl.textContent = bestScore;
 
-  levelBanner.textContent =
-    "LEVEL " + level + " • TARGET " + levelTarget;
+    let hearts = "";
+    for(let i=0;i<lives;i++) hearts += "❤️";
+    livesEl.textContent = hearts || "💔";
 
-  progressText.textContent =
-    poppedThisLevel + " / " + levelTarget;
-
-  const percent = Math.min(
-    100,
-    (poppedThisLevel / levelTarget) * 100
-  );
-
-  progressFill.style.width = percent + "%";
-
-  missionText.textContent =
-    "Pop " + (levelTarget - poppedThisLevel) +
-    " more balloons";
-
-  const shopCoins = document.getElementById("shopCoins");
-  if(shopCoins) shopCoins.textContent = coins;
+    saveData();
 }
 
-/* ---------- PAUSE ---------- */
-pauseBtn.addEventListener("click", () => {
-  if(!gameRunning) return;
+function showToast(message){
+    toast.textContent = message;
+    toast.classList.add("show");
 
-  paused = !paused;
+    clearTimeout(window.toastTimer);
 
-  if(paused){
-    game.classList.add("paused");
-    pauseBtn.textContent = "▶ RESUME";
-  }else{
-    game.classList.remove("paused");
-    pauseBtn.textContent = "⏸ PAUSE";
-  }
-});
-
-/* ---------- SOUND ---------- */
-soundBtn.addEventListener("click", () => {
-  soundOn = !soundOn;
-  soundBtn.textContent = soundOn ? "🔊" : "🔇";
-});
-
-function playSound(type){
-  if(!soundOn) return;
-
-  try{
-    const AudioContextClass =
-      window.AudioContext || window.webkitAudioContext;
-
-    const ctx = new AudioContextClass();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-
-    let frequency = 450;
-    let duration = .08;
-
-    if(type === "coin"){
-      frequency = 900;
-      duration = .12;
-    }
-
-    if(type === "bomb"){
-      frequency = 110;
-      duration = .25;
-    }
-
-    if(type === "level"){
-      frequency = 720;
-      duration = .22;
-    }
-
-    osc.frequency.value = frequency;
-    gain.gain.setValueAtTime(.06,ctx.currentTime);
-
-    gain.gain.exponentialRampToValueAtTime(
-      .001,
-      ctx.currentTime + duration
-    );
-
-    osc.start();
-    osc.stop(ctx.currentTime + duration);
-  }catch(e){}
-}
-
-/* ---------- PARTICLES ---------- */
-function createParticles(element,color,count){
-  const rect = element.getBoundingClientRect();
-  const gameRect = game.getBoundingClientRect();
-
-  const x = rect.left - gameRect.left + rect.width/2;
-  const y = rect.top - gameRect.top + rect.height/2;
-
-  for(let i=0;i<count;i++){
-    const p = document.createElement("div");
-
-    p.className = "particle";
-    p.style.background = color;
-    p.style.left = x + "px";
-    p.style.top = y + "px";
-
-    p.style.setProperty(
-      "--x",
-      (Math.random()*140 - 70) + "px"
-    );
-
-    p.style.setProperty(
-      "--y",
-      (Math.random()*140 - 70) + "px"
-    );
-
-    game.appendChild(p);
-
-    setTimeout(() => p.remove(),700);
-  }
-}
-
-function showFloatingText(text,element){
-  const rect = element.getBoundingClientRect();
-  const gameRect = game.getBoundingClientRect();
-
-  const msg = document.createElement("div");
-
-  msg.className = "combo-pop";
-  msg.style.left =
-    (rect.left - gameRect.left + rect.width/2) + "px";
-
-  msg.style.top =
-    (rect.top - gameRect.top) + "px";
-
-  msg.style.fontSize = "22px";
-  msg.innerHTML = text;
-
-  game.appendChild(msg);
-
-  setTimeout(() => msg.remove(),700);
-}
-
-function showCombo(number){
-  const msg = document.createElement("div");
-
-  msg.className = "combo-pop";
-  msg.innerHTML =
-    "🔥 COMBO x" + number +
-    "<br><span style='font-size:.35em'>BONUS +25</span>";
-
-  game.appendChild(msg);
-
-  setTimeout(() => msg.remove(),700);
-}
-
-/* ---------- REMOVE BALLOONS ---------- */
-function removeAllBalloons(){
-  game.querySelectorAll(".balloon,.particle,.combo-pop")
-    .forEach(el => el.remove());
-}
-
-/* ---------- MODALS ---------- */
-function openModal(id){
-  document.getElementById(id).classList.remove("hidden");
-  updateUI();
-}
-
-function closeModal(id){
-  document.getElementById(id).classList.add("hidden");
-}
-
-document.getElementById("shopOpenBtn")
-.addEventListener("click", () => openModal("shopModal"));
-
-document.getElementById("leaderBtn")
-.addEventListener("click", () => {
-  renderLeaderboard();
-  openModal("leaderModal");
-});
-
-document.getElementById("missionsBtn")
-.addEventListener("click", () => openModal("missionsModal"));
-
-document.querySelectorAll("[data-close]")
-.forEach(btn => {
-  btn.addEventListener("click", () => {
-    closeModal(btn.dataset.close);
-  });
-});
-
-document.querySelectorAll(".modal")
-.forEach(modal => {
-  modal.addEventListener("click", e => {
-    if(e.target === modal){
-      modal.classList.add("hidden");
-    }
-  });
-});
-
-/* ---------- LEADERBOARD ---------- */
-function renderLeaderboard(){
-  const list = document.getElementById("leaderboardList");
-
-  const board = JSON.parse(
-    localStorage.getItem("bbLeaderboard") || "[]"
-  );
-
-  if(board.length === 0){
-    list.innerHTML =
-      "<p style='color:#b9c6df'>No scores yet. Play your first game!</p>";
-    return;
-  }
-
-  list.innerHTML = "";
-
-  board.forEach((item,index) => {
-    const row = document.createElement("div");
-
-    row.className = "leader-row";
-
-    row.innerHTML = `
-      <strong>#${index + 1}</strong>
-      <div>
-        <strong>${escapeHTML(item.name)}</strong>
-        <div style="font-size:11px;color:#b9c6df">${item.date}</div>
-      </div>
-      <strong>${item.score}</strong>
-    `;
-
-    list.appendChild(row);
-  });
-}
-
-function escapeHTML(text){
-  return String(text)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-}
-
-/* ---------- SHOP / THEMES ---------- */
-function buyTheme(theme,cost){
-  if(unlockedThemes.includes(theme)){
-    selectTheme(theme);
-    return;
-  }
-
-  if(coins < cost){
-    alert("Not enough coins! You need " + cost + " coins.");
-    return;
-  }
-
-  coins -= cost;
-  unlockedThemes.push(theme);
-
-  localStorage.setItem(
-    "bbThemes",
-    JSON.stringify(unlockedThemes)
-  );
-
-  localStorage.setItem("bbCoins",coins);
-
-  selectTheme(theme);
-  updateUI();
-
-  alert("Theme unlocked successfully! 🎉");
-}
-
-function selectTheme(theme){
-  if(!unlockedThemes.includes(theme)){
-    alert("Please unlock this theme first.");
-    return;
-  }
-
-  currentTheme = theme;
-
-  localStorage.setItem("bbTheme",theme);
-
-  applyTheme(theme);
-
-  updateUI();
+    window.toastTimer = setTimeout(()=>{
+        toast.classList.remove("show");
+    },2200);
 }
 
 function applyTheme(theme){
-  document.body.classList.remove(
-    "theme-neon",
-    "theme-sunset",
-    "theme-purple"
-  );
+    currentTheme = theme;
+    document.querySelector(".gameCard").style.background = themes[theme];
 
-  if(theme === "neon"){
-    document.body.classList.add("theme-neon");
-  }
+    document.querySelectorAll(".shopItem").forEach(btn=>{
+        btn.classList.toggle("active", btn.dataset.theme === theme);
+        btn.classList.toggle(
+            "locked",
+            !unlockedThemes.includes(btn.dataset.theme)
+        );
+    });
 
-  if(theme === "sunset"){
-    document.body.classList.add("theme-sunset");
-  }
-
-  if(theme === "purple"){
-    document.body.classList.add("theme-purple");
-  }
+    saveData();
 }
 
-/* ---------- RESET ---------- */
-document.getElementById("resetBtn")
-.addEventListener("click", () => {
-  const ok = confirm(
-    "Are you sure? This will delete your saved score, coins and themes."
-  );
+function playSound(type="pop"){
+    if(!soundOn) return;
 
-  if(!ok) return;
+    try{
+        const AudioContextClass =
+            window.AudioContext || window.webkitAudioContext;
 
-  [
-    "bbCoins",
-    "bbHighScore",
-    "bbLeaderboard",
-    "bbThemes",
-    "bbTheme",
-    "bbPlayer"
-  ].forEach(key => localStorage.removeItem(key));
+        const ctx = new AudioContextClass();
+        const oscillator = ctx.createOscillator();
+        const gain = ctx.createGain();
 
-  location.reload();
+        oscillator.connect(gain);
+        gain.connect(ctx.destination);
+
+        let frequency = 400;
+        let duration = 0.08;
+
+        if(type === "pop"){
+            frequency = 420;
+            duration = 0.07;
+        }
+
+        if(type === "power"){
+            frequency = 700;
+            duration = 0.15;
+        }
+
+        if(type === "bomb"){
+            frequency = 120;
+            duration = 0.18;
+        }
+
+        oscillator.frequency.value = frequency;
+        oscillator.type = "sine";
+
+        gain.gain.setValueAtTime(.08,ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(
+            0.001,
+            ctx.currentTime + duration
+        );
+
+        oscillator.start();
+        oscillator.stop(ctx.currentTime + duration);
+
+    }catch(e){}
+}
+
+function random(min,max){
+    return Math.random()*(max-min)+min;
+}
+
+function createBalloon(){
+    if(!gameRunning || paused) return;
+
+    const balloon = document.createElement("div");
+    balloon.className = "balloon";
+
+    const chance = Math.random();
+
+    let type = "normal";
+
+    if(chance < 0.05 + level*0.002){
+        type = "bomb";
+    }
+    else if(chance < 0.16){
+        type = "special";
+    }
+
+    if(type === "bomb"){
+        balloon.classList.add("bomb");
+        balloon.dataset.type = "bomb";
+    }
+    else{
+        const color =
+            balloonColors[Math.floor(Math.random()*balloonColors.length)];
+
+        balloon.style.background = color;
+
+        if(type === "special"){
+            balloon.classList.add("special");
+            balloon.dataset.type = "special";
+        }
+        else{
+            balloon.dataset.type = "normal";
+        }
+    }
+
+    const areaWidth = gameArea.clientWidth;
+    const balloonWidth = window.innerWidth < 750 ? 58 : 68;
+
+    balloon.style.left =
+        Math.max(
+            5,
+            Math.random()*(areaWidth-balloonWidth-10)
+        ) + "px";
+
+    balloon.style.bottom = "-100px";
+
+    const baseDuration = Math.max(
+        3.5,
+        7 - level*0.22
+    );
+
+    let duration = random(baseDuration-1,baseDuration+1);
+
+    if(slowActive) duration *= 1.7;
+
+    balloon.style.animationDuration = duration + "s";
+
+    balloon.addEventListener("pointerdown",(e)=>{
+        e.preventDefault();
+
+        if(!gameRunning || paused) return;
+
+        if(balloon.dataset.popped === "yes") return;
+
+        balloon.dataset.popped = "yes";
+
+        if(balloon.dataset.type === "bomb"){
+            bombHit(balloon);
+        }
+        else{
+            popBalloon(balloon);
+        }
+    });
+
+    balloon.addEventListener("animationend",()=>{
+        if(!balloon.isConnected) return;
+
+        if(balloon.dataset.popped !== "yes"){
+            loseLife();
+        }
+
+        balloon.remove();
+    });
+
+    gameArea.appendChild(balloon);
+}
+
+function popBalloon(balloon){
+    balloon.dataset.popped = "yes";
+
+    let points = 10;
+    let earnedCoins = 1;
+
+    if(balloon.dataset.type === "special"){
+        points = 30;
+        earnedCoins = 5;
+    }
+
+    if(doubleScoreActive){
+        points *= 2;
+    }
+
+    score += points;
+    coins += earnedCoins;
+
+    balloon.style.animation = "none";
+    balloon.style.transform = "scale(1.35)";
+    balloon.style.opacity = "0";
+
+    playSound("pop");
+
+    showFloatingText(
+        "+" + points + "  +" + earnedCoins + "🪙",
+        balloon
+    );
+
+    setTimeout(()=>balloon.remove(),100);
+
+    checkLevel();
+    updateUI();
+}
+
+function bombHit(balloon){
+    balloon.dataset.popped = "yes";
+
+    balloon.style.animation = "none";
+    balloon.style.transform = "scale(1.5)";
+    balloon.style.opacity = "0";
+
+    playSound("bomb");
+    showToast("💣 Bomb! 1 life lost");
+
+    lives--;
+    setTimeout(()=>balloon.remove(),100);
+
+    updateUI();
+
+    if(lives <= 0){
+        endGame();
+    }
+}
+
+function loseLife(){
+    if(!gameRunning) return;
+
+    lives--;
+
+    playSound("bomb");
+    showToast("Missed balloon! ❤️ -1");
+
+    updateUI();
+
+    if(lives <= 0){
+        endGame();
+    }
+}
+
+function showFloatingText(text,element){
+    const rect = element.getBoundingClientRect();
+    const areaRect = gameArea.getBoundingClientRect();
+
+    const textEl = document.createElement("div");
+
+    textEl.textContent = text;
+
+    textEl.style.position = "absolute";
+    textEl.style.left = (rect.left-areaRect.left) + "px";
+    textEl.style.top = (rect.top-areaRect.top) + "px";
+    textEl.style.zIndex = "8";
+    textEl.style.fontWeight = "bold";
+    textEl.style.color = "white";
+    textEl.style.pointerEvents = "none";
+    textEl.style.textShadow = "0 3px 10px black";
+    textEl.style.transition = ".8s ease";
+
+    gameArea.appendChild(textEl);
+
+    requestAnimationFrame(()=>{
+        textEl.style.transform = "translateY(-70px)";
+        textEl.style.opacity = "0";
+    });
+
+    setTimeout(()=>textEl.remove(),850);
+}
+
+function checkLevel(){
+    const target = level * 200;
+
+    if(score >= target){
+        level++;
+
+        showToast("🎉 LEVEL " + level + " UNLOCKED!");
+
+        spawnPowerUp();
+
+        updateUI();
+
+        restartSpawner();
+    }
+}
+
+function spawnPowerUp(){
+    if(!gameRunning || paused) return;
+
+    const powers = [
+        {icon:"⏳",type:"slow"},
+        {icon:"✨",type:"double"},
+        {icon:"❤️",type:"life"},
+        {icon:"💰",type:"coins"}
+    ];
+
+    const selected =
+        powers[Math.floor(Math.random()*powers.length)];
+
+    const power = document.createElement("div");
+
+    power.className = "power";
+    power.textContent = selected.icon;
+    power.dataset.type = selected.type;
+
+    power.style.left =
+        Math.random()*(gameArea.clientWidth-70) + "px";
+
+    power.style.bottom = "-70px";
+
+    power.addEventListener("pointerdown",(e)=>{
+        e.preventDefault();
+
+        if(!gameRunning || paused) return;
+
+        activatePower(selected.type);
+
+        power.remove();
+    });
+
+    power.addEventListener("animationend",()=>power.remove());
+
+    gameArea.appendChild(power);
+
+    playSound("power");
+}
+
+function activatePower(type){
+
+    if(type === "slow"){
+        slowActive = true;
+
+        showToast("⏳ Slow Time Active!");
+
+        setTimeout(()=>{
+            slowActive = false;
+            showToast("Slow Time ended");
+        },8000);
+    }
+
+    if(type === "double"){
+        doubleScoreActive = true;
+
+        showToast("✨ Double Score Active!");
+
+        setTimeout(()=>{
+            doubleScoreActive = false;
+            showToast("Double Score ended");
+        },10000);
+    }
+
+    if(type === "life"){
+        lives = Math.min(5,lives+1);
+
+        showToast("❤️ Extra Life!");
+    }
+
+    if(type === "coins"){
+        coins += 20;
+
+        showToast("💰 +20 Coins!");
+    }
+
+    playSound("power");
+    updateUI();
+}
+
+function restartSpawner(){
+    clearInterval(spawnTimer);
+
+    const speed = Math.max(
+        350,
+        1000 - (level-1)*55
+    );
+
+    spawnTimer = setInterval(()=>{
+        createBalloon();
+
+        if(level >= 5 && Math.random() < .30){
+            setTimeout(createBalloon,150);
+        }
+
+        if(level >= 10 && Math.random() < .25){
+            setTimeout(createBalloon,300);
+        }
+
+    },speed);
+}
+
+function startGame(){
+
+    document.querySelectorAll(
+        "#gameArea .balloon, #gameArea .power"
+    ).forEach(el=>el.remove());
+
+    score = 0;
+    level = 1;
+    lives = 3;
+
+    doubleScoreActive = false;
+    slowActive = false;
+
+    gameRunning = true;
+    paused = false;
+
+    startScreen.classList.add("hidden");
+    gameOverScreen.classList.add("hidden");
+    pauseOverlay.classList.add("hidden");
+
+    pauseBtn.textContent = "⏸ Pause";
+
+    updateUI();
+    restartSpawner();
+
+    setTimeout(createBalloon,300);
+
+    powerTimer = setInterval(()=>{
+        if(gameRunning && !paused && Math.random() < .40){
+            spawnPowerUp();
+        }
+    },12000);
+}
+
+function endGame(){
+
+    if(!gameRunning) return;
+
+    gameRunning = false;
+
+    clearInterval(spawnTimer);
+    clearInterval(powerTimer);
+
+    document.querySelectorAll(
+        "#gameArea .balloon, #gameArea .power"
+    ).forEach(el=>el.remove());
+
+    if(score > bestScore){
+        bestScore = score;
+        showToast("🏆 NEW HIGH SCORE!");
+    }
+
+    updateUI();
+
+    document.getElementById("gameOverTitle").textContent =
+        lives <= 0 ? "GAME OVER 💥" : "GAME FINISHED";
+
+    document.getElementById("gameOverText").innerHTML =
+        "Final Score: <b>" + score + "</b><br>" +
+        "Level Reached: <b>" + level + "</b><br>" +
+        "Total Coins: <b>" + coins + " 🪙</b><br><br>" +
+        "Keep playing and unlock all premium themes!";
+
+    gameOverScreen.classList.remove("hidden");
+}
+
+function togglePause(){
+
+    if(!gameRunning) return;
+
+    paused = !paused;
+
+    document.querySelectorAll(
+        "#gameArea .balloon, #gameArea .power"
+    ).forEach(el=>{
+        el.style.animationPlayState =
+            paused ? "paused" : "running";
+    });
+
+    if(paused){
+        pauseOverlay.classList.remove("hidden");
+        pauseBtn.textContent = "▶ Resume";
+    }
+    else{
+        pauseOverlay.classList.add("hidden");
+        pauseBtn.textContent = "⏸ Pause";
+    }
+}
+
+startBtn.addEventListener("click",startGame);
+playAgainBtn.addEventListener("click",startGame);
+
+pauseBtn.addEventListener("click",()=>{
+    if(paused){
+        togglePause();
+    }
+    else{
+        togglePause();
+    }
 });
 
-/* ---------- SHAKE ANIMATION ---------- */
-const shakeStyle = document.createElement("style");
+resumeBtn.addEventListener("click",togglePause);
 
-shakeStyle.textContent = `
-@keyframes shake{
-  0%,100%{transform:translateX(0)}
-  25%{transform:translateX(-8px)}
-  75%{transform:translateX(8px)}
-}`;
+soundBtn.addEventListener("click",()=>{
+    soundOn = !soundOn;
 
-document.head.appendChild(shakeStyle);
+    soundBtn.textContent =
+        soundOn ? "🔊 Sound ON" : "🔇 Sound OFF";
 
-/* ---------- PROTECT AGAINST ACCIDENTAL PAGE ZOOM ---------- */
-document.addEventListener("gesturestart", e => e.preventDefault());
+    showToast(
+        soundOn ? "Sound Enabled 🔊" : "Sound Disabled 🔇"
+    );
+});
 
-/* ---------- START ---------- */
-init();
+document.querySelectorAll(".shopItem").forEach(button=>{
+
+    button.addEventListener("click",()=>{
+
+        const theme = button.dataset.theme;
+        const cost = Number(button.dataset.cost);
+
+        if(unlockedThemes.includes(theme)){
+            applyTheme(theme);
+            showToast("Theme Selected: " + theme.toUpperCase());
+            return;
+        }
+
+        if(coins >= cost){
+            coins -= cost;
+
+            unlockedThemes.push(theme);
+
+            applyTheme(theme);
+            updateUI();
+
+            showToast("🎉 " + theme.toUpperCase() + " Unlocked!");
+        }
+        else{
+            const need = cost - coins;
+
+            showToast("Need " + need + " more coins 🪙");
+        }
+    });
+
+});
+
+applyTheme(currentTheme);
+updateUI();
 </script>
+
 </body>
 </html>
