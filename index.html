@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Balloon Blast V5.0</title>
+<title>Balloon Blast - V5 Premium</title>
 
 <style>
 *{
@@ -14,24 +14,29 @@
 }
 
 :root{
-    --a:#7c3aed;
-    --b:#ec4899;
-    --c:#06b6d4;
-    --bg:#020617;
-    --panel:rgba(15,23,42,.86);
-    --line:rgba(255,255,255,.18);
-    --muted:#94a3b8;
+    --accent:#7c3aed;
+    --accent2:#ec4899;
+    --cyan:#06b6d4;
     --gold:#fbbf24;
+    --green:#22c55e;
+    --red:#ef4444;
+    --panel:rgba(15,23,42,.86);
+    --border:rgba(255,255,255,.17);
+    --muted:#94a3b8;
+}
+
+html,body{
+    width:100%;
+    min-height:100%;
 }
 
 body{
-    min-height:100vh;
-    overflow-x:hidden;
     font-family:Arial,Helvetica,sans-serif;
     color:#fff;
+    overflow-x:hidden;
     background:
-        radial-gradient(circle at 10% 10%,rgba(124,58,237,.25),transparent 28%),
-        radial-gradient(circle at 90% 20%,rgba(236,72,153,.18),transparent 25%),
+        radial-gradient(circle at 15% 10%,rgba(124,58,237,.22),transparent 28%),
+        radial-gradient(circle at 85% 20%,rgba(236,72,153,.16),transparent 25%),
         linear-gradient(135deg,#020617,#111827,#1e1b4b);
 }
 
@@ -40,11 +45,16 @@ button{
 }
 
 button:active{
-    transform:scale(.93)!important;
+    transform:scale(.94)!important;
+}
+
+.hidden{
+    display:none!important;
 }
 
 .app{
     width:min(1200px,100%);
+    min-height:100vh;
     margin:auto;
     padding:16px;
 }
@@ -64,31 +74,33 @@ button:active{
     gap:12px;
 }
 
-.brand-icon{
+.brandIcon{
     width:56px;
     height:56px;
     display:grid;
     place-items:center;
-    font-size:30px;
-    border:2px solid var(--line);
+    border:2px solid var(--border);
     border-radius:18px;
+    font-size:30px;
     background:rgba(255,255,255,.06);
     box-shadow:0 0 30px rgba(124,58,237,.35);
-    animation:floatLogo 2.5s ease-in-out infinite;
+    animation:floatLogo 2.6s ease-in-out infinite;
 }
 
 @keyframes floatLogo{
-    50%{transform:translateY(-5px) rotate(4deg)}
+    50%{
+        transform:translateY(-5px) rotate(5deg);
+    }
 }
 
 .brand h1{
-    font-size:clamp(24px,5vw,39px);
+    font-size:clamp(23px,5vw,39px);
 }
 
 .brand p{
+    margin-top:4px;
     color:var(--muted);
     font-size:12px;
-    margin-top:3px;
 }
 
 .actions{
@@ -97,17 +109,17 @@ button:active{
     flex-wrap:wrap;
 }
 
-.btn{
-    border:2px solid var(--line);
+.outlineBtn{
+    border:2px solid var(--border);
     background:rgba(255,255,255,.05);
-    color:#fff;
-    border-radius:14px;
+    color:white;
+    border-radius:13px;
     padding:10px 14px;
     cursor:pointer;
-    transition:.2s;
+    transition:.2s ease;
 }
 
-.btn:hover{
+.outlineBtn:hover{
     transform:translateY(-2px);
     border-color:#c4b5fd;
     background:rgba(124,58,237,.18);
@@ -121,8 +133,9 @@ button:active{
 }
 
 .stat{
+    min-width:0;
     padding:12px;
-    border:1px solid var(--line);
+    border:1px solid var(--border);
     border-radius:16px;
     background:var(--panel);
     backdrop-filter:blur(14px);
@@ -139,52 +152,23 @@ button:active{
     display:block;
     font-size:18px;
     white-space:nowrap;
-}
-
-.xp{
-    margin-bottom:14px;
-    padding:12px 15px;
-    border:1px solid var(--line);
-    border-radius:16px;
-    background:var(--panel);
-}
-
-.xp-top{
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:7px;
-    font-size:13px;
-}
-
-.xp-track{
-    width:100%;
-    height:9px;
     overflow:hidden;
-    border-radius:20px;
-    background:rgba(255,255,255,.08);
+    text-overflow:ellipsis;
 }
 
-.xp-fill{
-    height:100%;
-    width:0;
-    border-radius:20px;
-    background:linear-gradient(90deg,var(--a),var(--b),var(--gold));
-    transition:.3s;
-}
-
-.game{
+.gameCard{
     position:relative;
     width:100%;
-    height:min(68vh,680px);
+    height:min(67vh,670px);
     min-height:500px;
     overflow:hidden;
-    border:2px solid var(--line);
+    border:2px solid var(--border);
     border-radius:27px;
     background:
         radial-gradient(circle at 20% 20%,rgba(124,58,237,.3),transparent 30%),
-        radial-gradient(circle at 85% 15%,rgba(236,72,153,.2),transparent 26%),
+        radial-gradient(circle at 80% 15%,rgba(236,72,153,.2),transparent 27%),
         linear-gradient(180deg,#172554,#1e1b4b,#0f172a);
-    box-shadow:0 25px 85px rgba(0,0,0,.45);
+    box-shadow:0 25px 85px rgba(0,0,0,.42);
 }
 
 #gameArea{
@@ -199,8 +183,8 @@ button:active{
     width:150px;
     height:42px;
     border-radius:50px;
-    background:rgba(255,255,255,.08);
-    animation:cloudMove linear infinite;
+    background:rgba(255,255,255,.07);
+    animation:cloudMove 24s linear infinite;
     pointer-events:none;
 }
 
@@ -208,30 +192,47 @@ button:active{
 .cloud:after{
     content:"";
     position:absolute;
-    border-radius:50%;
     background:inherit;
+    border-radius:50%;
 }
 
 .cloud:before{
     width:65px;
     height:65px;
     left:20px;
-    bottom:7px;
+    bottom:8px;
 }
 
 .cloud:after{
-    width:82px;
-    height:82px;
+    width:80px;
+    height:80px;
     right:18px;
     bottom:5px;
 }
 
-.c1{top:12%;left:-180px;animation-duration:24s}
-.c2{top:40%;left:-210px;animation-duration:30s;animation-delay:-8s}
-.c3{top:68%;left:-180px;animation-duration:27s;animation-delay:-15s}
+.c1{
+    top:12%;
+    left:-180px;
+}
+
+.c2{
+    top:40%;
+    left:-220px;
+    animation-duration:31s;
+    animation-delay:-8s;
+}
+
+.c3{
+    top:67%;
+    left:-200px;
+    animation-duration:27s;
+    animation-delay:-15s;
+}
 
 @keyframes cloudMove{
-    to{transform:translateX(140vw)}
+    to{
+        transform:translateX(140vw);
+    }
 }
 
 .balloon{
@@ -243,9 +244,9 @@ button:active{
     user-select:none;
     box-shadow:
         inset -12px -12px 20px rgba(0,0,0,.18),
-        inset 12px 12px 20px rgba(255,255,255,.22),
-        0 8px 20px rgba(0,0,0,.3);
-    animation:rise linear forwards;
+        inset 12px 12px 20px rgba(255,255,255,.24),
+        0 8px 22px rgba(0,0,0,.3);
+    animation:balloonRise linear forwards;
 }
 
 .balloon:before{
@@ -257,38 +258,55 @@ button:active{
     left:27px;
     background:inherit;
     transform:rotate(45deg);
+    border-radius:2px;
 }
 
 .balloon:after{
     content:"";
     position:absolute;
     width:2px;
-    height:55px;
-    bottom:-58px;
+    height:56px;
     left:33px;
+    bottom:-59px;
     background:rgba(255,255,255,.45);
 }
 
-@keyframes rise{
-    from{transform:translateY(0) rotate(-5deg)}
-    50%{transform:translateY(-45vh) rotate(5deg)}
-    to{transform:translateY(-100vh) rotate(-4deg)}
+@keyframes balloonRise{
+    from{
+        transform:translateY(0) rotate(-5deg);
+    }
+    50%{
+        transform:translateY(-45vh) rotate(5deg);
+    }
+    to{
+        transform:translateY(-105vh) rotate(-4deg);
+    }
 }
 
 .special{
     border:3px solid #fff;
-    box-shadow:0 0 30px rgba(255,255,255,.85);
+    box-shadow:0 0 32px rgba(255,255,255,.9);
 }
 
 .gold{
-    background:linear-gradient(135deg,#fef08a,#f59e0b,#92400e)!important;
+    background:linear-gradient(135deg,#fff7ae,#fbbf24,#a16207)!important;
     border:3px solid #fff;
-    box-shadow:0 0 30px rgba(251,191,36,.85);
+    box-shadow:0 0 32px rgba(251,191,36,.95);
 }
 
 .bomb{
     background:radial-gradient(circle at 35% 30%,#64748b,#020617 65%)!important;
     border:2px solid #cbd5e1;
+    box-shadow:0 0 25px rgba(239,68,68,.4);
+}
+
+.boss{
+    width:120px!important;
+    height:145px!important;
+    background:
+        radial-gradient(circle at 30% 25%,#fff 0 10%,#fb7185 12%,#be123c 58%,#450a0a 100%)!important;
+    border:4px solid #fecdd3;
+    box-shadow:0 0 50px rgba(244,63,94,.9);
 }
 
 .power{
@@ -302,29 +320,71 @@ button:active{
     font-size:28px;
     cursor:pointer;
     background:rgba(15,23,42,.6);
-    box-shadow:0 0 24px rgba(255,255,255,.45);
-    animation:powerMove 5.5s linear forwards;
+    box-shadow:0 0 25px rgba(255,255,255,.45);
+    animation:powerRise 5s linear forwards;
+    z-index:5;
 }
 
-@keyframes powerMove{
-    to{transform:translateY(-110vh) rotate(360deg)}
+@keyframes powerRise{
+    from{
+        transform:translateY(0) rotate(0);
+    }
+    to{
+        transform:translateY(-110vh) rotate(360deg);
+    }
+}
+
+.floating{
+    position:absolute;
+    z-index:15;
+    color:#fff;
+    font-weight:900;
+    pointer-events:none;
+    text-shadow:0 3px 10px #000;
+    animation:floatingText .8s ease forwards;
+}
+
+@keyframes floatingText{
+    to{
+        transform:translateY(-75px);
+        opacity:0;
+    }
+}
+
+.particle{
+    position:absolute;
+    width:9px;
+    height:9px;
+    border-radius:50%;
+    z-index:15;
+    pointer-events:none;
+    animation:particleFly .65s ease-out forwards;
+}
+
+@keyframes particleFly{
+    to{
+        transform:translate(var(--x),var(--y)) scale(.1);
+        opacity:0;
+    }
 }
 
 .combo{
     position:absolute;
+    top:17px;
     left:50%;
-    top:18px;
-    transform:translateX(-50%) scale(.7);
+    transform:translateX(-50%) scale(.75);
     opacity:0;
     z-index:10;
-    padding:9px 16px;
-    border:2px solid rgba(255,255,255,.3);
+    padding:9px 17px;
+    border:2px solid rgba(255,255,255,.32);
     border-radius:999px;
-    background:rgba(15,23,42,.8);
+    background:rgba(15,23,42,.82);
     color:var(--gold);
+    font-size:23px;
     font-weight:900;
-    font-size:22px;
-    transition:.2s;
+    transition:.22s;
+    pointer-events:none;
+    text-shadow:0 0 12px rgba(251,191,36,.7);
 }
 
 .combo.show{
@@ -332,70 +392,67 @@ button:active{
     transform:translateX(-50%) scale(1);
 }
 
-.floatText{
+.bossBar{
     position:absolute;
-    z-index:10;
-    font-weight:900;
-    color:#fff;
-    pointer-events:none;
-    text-shadow:0 3px 10px #000;
-    animation:floatText .8s ease forwards;
+    left:50%;
+    top:18px;
+    width:min(360px,70%);
+    transform:translateX(-50%);
+    z-index:12;
 }
 
-@keyframes floatText{
-    to{
-        transform:translateY(-65px);
-        opacity:0;
-    }
+.bossTitle{
+    text-align:center;
+    margin-bottom:5px;
+    font-weight:bold;
+    color:#fecdd3;
 }
 
-.particle{
-    position:absolute;
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    z-index:10;
-    pointer-events:none;
-    animation:particle .65s ease-out forwards;
+.bossTrack{
+    height:10px;
+    border-radius:20px;
+    overflow:hidden;
+    background:rgba(0,0,0,.35);
+    border:1px solid rgba(255,255,255,.2);
 }
 
-@keyframes particle{
-    to{
-        transform:translate(var(--x),var(--y)) scale(.15);
-        opacity:0;
-    }
+.bossFill{
+    width:100%;
+    height:100%;
+    background:linear-gradient(90deg,#ef4444,#f97316,#fbbf24);
+    transition:.2s;
 }
 
-.overlay{
+.center{
     position:absolute;
     inset:0;
-    z-index:20;
+    z-index:30;
     display:flex;
     align-items:center;
     justify-content:center;
     padding:18px;
-    background:rgba(2,6,23,.62);
+    background:rgba(2,6,23,.63);
     backdrop-filter:blur(7px);
 }
 
-.panel{
-    width:min(540px,100%);
+.modal{
+    width:min(550px,100%);
     max-height:92%;
     overflow:auto;
     padding:28px;
-    border:2px solid var(--line);
-    border-radius:28px;
-    background:rgba(15,23,42,.92);
     text-align:center;
-    box-shadow:0 25px 75px rgba(0,0,0,.5);
+    border:2px solid var(--border);
+    border-radius:28px;
+    background:rgba(15,23,42,.94);
+    box-shadow:0 30px 80px rgba(0,0,0,.55);
 }
 
-.panel h2{
-    font-size:clamp(30px,7vw,50px);
+.modal h2{
+    font-size:clamp(29px,7vw,50px);
     margin-bottom:10px;
 }
 
-.panel p{
+.modal p{
     color:#cbd5e1;
     line-height:1.6;
     margin-bottom:18px;
@@ -406,11 +463,13 @@ button:active{
     padding:15px;
     border:2px solid #fff;
     border-radius:16px;
-    background:linear-gradient(135deg,var(--a),var(--b));
     color:#fff;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    font-size:17px;
     font-weight:900;
     cursor:pointer;
     transition:.2s;
+    box-shadow:0 10px 30px rgba(124,58,237,.35);
 }
 
 .primary:hover{
@@ -421,15 +480,49 @@ button:active{
     width:100%;
     padding:12px;
     margin-top:9px;
-    border:2px solid var(--line);
+    border:2px solid var(--border);
     border-radius:14px;
-    background:rgba(255,255,255,.05);
+    background:rgba(255,255,255,.04);
     color:#fff;
     cursor:pointer;
 }
 
-.hidden{
-    display:none!important;
+.modeGrid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+    margin:16px 0;
+}
+
+.mode{
+    padding:13px 7px;
+    border:2px solid var(--border);
+    border-radius:15px;
+    background:rgba(255,255,255,.04);
+    color:#fff;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.mode.active{
+    border-color:#fff;
+    background:rgba(124,58,237,.25);
+}
+
+.mode:hover{
+    transform:translateY(-2px);
+}
+
+.mode span{
+    display:block;
+    font-size:22px;
+    margin-bottom:5px;
+}
+
+.mode small{
+    display:block;
+    color:var(--muted);
+    font-size:10px;
 }
 
 .bottom{
@@ -441,57 +534,87 @@ button:active{
 
 .card{
     padding:17px;
-    border:1px solid var(--line);
+    border:1px solid var(--border);
     border-radius:20px;
     background:var(--panel);
+    backdrop-filter:blur(14px);
 }
 
 .card h3{
-    margin-bottom:11px;
+    margin-bottom:12px;
 }
 
 .mission{
-    margin:7px 0;
     padding:10px;
-    border:1px solid rgba(255,255,255,.1);
+    margin:7px 0;
+    border:1px solid rgba(255,255,255,.11);
     border-radius:13px;
-    background:rgba(255,255,255,.03);
+    background:rgba(255,255,255,.035);
 }
 
-.mission-top{
+.missionTop{
     display:flex;
     justify-content:space-between;
     gap:8px;
     font-size:12px;
 }
 
-.progress{
+.missionBar{
     height:7px;
     margin-top:7px;
-    overflow:hidden;
     border-radius:20px;
+    overflow:hidden;
     background:rgba(255,255,255,.08);
 }
 
-.progress div{
+.missionFill{
     height:100%;
     width:0;
     background:linear-gradient(90deg,#22c55e,#06b6d4);
     transition:.3s;
 }
 
+.rewardCard{
+    padding:15px;
+    border:2px solid rgba(251,191,36,.4);
+    border-radius:16px;
+    background:rgba(251,191,36,.07);
+}
+
+.rewardRow{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    align-items:center;
+}
+
+.claim{
+    border:2px solid #fbbf24;
+    border-radius:12px;
+    padding:10px 14px;
+    color:#fff;
+    background:rgba(251,191,36,.08);
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.claim:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
 .achievement{
-    padding:10px;
+    padding:9px 10px;
     margin:6px 0;
     border:1px solid rgba(255,255,255,.1);
-    border-radius:12px;
-    background:rgba(255,255,255,.03);
+    border-radius:11px;
+    background:rgba(255,255,255,.035);
     font-size:12px;
 }
 
 .achievement.done{
     border-color:#facc15;
-    background:rgba(250,204,21,.09);
+    background:rgba(250,204,21,.08);
 }
 
 .shop{
@@ -500,59 +623,116 @@ button:active{
     gap:8px;
 }
 
-.shop button{
+.shopItem{
     min-height:62px;
-    border:2px solid var(--line);
-    border-radius:12px;
-    background:rgba(255,255,255,.04);
+    border:2px solid var(--border);
+    border-radius:13px;
     color:#fff;
+    background:rgba(255,255,255,.04);
     cursor:pointer;
     font-size:11px;
     transition:.2s;
 }
 
-.shop button:hover{
+.shopItem:hover{
     transform:translateY(-2px);
     border-color:#c4b5fd;
 }
 
-.shop button.active{
+.shopItem.active{
     border-color:#fff;
     box-shadow:0 0 18px rgba(255,255,255,.15);
 }
 
 .toast{
     position:fixed;
-    z-index:100;
     left:50%;
     bottom:20px;
+    transform:translate(-50%,130px);
+    z-index:100;
     max-width:90%;
     padding:12px 20px;
-    transform:translate(-50%,130px);
-    border:1px solid var(--line);
+    border:1px solid var(--border);
     border-radius:999px;
     background:#111827;
+    color:#fff;
     text-align:center;
     transition:.35s;
+    box-shadow:0 10px 30px rgba(0,0,0,.4);
 }
 
 .toast.show{
     transform:translate(-50%,0);
 }
 
-@media(max-width:850px){
-    .stats{grid-template-columns:repeat(3,1fr)}
+@media(max-width:900px){
+    .stats{
+        grid-template-columns:repeat(3,1fr);
+    }
 }
 
-@media(max-width:650px){
-    .app{padding:10px}
-    .stats{grid-template-columns:repeat(2,1fr)}
-    .game{height:70vh;min-height:520px}
-    .bottom{grid-template-columns:1fr}
-    .balloon{width:58px;height:72px}
-    .balloon:before{left:22px}
-    .balloon:after{left:28px}
-    .shop{grid-template-columns:repeat(2,1fr)}
+@media(max-width:700px){
+    .app{
+        padding:9px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .gameCard{
+        height:70vh;
+        min-height:520px;
+    }
+
+    .bottom{
+        grid-template-columns:1fr;
+    }
+
+    .balloon{
+        width:58px;
+        height:72px;
+    }
+
+    .balloon:before{
+        left:22px;
+    }
+
+    .balloon:after{
+        left:28px;
+    }
+
+    .boss{
+        width:96px!important;
+        height:118px!important;
+    }
+
+    .bossBar{
+        width:75%;
+    }
+
+    .modeGrid{
+        grid-template-columns:1fr;
+    }
+
+    .shop{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .topActions{
+        width:100%;
+    }
+
+    .outlineBtn{
+        flex:1;
+        padding:10px 7px;
+        font-size:12px;
+    }
+
+    .rewardRow{
+        flex-direction:column;
+        align-items:stretch;
+    }
 }
 </style>
 </head>
@@ -561,42 +741,55 @@ button:active{
 
 <div class="app">
 
-<div class="header">
+<header class="header">
     <div class="brand">
-        <div class="brand-icon">🎈</div>
+        <div class="brandIcon">🎈</div>
         <div>
             <h1>Balloon Blast</h1>
-            <p>VERSION 5.0 • LIVE BUILD</p>
+            <p>V5.0 • Premium Arcade Edition</p>
         </div>
     </div>
 
     <div class="actions">
-        <button class="btn" id="dailyBtn">🎁 Daily</button>
-        <button class="btn" id="soundBtn">🔊 Sound</button>
-        <button class="btn" id="pauseBtn">⏸ Pause</button>
+        <button class="outlineBtn" id="dailyBtn">🎁 Daily</button>
+        <button class="outlineBtn" id="soundBtn">🔊 Sound</button>
+        <button class="outlineBtn" id="pauseBtn">⏸ Pause</button>
     </div>
-</div>
+</header>
 
-<div class="stats">
-    <div class="stat"><small>LEVEL</small><strong id="level">1</strong></div>
-    <div class="stat"><small>SCORE</small><strong id="score">0</strong></div>
-    <div class="stat"><small>COINS</small><strong id="coins">0</strong></div>
-    <div class="stat"><small>LIVES</small><strong id="lives">❤️❤️❤️</strong></div>
-    <div class="stat"><small>COMBO</small><strong id="comboStat">x0</strong></div>
-    <div class="stat"><small>BEST</small><strong id="best">0</strong></div>
-</div>
-
-<div class="xp">
-    <div class="xp-top">
-        <strong id="rankName">Rookie Popper</strong>
-        <span id="xpText">0 / 100 XP</span>
+<section class="stats">
+    <div class="stat">
+        <small>LEVEL</small>
+        <strong id="level">1</strong>
     </div>
-    <div class="xp-track">
-        <div class="xp-fill" id="xpFill"></div>
-    </div>
-</div>
 
-<div class="game">
+    <div class="stat">
+        <small>SCORE</small>
+        <strong id="score">0</strong>
+    </div>
+
+    <div class="stat">
+        <small>COINS</small>
+        <strong id="coins">0</strong>
+    </div>
+
+    <div class="stat">
+        <small>LIVES</small>
+        <strong id="lives">❤️❤️❤️</strong>
+    </div>
+
+    <div class="stat">
+        <small>COMBO</small>
+        <strong id="comboStat">x0</strong>
+    </div>
+
+    <div class="stat">
+        <small>BEST</small>
+        <strong id="best">0</strong>
+    </div>
+</section>
+
+<div class="gameCard">
 
     <div class="cloud c1"></div>
     <div class="cloud c2"></div>
@@ -604,362 +797,1014 @@ button:active{
 
     <div id="gameArea"></div>
 
-    <div class="combo" id="comboBox">🔥 COMBO x2</div>
+    <div class="combo" id="comboBox">
+        🔥 COMBO x2
+    </div>
 
-    <div class="overlay" id="startOverlay">
-        <div class="panel">
+    <div class="bossBar hidden" id="bossBar">
+        <div class="bossTitle">👑 BOSS BALLOON</div>
+        <div class="bossTrack">
+            <div class="bossFill" id="bossFill"></div>
+        </div>
+    </div>
+
+    <!-- HOME -->
+    <div class="center" id="startOverlay">
+        <div class="modal">
             <h2>🎈 Balloon Blast</h2>
+
             <p>
-                This build includes missions, daily rewards, achievements,
-                power-ups, coins, levels and unlockable themes.
+                Pop balloons, earn coins, build combos,
+                defeat boss balloons and unlock premium themes!
             </p>
-            <button class="primary" id="startBtn">START GAME 🚀</button>
+
+            <div class="modeGrid">
+                <button class="mode active" data-mode="classic">
+                    <span>🎈</span>
+                    Classic
+                    <small>Standard mode</small>
+                </button>
+
+                <button class="mode" data-mode="time">
+                    <span>⏱️</span>
+                    Time Attack
+                    <small>60 seconds</small>
+                </button>
+
+                <button class="mode" data-mode="survival">
+                    <span>🔥</span>
+                    Survival
+                    <small>Hard mode</small>
+                </button>
+            </div>
+
+            <button class="primary" id="startBtn">
+                START GAME 🚀
+            </button>
+
+            <p style="font-size:12px;margin-top:12px;color:#94a3b8">
+                Desktop: Mouse • Mobile: Touch
+            </p>
         </div>
     </div>
 
-    <div class="overlay hidden" id="pauseOverlay">
-        <div class="panel">
+    <!-- PAUSE -->
+    <div class="center hidden" id="pauseOverlay">
+        <div class="modal">
             <h2>⏸ PAUSED</h2>
-            <p>Your game is paused.</p>
-            <button class="primary" id="resumeBtn">RESUME ▶</button>
+            <p>Your game is safely paused.</p>
+
+            <button class="primary" id="resumeBtn">
+                RESUME GAME ▶
+            </button>
+
+            <button class="secondary" id="menuBtn">
+                MAIN MENU
+            </button>
         </div>
     </div>
 
-    <div class="overlay hidden" id="overOverlay">
-        <div class="panel">
-            <h2 id="overTitle">GAME OVER</h2>
-            <p id="overText"></p>
-            <button class="primary" id="againBtn">PLAY AGAIN 🔥</button>
+    <!-- GAME OVER -->
+    <div class="center hidden" id="gameOverOverlay">
+        <div class="modal">
+            <h2 id="gameOverTitle">
+                GAME OVER
+            </h2>
+
+            <p id="gameOverText"></p>
+
+            <button class="primary" id="againBtn">
+                PLAY AGAIN 🔥
+            </button>
+
+            <button class="secondary" id="overMenuBtn">
+                MAIN MENU
+            </button>
         </div>
     </div>
 
 </div>
 
-<div class="bottom">
+<section class="bottom">
 
+    <!-- MISSIONS -->
     <div class="card">
         <h3>🎯 Daily Missions</h3>
+
         <div id="missions"></div>
     </div>
 
+    <!-- REWARD -->
+    <div class="card">
+        <h3>🎁 Daily Reward</h3>
+
+        <div class="rewardCard">
+            <div class="rewardRow">
+                <div>
+                    <strong id="rewardAmount">+25 🪙</strong>
+                    <br>
+                    <small id="rewardText" style="color:#94a3b8">
+                        Claim your daily bonus.
+                    </small>
+                </div>
+
+                <button class="claim" id="claimBtn">
+                    CLAIM
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ACHIEVEMENTS -->
     <div class="card">
         <h3>🏆 Achievements</h3>
+
         <div id="achievements"></div>
     </div>
 
-    <div class="card">
-        <h3>⚡ Power-Ups</h3>
-        <p style="line-height:1.9;color:#cbd5e1;font-size:14px">
-            ⏳ Slow Time<br>
-            ✨ Double Score<br>
-            ❤️ Extra Life<br>
-            💰 Coin Bonus
-        </p>
-    </div>
-
+    <!-- SHOP -->
     <div class="card">
         <h3>🛒 Theme Shop</h3>
+
         <div class="shop">
-            <button data-theme="default" data-cost="0">🌌 Default<br>FREE</button>
-            <button data-theme="ocean" data-cost="50">🌊 Ocean<br>50 🪙</button>
-            <button data-theme="sunset" data-cost="100">🌅 Sunset<br>100 🪙</button>
-            <button data-theme="forest" data-cost="150">🌲 Forest<br>150 🪙</button>
-            <button data-theme="gold" data-cost="250">👑 Gold<br>250 🪙</button>
-            <button data-theme="neon" data-cost="400">💜 Neon<br>400 🪙</button>
+
+            <button
+                class="shopItem"
+                data-theme="default"
+                data-cost="0">
+                🌌 Default<br>
+                FREE
+            </button>
+
+            <button
+                class="shopItem"
+                data-theme="ocean"
+                data-cost="50">
+                🌊 Ocean<br>
+                50 🪙
+            </button>
+
+            <button
+                class="shopItem"
+                data-theme="sunset"
+                data-cost="100">
+                🌅 Sunset<br>
+                100 🪙
+            </button>
+
+            <button
+                class="shopItem"
+                data-theme="forest"
+                data-cost="150">
+                🌲 Forest<br>
+                150 🪙
+            </button>
+
+            <button
+                class="shopItem"
+                data-theme="gold"
+                data-cost="250">
+                👑 Gold<br>
+                250 🪙
+            </button>
+
+            <button
+                class="shopItem"
+                data-theme="neon"
+                data-cost="400">
+                💜 Neon<br>
+                400 🪙
+            </button>
+
         </div>
     </div>
 
-</div>
+    <!-- POWER UPS -->
+    <div class="card">
+        <h3>⚡ Power-Ups</h3>
+
+        <p style="line-height:2;color:#cbd5e1;font-size:14px">
+            ⏳ <b>Slow Time</b> — balloons slow down<br>
+            ✨ <b>Double Score</b> — double points<br>
+            ❤️ <b>Extra Life</b> — restore life<br>
+            💰 <b>Coin Bonus</b> — +20 coins<br>
+            👑 <b>Boss</b> — huge reward
+        </p>
+    </div>
+
+    <!-- GAME INFO -->
+    <div class="card">
+        <h3>📊 Game Stats</h3>
+
+        <p style="line-height:2;color:#cbd5e1;font-size:14px">
+            Total Balloons:
+            <b id="statPopped">0</b><br>
+
+            Total Games:
+            <b id="statGames">0</b><br>
+
+            Bosses Defeated:
+            <b id="statBoss">0</b><br>
+
+            Highest Combo:
+            <b id="statCombo">0</b>
+        </p>
+    </div>
+
+</section>
 
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-const $=id=>document.getElementById(id);
+"use strict";
 
-const gameArea=$("gameArea");
-const scoreEl=$("score");
-const coinsEl=$("coins");
-const levelEl=$("level");
-const livesEl=$("lives");
-const comboStat=$("comboStat");
-const bestEl=$("best");
-const comboBox=$("comboBox");
-const xpFill=$("xpFill");
-const xpText=$("xpText");
-const rankName=$("rankName");
-const toast=$("toast");
+/* =========================================================
+   BALLOON BLAST V5.0 PREMIUM
+   Single-file game
+   ========================================================= */
 
-let score=0;
-let level=1;
-let lives=3;
-let combo=0;
+const $ = id => document.getElementById(id);
 
-let coins=Number(localStorage.getItem("bb5Coins"))||0;
-let bestScore=Number(localStorage.getItem("bb5Best"))||0;
-let totalPopped=Number(localStorage.getItem("bb5Popped"))||0;
-let xp=Number(localStorage.getItem("bb5XP"))||0;
+const gameArea = $("gameArea");
 
-let running=false;
-let paused=false;
-let sound=true;
+const scoreEl = $("score");
+const coinsEl = $("coins");
+const levelEl = $("level");
+const livesEl = $("lives");
+const comboStat = $("comboStat");
+const bestEl = $("best");
 
-let spawnTimer=null;
-let powerTimer=null;
-let comboTimer=null;
+const comboBox = $("comboBox");
+const toast = $("toast");
 
-let slow=false;
-let doubleScore=false;
+const startOverlay = $("startOverlay");
+const pauseOverlay = $("pauseOverlay");
+const gameOverOverlay = $("gameOverOverlay");
 
-let currentTheme=localStorage.getItem("bb5Theme")||"default";
-let unlocked=JSON.parse(localStorage.getItem("bb5Themes")||'["default"]');
-let achieved=JSON.parse(localStorage.getItem("bb5Achieved")||"[]");
-let daily=JSON.parse(localStorage.getItem("bb5Daily")||'{"date":"","streak":0}');
+const startBtn = $("startBtn");
+const pauseBtn = $("pauseBtn");
+const resumeBtn = $("resumeBtn");
+const menuBtn = $("menuBtn");
+const againBtn = $("againBtn");
+const overMenuBtn = $("overMenuBtn");
 
-let missions={
-    pop:Number(localStorage.getItem("bb5MissionPop"))||0,
-    score:Number(localStorage.getItem("bb5MissionScore"))||0,
-    combo:Number(localStorage.getItem("bb5MissionCombo"))||0
-};
+const dailyBtn = $("dailyBtn");
+const claimBtn = $("claimBtn");
 
-const colors=[
-    "#ef4444","#f97316","#eab308","#22c55e",
-    "#06b6d4","#3b82f6","#8b5cf6","#ec4899"
+const xpBar = document.createElement("div");
+
+let score = 0;
+let coins = Number(localStorage.getItem("bb5Coins")) || 0;
+let bestScore = Number(localStorage.getItem("bb5Best")) || 0;
+
+let level = 1;
+let lives = 3;
+let combo = 0;
+
+let gameRunning = false;
+let paused = false;
+
+let selectedMode = "classic";
+
+let spawnTimer = null;
+let powerTimer = null;
+let comboTimer = null;
+let timeTimer = null;
+let bossTimer = null;
+
+let timeLeft = 60;
+
+let slowActive = false;
+let doubleScoreActive = false;
+
+let bossActive = false;
+let bossHits = 0;
+let bossMaxHits = 10;
+
+let soundEnabled =
+    localStorage.getItem("bb5Sound") !== "false";
+
+let totalBalloons =
+    Number(localStorage.getItem("bb5TotalBalloons")) || 0;
+
+let totalGames =
+    Number(localStorage.getItem("bb5TotalGames")) || 0;
+
+let bossesDefeated =
+    Number(localStorage.getItem("bb5Bosses")) || 0;
+
+let highestCombo =
+    Number(localStorage.getItem("bb5HighestCombo")) || 0;
+
+let currentTheme =
+    localStorage.getItem("bb5Theme") || "default";
+
+let unlockedThemes =
+    JSON.parse(
+        localStorage.getItem("bb5Themes") ||
+        '["default"]'
+    );
+
+let achievements =
+    JSON.parse(
+        localStorage.getItem("bb5Achievements") ||
+        "[]"
+    );
+
+let dailyData =
+    JSON.parse(
+        localStorage.getItem("bb5Daily") ||
+        '{"date":"","streak":0}'
+    );
+
+let missions =
+    JSON.parse(
+        localStorage.getItem("bb5Missions") ||
+        "null"
+    ) || {
+        date:"",
+        balloons:0,
+        score:0,
+        combo:0,
+        claimed:{
+            balloons:false,
+            score:false,
+            combo:false
+        }
+    };
+
+const colors = [
+    "#ef4444",
+    "#f97316",
+    "#eab308",
+    "#22c55e",
+    "#06b6d4",
+    "#3b82f6",
+    "#8b5cf6",
+    "#ec4899"
 ];
 
-const themes={
-default:"radial-gradient(circle at 20% 20%,rgba(124,58,237,.3),transparent 28%),radial-gradient(circle at 80% 15%,rgba(236,72,153,.2),transparent 25%),linear-gradient(180deg,#172554,#1e1b4b,#0f172a)",
-ocean:"radial-gradient(circle at 20% 20%,rgba(34,211,238,.3),transparent 30%),linear-gradient(180deg,#0c4a6e,#155e75,#082f49)",
-sunset:"radial-gradient(circle at 50% 10%,rgba(251,191,36,.35),transparent 28%),linear-gradient(180deg,#fb7185,#f97316,#7c2d12)",
-forest:"radial-gradient(circle at 50% 10%,rgba(74,222,128,.2),transparent 25%),linear-gradient(180deg,#14532d,#166534,#052e16)",
-gold:"radial-gradient(circle at 50% 10%,rgba(255,255,255,.25),transparent 20%),linear-gradient(180deg,#92400e,#d97706,#451a03)",
-neon:"radial-gradient(circle at 20% 20%,rgba(217,70,239,.4),transparent 25%),radial-gradient(circle at 80% 30%,rgba(34,211,238,.35),transparent 25%),linear-gradient(180deg,#2e1065,#581c87,#0f172a)"
+const themes = {
+    default:
+        `radial-gradient(circle at 20% 20%,rgba(124,58,237,.3),transparent 30%),
+         radial-gradient(circle at 80% 15%,rgba(236,72,153,.2),transparent 27%),
+         linear-gradient(180deg,#172554,#1e1b4b,#0f172a)`,
+
+    ocean:
+        `radial-gradient(circle at 20% 20%,rgba(34,211,238,.35),transparent 30%),
+         linear-gradient(180deg,#0c4a6e,#155e75,#082f49)`,
+
+    sunset:
+        `radial-gradient(circle at 50% 10%,rgba(251,191,36,.35),transparent 28%),
+         linear-gradient(180deg,#fb7185,#f97316,#7c2d12)`,
+
+    forest:
+        `radial-gradient(circle at 50% 10%,rgba(74,222,128,.25),transparent 25%),
+         linear-gradient(180deg,#14532d,#166534,#052e16)`,
+
+    gold:
+        `radial-gradient(circle at 50% 10%,rgba(255,255,255,.28),transparent 20%),
+         linear-gradient(180deg,#92400e,#d97706,#451a03)`,
+
+    neon:
+        `radial-gradient(circle at 20% 20%,rgba(217,70,239,.45),transparent 25%),
+         radial-gradient(circle at 80% 30%,rgba(34,211,238,.38),transparent 25%),
+         linear-gradient(180deg,#2e1065,#581c87,#0f172a)`
 };
 
-const achievements=[
-    {id:"first",name:"🎈 First Pop",test:()=>totalPopped>=1},
-    {id:"50",name:"🔥 50 Balloons",test:()=>totalPopped>=50},
-    {id:"100",name:"💥 100 Balloons",test:()=>totalPopped>=100},
-    {id:"score500",name:"⭐ Score 500",test:()=>bestScore>=500},
-    {id:"score2000",name:"🏆 Score 2000",test:()=>bestScore>=2000},
-    {id:"level5",name:"🚀 Level 5",test:()=>level>=5}
+const achievementRules = [
+    {
+        id:"first",
+        title:"🎈 First Pop",
+        text:"Pop 1 balloon",
+        reward:10,
+        check:()=>totalBalloons >= 1
+    },
+    {
+        id:"50",
+        title:"🔥 Balloon Hunter",
+        text:"Pop 50 balloons",
+        reward:25,
+        check:()=>totalBalloons >= 50
+    },
+    {
+        id:"200",
+        title:"💥 Blast Master",
+        text:"Pop 200 balloons",
+        reward:50,
+        check:()=>totalBalloons >= 200
+    },
+    {
+        id:"500",
+        title:"⭐ Score Star",
+        text:"Reach 500 best score",
+        reward:40,
+        check:()=>bestScore >= 500
+    },
+    {
+        id:"2000",
+        title:"🏆 Score Legend",
+        text:"Reach 2000 best score",
+        reward:100,
+        check:()=>bestScore >= 2000
+    },
+    {
+        id:"boss",
+        title:"👑 Boss Slayer",
+        text:"Defeat a boss balloon",
+        reward:75,
+        check:()=>bossesDefeated >= 1
+    },
+    {
+        id:"games10",
+        title:"🎮 Dedicated Player",
+        text:"Play 10 games",
+        reward:50,
+        check:()=>totalGames >= 10
+    }
 ];
 
-function save(){
-    localStorage.setItem("bb5Coins",coins);
-    localStorage.setItem("bb5Best",bestScore);
-    localStorage.setItem("bb5Popped",totalPopped);
-    localStorage.setItem("bb5XP",xp);
-    localStorage.setItem("bb5Theme",currentTheme);
-    localStorage.setItem("bb5Themes",JSON.stringify(unlocked));
-    localStorage.setItem("bb5Achieved",JSON.stringify(achieved));
-    localStorage.setItem("bb5Daily",JSON.stringify(daily));
-    localStorage.setItem("bb5MissionPop",missions.pop);
-    localStorage.setItem("bb5MissionScore",missions.score);
-    localStorage.setItem("bb5MissionCombo",missions.combo);
+/* =========================================================
+   SAVE / UI
+   ========================================================= */
+
+function todayString(){
+    return new Date().toDateString();
 }
 
-function showToast(message){
-    toast.textContent=message;
-    toast.classList.add("show");
-    clearTimeout(window.toastTimer);
-    window.toastTimer=setTimeout(()=>toast.classList.remove("show"),2300);
-}
+function saveData(){
 
-function getRank(){
-    const level=Math.floor(xp/100)+1;
-    if(level>=20)return"👑 Legendary Blaster";
-    if(level>=10)return"🔥 Balloon Master";
-    if(level>=5)return"⚡ Sky Blaster";
-    if(level>=3)return"🎯 Balloon Hunter";
-    return"🌱 Rookie Popper";
-}
+    localStorage.setItem(
+        "bb5Coins",
+        String(coins)
+    );
 
-function addXP(amount){
-    xp+=amount;
-    updateRank();
-}
+    localStorage.setItem(
+        "bb5Best",
+        String(bestScore)
+    );
 
-function updateRank(){
-    const current=xp%100;
-    xpFill.style.width=current+"%";
-    xpText.textContent=current+" / 100 XP";
-    rankName.textContent=getRank();
+    localStorage.setItem(
+        "bb5TotalBalloons",
+        String(totalBalloons)
+    );
+
+    localStorage.setItem(
+        "bb5TotalGames",
+        String(totalGames)
+    );
+
+    localStorage.setItem(
+        "bb5Bosses",
+        String(bossesDefeated)
+    );
+
+    localStorage.setItem(
+        "bb5HighestCombo",
+        String(highestCombo)
+    );
+
+    localStorage.setItem(
+        "bb5Theme",
+        currentTheme
+    );
+
+    localStorage.setItem(
+        "bb5Themes",
+        JSON.stringify(unlockedThemes)
+    );
+
+    localStorage.setItem(
+        "bb5Achievements",
+        JSON.stringify(achievements)
+    );
+
+    localStorage.setItem(
+        "bb5Daily",
+        JSON.stringify(dailyData)
+    );
+
+    localStorage.setItem(
+        "bb5Missions",
+        JSON.stringify(missions)
+    );
+
+    localStorage.setItem(
+        "bb5Sound",
+        String(soundEnabled)
+    );
 }
 
 function updateUI(){
-    scoreEl.textContent=score;
-    coinsEl.textContent=coins;
-    levelEl.textContent=level;
-    livesEl.textContent="❤️".repeat(lives)||"💔";
-    comboStat.textContent="x"+combo;
-    bestEl.textContent=bestScore;
-    updateRank();
+
+    scoreEl.textContent = score;
+    coinsEl.textContent = coins;
+    bestEl.textContent = bestScore;
+    levelEl.textContent = level;
+    comboStat.textContent = "x" + combo;
+
+    livesEl.textContent =
+        lives > 0
+        ? "❤️".repeat(lives)
+        : "💔";
+
+    $("statPopped").textContent =
+        totalBalloons;
+
+    $("statGames").textContent =
+        totalGames;
+
+    $("statBoss").textContent =
+        bossesDefeated;
+
+    $("statCombo").textContent =
+        highestCombo;
+
     renderMissions();
     renderAchievements();
-    save();
+    updateDaily();
+
+    saveData();
 }
+
+function showToast(message){
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    clearTimeout(window.toastTimer);
+
+    window.toastTimer =
+        setTimeout(()=>{
+            toast.classList.remove("show");
+        },2400);
+}
+
+/* =========================================================
+   SOUND
+   ========================================================= */
 
 function playSound(type="pop"){
-    if(!sound)return;
+
+    if(!soundEnabled)return;
 
     try{
-        const AudioCtx=window.AudioContext||window.webkitAudioContext;
-        const ctx=new AudioCtx();
-        const osc=ctx.createOscillator();
-        const gain=ctx.createGain();
 
-        let freq=430;
-        let duration=.08;
+        const AudioContextClass =
+            window.AudioContext ||
+            window.webkitAudioContext;
 
-        if(type==="bomb"){freq=120;duration=.18}
-        if(type==="power"){freq=720;duration=.15}
+        const ctx =
+            new AudioContextClass();
 
-        osc.frequency.value=freq;
-        osc.connect(gain);
+        const oscillator =
+            ctx.createOscillator();
+
+        const gain =
+            ctx.createGain();
+
+        let frequency = 430;
+        let duration = .08;
+
+        if(type==="power"){
+            frequency = 720;
+            duration = .15;
+        }
+
+        if(type==="bomb"){
+            frequency = 120;
+            duration = .18;
+        }
+
+        if(type==="boss"){
+            frequency = 220;
+            duration = .22;
+        }
+
+        oscillator.type = "sine";
+        oscillator.frequency.value =
+            frequency;
+
+        oscillator.connect(gain);
         gain.connect(ctx.destination);
 
-        gain.gain.setValueAtTime(.07,ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+duration);
+        gain.gain.setValueAtTime(
+            .07,
+            ctx.currentTime
+        );
 
-        osc.start();
-        osc.stop(ctx.currentTime+duration);
-    }catch(e){}
+        gain.gain.exponentialRampToValueAtTime(
+            .001,
+            ctx.currentTime + duration
+        );
+
+        oscillator.start();
+
+        oscillator.stop(
+            ctx.currentTime + duration
+        );
+
+    }catch(error){}
 }
+
+/* =========================================================
+   THEMES
+   ========================================================= */
 
 function applyTheme(theme){
-    currentTheme=theme;
-    document.querySelector(".game").style.background=themes[theme];
 
-    document.querySelectorAll(".shop button").forEach(btn=>{
-        btn.classList.toggle("active",btn.dataset.theme===theme);
-        btn.classList.toggle("locked",!unlocked.includes(btn.dataset.theme));
+    if(!themes[theme]){
+        theme = "default";
+    }
+
+    currentTheme = theme;
+
+    $("gameCard")?.style;
+
+    document.querySelector(
+        ".gameCard"
+    ).style.background =
+        themes[theme];
+
+    document.querySelectorAll(
+        ".shopItem"
+    ).forEach(button=>{
+
+        const name =
+            button.dataset.theme;
+
+        button.classList.toggle(
+            "active",
+            name === theme
+        );
+
+        button.classList.toggle(
+            "locked",
+            !unlockedThemes.includes(name)
+        );
     });
 
-    save();
+    saveData();
 }
 
+/* =========================================================
+   GAME OBJECTS
+   ========================================================= */
+
+function removeObjects(){
+
+    document.querySelectorAll(
+        "#gameArea .balloon,"+
+        "#gameArea .power,"+
+        "#gameArea .particle,"+
+        "#gameArea .floating"
+    ).forEach(element=>{
+        element.remove();
+    });
+
+    $("bossBar").classList.add("hidden");
+
+    bossActive = false;
+}
+
+/* =========================================================
+   PARTICLES / TEXT
+   ========================================================= */
+
+function createParticles(
+    element,
+    color="#fff",
+    count=14
+){
+
+    const rect =
+        element.getBoundingClientRect();
+
+    const area =
+        gameArea.getBoundingClientRect();
+
+    for(let i=0;i<count;i++){
+
+        const particle =
+            document.createElement("div");
+
+        particle.className =
+            "particle";
+
+        particle.style.left =
+            (
+                rect.left -
+                area.left +
+                rect.width/2
+            )+"px";
+
+        particle.style.top =
+            (
+                rect.top -
+                area.top +
+                rect.height/2
+            )+"px";
+
+        particle.style.background =
+            color;
+
+        particle.style.setProperty(
+            "--x",
+            (Math.random()*150-75)+"px"
+        );
+
+        particle.style.setProperty(
+            "--y",
+            (Math.random()*150-75)+"px"
+        );
+
+        gameArea.appendChild(
+            particle
+        );
+
+        setTimeout(
+            ()=>particle.remove(),
+            750
+        );
+    }
+}
+
+function floatingText(text,element){
+
+    const rect =
+        element.getBoundingClientRect();
+
+    const area =
+        gameArea.getBoundingClientRect();
+
+    const floating =
+        document.createElement("div");
+
+    floating.className =
+        "floating";
+
+    floating.textContent =
+        text;
+
+    floating.style.left =
+        (rect.left-area.left)+"px";
+
+    floating.style.top =
+        (rect.top-area.top)+"px";
+
+    gameArea.appendChild(
+        floating
+    );
+
+    setTimeout(
+        ()=>floating.remove(),
+        900
+    );
+}
+
+/* =========================================================
+   BALLOON CREATION
+   ========================================================= */
+
 function createBalloon(){
-    if(!running||paused)return;
 
-    const balloon=document.createElement("div");
-    balloon.className="balloon";
+    if(!gameRunning || paused)return;
 
-    const r=Math.random();
-    let type="normal";
+    const balloon =
+        document.createElement("div");
 
-    if(r<Math.min(.13,.05+level*.006))type="bomb";
-    else if(r<.22)type="special";
-    else if(r<.28)type="gold";
+    balloon.className =
+        "balloon";
 
-    balloon.dataset.type=type;
+    const randomValue =
+        Math.random();
+
+    let type = "normal";
+
+    const bombChance =
+        Math.min(
+            .13,
+            .045 + level*.005
+        );
+
+    if(randomValue < bombChance){
+
+        type = "bomb";
+
+    }else if(randomValue < .14){
+
+        type = "gold";
+
+    }else if(randomValue < .24){
+
+        type = "special";
+    }
+
+    balloon.dataset.type =
+        type;
 
     if(type==="bomb"){
-        balloon.classList.add("bomb");
+
+        balloon.classList.add(
+            "bomb"
+        );
+
     }else if(type==="gold"){
-        balloon.classList.add("gold");
+
+        balloon.classList.add(
+            "gold"
+        );
+
     }else{
-        balloon.style.background=
-            colors[Math.floor(Math.random()*colors.length)];
+
+        balloon.style.background =
+            colors[
+                Math.floor(
+                    Math.random()*
+                    colors.length
+                )
+            ];
 
         if(type==="special"){
-            balloon.classList.add("special");
+            balloon.classList.add(
+                "special"
+            );
         }
     }
 
-    const bw=innerWidth<650?58:68;
+    const balloonWidth =
+        window.innerWidth < 700
+        ? 58
+        : 68;
 
-    balloon.style.left=
-        Math.max(2,Math.random()*(gameArea.clientWidth-bw-5))+"px";
+    balloon.style.left =
+        Math.max(
+            4,
+            Math.random()*
+            (gameArea.clientWidth-
+             balloonWidth-8)
+        )+"px";
 
-    balloon.style.bottom="-100px";
+    balloon.style.bottom =
+        "-110px";
 
-    let duration=Math.max(3.1,7-level*.22);
+    let duration =
+        Math.max(
+            3,
+            7-level*.22
+        );
 
-    balloon.style.animationDuration=
-        (duration+Math.random()*1.5-.75)+"s";
+    if(selectedMode==="survival"){
 
-    balloon.addEventListener("pointerdown",e=>{
-        e.preventDefault();
+        duration =
+            Math.max(
+                2.2,
+                5.5-level*.28
+            );
+    }
 
-        if(!running||paused||balloon.dataset.hit)return;
+    if(slowActive){
+        duration *= 1.7;
+    }
 
-        balloon.dataset.hit="yes";
+    duration +=
+        Math.random()*1.3-.65;
 
-        if(type==="bomb"){
-            hitBomb(balloon);
-        }else{
-            popBalloon(balloon);
+    balloon.style.animationDuration =
+        duration+"s";
+
+    balloon.addEventListener(
+        "pointerdown",
+        event=>{
+
+            event.preventDefault();
+
+            if(
+                !gameRunning ||
+                paused ||
+                balloon.dataset.hit
+            ){
+                return;
+            }
+
+            balloon.dataset.hit =
+                "yes";
+
+            if(
+                balloon.dataset.type===
+                "bomb"
+            ){
+                hitBomb(balloon);
+            }else{
+                popBalloon(balloon);
+            }
         }
-    });
+    );
 
-    balloon.addEventListener("animationend",()=>{
-        if(!balloon.isConnected)return;
+    balloon.addEventListener(
+        "animationend",
+        ()=>{
 
-        if(!balloon.dataset.hit){
-            loseLife();
+            if(
+                !balloon.isConnected
+            ){
+                return;
+            }
+
+            if(!balloon.dataset.hit){
+                loseLife();
+            }
+
+            balloon.remove();
         }
+    );
 
-        balloon.remove();
-    });
-
-    gameArea.appendChild(balloon);
+    gameArea.appendChild(
+        balloon
+    );
 }
+
+/* =========================================================
+   BALLOON HIT
+   ========================================================= */
 
 function popBalloon(balloon){
 
-    let points=10;
-    let coinReward=1;
+    let points = 10;
+    let coinReward = 1;
 
-    if(balloon.dataset.type==="special"){
-        points=35;
-        coinReward=5;
+    if(
+        balloon.dataset.type===
+        "special"
+    ){
+
+        points = 35;
+        coinReward = 5;
     }
 
-    if(balloon.dataset.type==="gold"){
-        points=70;
-        coinReward=12;
-    }
+    if(
+        balloon.dataset.type===
+        "gold"
+    ){
 
-    if(doubleScore){
-        points*=2;
+        points = 75;
+        coinReward = 15;
     }
 
     combo++;
 
+    highestCombo =
+        Math.max(
+            highestCombo,
+            combo
+        );
+
     clearTimeout(comboTimer);
 
-    comboTimer=setTimeout(()=>{
-        combo=0;
-        comboBox.classList.remove("show");
-        updateUI();
-    },2100);
+    comboTimer =
+        setTimeout(
+            ()=>{
+                combo = 0;
+                comboBox.classList.remove(
+                    "show"
+                );
+                updateUI();
+            },
+            2200
+        );
 
-    if(combo>=2){
-        const bonus=Math.min(combo*2,50);
-        points+=bonus;
+    const comboBonus =
+        combo > 1
+        ? Math.min(combo*2,60)
+        : 0;
 
-        comboBox.textContent=
-            "🔥 COMBO x"+combo+" +"+bonus;
+    points +=
+        comboBonus;
 
-        comboBox.classList.add("show");
+    if(doubleScoreActive){
+        points *= 2;
+    }
 
-        missions.combo=Math.max(
+    score += points;
+    coins += coinReward;
+    totalBalloons++;
+
+    missions.balloons++;
+    missions.score =
+        Math.max(
+            missions.score,
+            score
+        );
+
+    missions.combo =
+        Math.max(
             missions.combo,
             combo
         );
-    }
-
-    score+=points;
-    coins+=coinReward;
-    totalPopped++;
-
-    missions.pop++;
-    missions.score=Math.max(
-        missions.score,
-        score
-    );
 
     addXP(
         balloon.dataset.type==="gold"
@@ -969,36 +1814,102 @@ function popBalloon(balloon){
         : 3
     );
 
-    floating(
-        "+"+points+"  +"+coinReward+"🪙",
+    if(combo >= 2){
+
+        comboBox.textContent =
+            "🔥 COMBO x"+
+            combo+
+            (
+                comboBonus
+                ? " +"+comboBonus
+                : ""
+            );
+
+        comboBox.classList.add(
+            "show"
+        );
+    }
+
+    floatingText(
+        "+"+points+
+        "  +"+coinReward+
+        "🪙",
         balloon
+    );
+
+    createParticles(
+        balloon,
+        balloon.style.background ||
+        "#fff",
+        15
     );
 
     playSound();
 
-    balloon.style.animation="none";
-    balloon.style.transform="scale(1.5)";
-    balloon.style.opacity="0";
+    balloon.style.animation =
+        "none";
 
-    setTimeout(()=>balloon.remove(),100);
+    balloon.style.transform =
+        "scale(1.5)";
+
+    balloon.style.opacity =
+        "0";
+
+    setTimeout(
+        ()=>balloon.remove(),
+        100
+    );
 
     checkLevel();
+    checkMissionCompletion();
     checkAchievements();
     updateUI();
 }
 
-function hitBomb(balloon){
-    lives--;
-    combo=0;
+/* =========================================================
+   BOMB
+   ========================================================= */
 
-    showToast("💣 Bomb! 1 Life Lost");
+function hitBomb(balloon){
+
+    lives--;
+
+    combo = 0;
+
+    comboBox.classList.remove(
+        "show"
+    );
+
+    createParticles(
+        balloon,
+        "#ef4444",
+        18
+    );
+
+    floatingText(
+        "💣 -1 LIFE",
+        balloon
+    );
+
     playSound("bomb");
 
-    balloon.style.animation="none";
-    balloon.style.transform="scale(1.5)";
-    balloon.style.opacity="0";
+    showToast(
+        "💣 Bomb! 1 Life Lost"
+    );
 
-    setTimeout(()=>balloon.remove(),100);
+    balloon.style.animation =
+        "none";
+
+    balloon.style.transform =
+        "scale(1.5)";
+
+    balloon.style.opacity =
+        "0";
+
+    setTimeout(
+        ()=>balloon.remove(),
+        100
+    );
 
     updateUI();
 
@@ -1008,12 +1919,23 @@ function hitBomb(balloon){
 }
 
 function loseLife(){
-    if(!running)return;
+
+    if(!gameRunning)return;
 
     lives--;
-    combo=0;
 
-    showToast("Balloon Missed! ❤️ -1");
+    combo = 0;
+
+    comboBox.classList.remove(
+        "show"
+    );
+
+    showToast(
+        "Balloon missed! ❤️ -1"
+    );
+
+    playSound("bomb");
+
     updateUI();
 
     if(lives<=0){
@@ -1021,212 +1943,1170 @@ function loseLife(){
     }
 }
 
-function floating(text,element){
-    const r=element.getBoundingClientRect();
-    const a=gameArea.getBoundingClientRect();
-
-    const el=document.createElement("div");
-
-    el.className="floatText";
-    el.textContent=text;
-
-    el.style.left=(r.left-a.left)+"px";
-    el.style.top=(r.top-a.top)+"px";
-
-    gameArea.appendChild(el);
-
-    setTimeout(()=>el.remove(),850);
-}
+/* =========================================================
+   LEVEL
+   ========================================================= */
 
 function checkLevel(){
-    while(score>=level*200){
+
+    const target =
+        level * 250;
+
+    if(score >= target){
+
         level++;
 
-        coins+=level*5;
+        coins +=
+            5 + level;
+
         addXP(20);
 
         showToast(
-            "🎉 LEVEL "+level+
-            " UNLOCKED! +"+
-            (level*5)+" 🪙"
+            "🎉 LEVEL "+
+            level+
+            " UNLOCKED!"
         );
 
-        spawnPower();
+        spawnPowerUp();
+
+        if(level % 5 === 0){
+            spawnBoss();
+        }
+
         restartSpawner();
     }
 }
 
-function spawnPower(){
-    if(!running||paused)return;
+/* =========================================================
+   POWER UPS
+   ========================================================= */
 
-    const powers=[
-        ["⏳","slow"],
-        ["✨","double"],
-        ["❤️","life"],
-        ["💰","coins"]
+function spawnPowerUp(){
+
+    if(
+        !gameRunning ||
+        paused
+    ){
+        return;
+    }
+
+    const powers = [
+        {
+            icon:"⏳",
+            type:"slow"
+        },
+        {
+            icon:"✨",
+            type:"double"
+        },
+        {
+            icon:"❤️",
+            type:"life"
+        },
+        {
+            icon:"💰",
+            type:"coins"
+        }
     ];
 
-    const p=
+    const powerData =
         powers[
-            Math.floor(Math.random()*powers.length)
+            Math.floor(
+                Math.random()*
+                powers.length
+            )
         ];
 
-    const power=document.createElement("div");
+    const power =
+        document.createElement(
+            "div"
+        );
 
-    power.className="power";
-    power.textContent=p[0];
-    power.style.left=
+    power.className =
+        "power";
+
+    power.textContent =
+        powerData.icon;
+
+    power.style.left =
         Math.max(
-            2,
+            3,
             Math.random()*
             (gameArea.clientWidth-70)
         )+"px";
 
-    power.style.bottom="-70px";
+    power.style.bottom =
+        "-70px";
 
-    power.addEventListener("pointerdown",e=>{
-        e.preventDefault();
+    power.addEventListener(
+        "pointerdown",
+        event=>{
 
-        if(!running||paused)return;
+            event.preventDefault();
 
-        activatePower(p[1]);
-        power.remove();
-    });
+            if(
+                !gameRunning ||
+                paused
+            ){
+                return;
+            }
+
+            activatePower(
+                powerData.type
+            );
+
+            power.remove();
+        }
+    );
 
     power.addEventListener(
         "animationend",
         ()=>power.remove()
     );
 
-    gameArea.appendChild(power);
+    gameArea.appendChild(
+        power
+    );
 }
 
 function activatePower(type){
 
     if(type==="slow"){
-        slow=true;
 
-        showToast("⏳ Slow Time Active!");
+        slowActive = true;
 
-        setTimeout(()=>{
-            slow=false;
-            showToast("Slow Time Ended");
-        },8000);
+        showToast(
+            "⏳ SLOW TIME ACTIVE!"
+        );
+
+        setTimeout(
+            ()=>{
+                slowActive = false;
+
+                if(gameRunning){
+                    showToast(
+                        "Slow Time Ended"
+                    );
+                }
+            },
+            8000
+        );
     }
 
     if(type==="double"){
-        doubleScore=true;
 
-        showToast("✨ Double Score Active!");
+        doubleScoreActive = true;
 
-        setTimeout(()=>{
-            doubleScore=false;
-            showToast("Double Score Ended");
-        },10000);
+        showToast(
+            "✨ DOUBLE SCORE ACTIVE!"
+        );
+
+        setTimeout(
+            ()=>{
+                doubleScoreActive =
+                    false;
+
+                if(gameRunning){
+                    showToast(
+                        "Double Score Ended"
+                    );
+                }
+            },
+            10000
+        );
     }
 
     if(type==="life"){
-        lives=Math.min(5,lives+1);
-        showToast("❤️ Extra Life!");
+
+        lives =
+            Math.min(
+                5,
+                lives+1
+            );
+
+        showToast(
+            "❤️ EXTRA LIFE!"
+        );
     }
 
     if(type==="coins"){
-        coins+=20;
-        showToast("💰 +20 Coins!");
+
+        coins += 20;
+
+        showToast(
+            "💰 +20 COINS!"
+        );
     }
 
     addXP(5);
+
     playSound("power");
+
     updateUI();
 }
 
-function restartSpawner(){
-    clearInterval(spawnTimer);
+/* =========================================================
+   BOSS
+   ========================================================= */
 
-    const speed=
-        Math.max(
-            330,
-            1000-(level-1)*55
+function spawnBoss(){
+
+    if(
+        !gameRunning ||
+        paused ||
+        bossActive
+    ){
+        return;
+    }
+
+    bossActive = true;
+
+    bossHits = bossMaxHits;
+
+    $("bossBar")
+        .classList.remove(
+            "hidden"
         );
 
-    spawnTimer=setInterval(()=>{
-        createBalloon();
+    $("bossFill").style.width =
+        "100%";
 
-        if(level>=5&&Math.random()<.3){
-            setTimeout(createBalloon,150);
+    showToast(
+        "👑 BOSS BALLOON INCOMING!"
+    );
+
+    playSound("boss");
+
+    const boss =
+        document.createElement(
+            "div"
+        );
+
+    boss.className =
+        "balloon boss";
+
+    boss.dataset.boss =
+        "yes";
+
+    boss.style.left =
+        Math.max(
+            10,
+            gameArea.clientWidth/2-
+            60
+        )+"px";
+
+    boss.style.bottom =
+        "-170px";
+
+    boss.style.animationDuration =
+        "12s";
+
+    boss.addEventListener(
+        "pointerdown",
+        event=>{
+
+            event.preventDefault();
+
+            if(
+                !gameRunning ||
+                paused ||
+                boss.dataset.dead
+            ){
+                return;
+            }
+
+            bossHits--;
+
+            createParticles(
+                boss,
+                "#fb7185",
+                8
+            );
+
+            floatingText(
+                "💥 "+bossHits+" HP",
+                boss
+            );
+
+            playSound("boss");
+
+            $("bossFill").style.width =
+                (
+                    bossHits/
+                    bossMaxHits*
+                    100
+                )+"%";
+
+            if(bossHits<=0){
+
+                boss.dataset.dead =
+                    "yes";
+
+                bossesDefeated++;
+
+                score += 500;
+                coins += 75;
+
+                addXP(75);
+
+                showToast(
+                    "👑 BOSS DEFEATED! +500 SCORE +75 🪙"
+                );
+
+                createParticles(
+                    boss,
+                    "#fbbf24",
+                    30
+                );
+
+                setTimeout(
+                    ()=>{
+                        boss.remove();
+
+                        bossActive =
+                            false;
+
+                        $("bossBar")
+                            .classList.add(
+                                "hidden"
+                            );
+
+                        updateUI();
+                        checkAchievements();
+                    },
+                    200
+                );
+            }
         }
+    );
 
-        if(level>=10&&Math.random()<.25){
-            setTimeout(createBalloon,300);
+    boss.addEventListener(
+        "animationend",
+        ()=>{
+
+            if(
+                boss.isConnected &&
+                !boss.dataset.dead
+            ){
+
+                boss.remove();
+
+                bossActive =
+                    false;
+
+                $("bossBar")
+                    .classList.add(
+                        "hidden"
+                    );
+
+                lives =
+                    Math.max(
+                        0,
+                        lives-2
+                    );
+
+                showToast(
+                    "👑 Boss escaped! -2 Lives"
+                );
+
+                updateUI();
+
+                if(lives<=0){
+                    endGame();
+                }
+            }
         }
+    );
 
-    },speed);
+    gameArea.appendChild(
+        boss
+    );
 }
 
-function clearGameObjects(){
+/* =========================================================
+   XP
+   ========================================================= */
+
+function addXP(amount){
+
+    const oldRank =
+        Math.floor(
+            getStoredXP()/100
+        )+1;
+
+    const newXP =
+        getStoredXP()+amount;
+
+    localStorage.setItem(
+        "bb5XP",
+        String(newXP)
+    );
+
+    const newRank =
+        Math.floor(
+            newXP/100
+        )+1;
+
+    if(newRank>oldRank){
+
+        showToast(
+            "⭐ PLAYER RANK UP! LV. "+
+            newRank
+        );
+    }
+}
+
+function getStoredXP(){
+
+    return Number(
+        localStorage.getItem(
+            "bb5XP"
+        )
+    )||0;
+}
+
+/* =========================================================
+   MISSIONS
+   ========================================================= */
+
+function ensureMissionDay(){
+
+    const today =
+        todayString();
+
+    if(
+        missions.date !==
+        today
+    ){
+
+        missions = {
+            date:today,
+            balloons:0,
+            score:0,
+            combo:0,
+            claimed:{
+                balloons:false,
+                score:false,
+                combo:false
+            }
+        };
+
+        saveData();
+    }
+}
+
+function renderMissions(){
+
+    ensureMissionDay();
+
+    const missionList = [
+
+        {
+            key:"balloons",
+            title:"🎈 Pop 30 Balloons",
+            target:30,
+            reward:20
+        },
+
+        {
+            key:"score",
+            title:"⭐ Score 500 Points",
+            target:500,
+            reward:30
+        },
+
+        {
+            key:"combo",
+            title:"🔥 Reach Combo x10",
+            target:10,
+            reward:35
+        }
+    ];
+
+    $("missions").innerHTML =
+        missionList.map(
+            mission=>{
+
+                const value =
+                    Math.min(
+                        missions[
+                            mission.key
+                        ],
+                        mission.target
+                    );
+
+                const percent =
+                    (
+                        value/
+                        mission.target
+                    )*100;
+
+                const done =
+                    missions[
+                        mission.key
+                    ] >=
+                    mission.target;
+
+                const claimed =
+                    missions.claimed[
+                        mission.key
+                    ];
+
+                return `
+                    <div class="mission">
+
+                        <div class="missionTop">
+                            <span>
+                                ${done?"✅":"🎯"}
+                                ${mission.title}
+                            </span>
+
+                            <b>
+                                ${value}/
+                                ${mission.target}
+                            </b>
+                        </div>
+
+                        <div class="missionBar">
+                            <div
+                                class="missionFill"
+                                style="width:${percent}%">
+                            </div>
+                        </div>
+
+                        <small style="color:#fbbf24">
+                            Reward:
+                            ${mission.reward}
+                            🪙
+                        </small>
+
+                        <button
+                            class="claim"
+                            style="width:100%;margin-top:7px"
+                            ${!done||claimed?"disabled":""}
+                            data-mission="${mission.key}"
+                        >
+                            ${
+                                claimed
+                                ?"✓ CLAIMED"
+                                :"CLAIM REWARD"
+                            }
+                        </button>
+                    </div>
+                `;
+            }
+        ).join("");
+
     document.querySelectorAll(
-        "#gameArea .balloon,#gameArea .power,#gameArea .floatText"
-    ).forEach(e=>e.remove());
+        "[data-mission]"
+    ).forEach(button=>{
+
+        button.addEventListener(
+            "click",
+            ()=>{
+
+                const key =
+                    button.dataset.mission;
+
+                if(
+                    missions.claimed[key]
+                ){
+                    return;
+                }
+
+                let reward = 0;
+
+                if(key==="balloons"){
+                    reward = 20;
+                }
+
+                if(key==="score"){
+                    reward = 30;
+                }
+
+                if(key==="combo"){
+                    reward = 35;
+                }
+
+                coins += reward;
+
+                missions.claimed[key] =
+                    true;
+
+                addXP(10);
+
+                showToast(
+                    "🎯 Mission Complete! +"+
+                    reward+
+                    " 🪙"
+                );
+
+                updateUI();
+            }
+        );
+    });
+}
+
+function checkMissionCompletion(){
+
+    if(
+        missions.balloons>=30 &&
+        !missions.claimed.balloons
+    ){
+        showToast(
+            "🎯 Balloon Mission Ready!"
+        );
+    }
+
+    if(
+        missions.score>=500 &&
+        !missions.claimed.score
+    ){
+        showToast(
+            "🎯 Score Mission Ready!"
+        );
+    }
+
+    if(
+        missions.combo>=10 &&
+        !missions.claimed.combo
+    ){
+        showToast(
+            "🎯 Combo Mission Ready!"
+        );
+    }
+}
+
+/* =========================================================
+   ACHIEVEMENTS
+   ========================================================= */
+
+function checkAchievements(){
+
+    achievementRules.forEach(
+        achievement=>{
+
+            if(
+                achievement.check() &&
+                !achievements.includes(
+                    achievement.id
+                )
+            ){
+
+                achievements.push(
+                    achievement.id
+                );
+
+                coins +=
+                    achievement.reward;
+
+                addXP(
+                    achievement.reward
+                );
+
+                showToast(
+                    "🏆 "+
+                    achievement.title+
+                    " +"+
+                    achievement.reward+
+                    " 🪙"
+                );
+            }
+        }
+    );
+
+    saveData();
+}
+
+function renderAchievements(){
+
+    $("achievements").innerHTML =
+        achievementRules.map(
+            achievement=>{
+
+                const unlocked =
+                    achievements.includes(
+                        achievement.id
+                    );
+
+                return `
+                    <div class="achievement ${
+                        unlocked
+                        ?"done"
+                        :""
+                    }">
+
+                        ${
+                            unlocked
+                            ?"🏆"
+                            :"🔒"
+                        }
+
+                        <b>
+                            ${achievement.title}
+                        </b>
+
+                        <small>
+                            ${achievement.text}
+                            • Reward:
+                            ${achievement.reward}
+                            🪙
+                        </small>
+
+                    </div>
+                `;
+            }
+        ).join("");
+}
+
+/* =========================================================
+   DAILY REWARD
+   ========================================================= */
+
+function updateDaily(){
+
+    const claimed =
+        dailyData.date ===
+        todayString();
+
+    const reward =
+        25+
+        Math.min(
+            dailyData.streak,
+            7
+        )*5;
+
+    $("rewardAmount").textContent =
+        "+"+reward+" 🪙";
+
+    if(claimed){
+
+        claimBtn.disabled =
+            true;
+
+        claimBtn.textContent =
+            "CLAIMED ✓";
+
+        $("rewardText").textContent =
+            "Come back tomorrow. Streak: "+
+            dailyData.streak+
+            " days 🔥";
+
+    }else{
+
+        claimBtn.disabled =
+            false;
+
+        claimBtn.textContent =
+            "CLAIM";
+
+        $("rewardText").textContent =
+            "Daily streak: "+
+            dailyData.streak+
+            " days 🔥";
+    }
+}
+
+claimBtn.addEventListener(
+    "click",
+    ()=>{
+
+        if(
+            dailyData.date===
+            todayString()
+        ){
+            showToast(
+                "🎁 Already claimed today!"
+            );
+            return;
+        }
+
+        const yesterday =
+            new Date();
+
+        yesterday.setDate(
+            yesterday.getDate()-1
+        );
+
+        const yesterdayText =
+            yesterday.toDateString();
+
+        if(
+            dailyData.date===
+            yesterdayText
+        ){
+            dailyData.streak++;
+        }else{
+            dailyData.streak=1;
+        }
+
+        const reward =
+            25+
+            Math.min(
+                dailyData.streak,
+                7
+            )*5;
+
+        coins += reward;
+
+        dailyData.date =
+            todayString();
+
+        addXP(10);
+
+        showToast(
+            "🎁 Daily Reward! +"+
+            reward+
+            " Coins"
+        );
+
+        updateUI();
+    }
+);
+
+/* =========================================================
+   GAME FLOW
+   ========================================================= */
+
+function restartSpawner(){
+
+    clearInterval(
+        spawnTimer
+    );
+
+    let speed =
+        Math.max(
+            330,
+            1000-
+            (level-1)*50
+        );
+
+    if(
+        selectedMode===
+        "survival"
+    ){
+        speed =
+            Math.max(
+                240,
+                700-
+                (level-1)*45
+            );
+    }
+
+    spawnTimer =
+        setInterval(
+            ()=>{
+
+                createBalloon();
+
+                if(
+                    level>=5 &&
+                    Math.random()<.3
+                ){
+                    setTimeout(
+                        createBalloon,
+                        140
+                    );
+                }
+
+                if(
+                    level>=10 &&
+                    Math.random()<.25
+                ){
+                    setTimeout(
+                        createBalloon,
+                        300
+                    );
+                }
+
+            },
+            speed
+        );
 }
 
 function startGame(){
-    clearInterval(powerTimer);
-    clearInterval(spawnTimer);
-    clearTimeout(comboTimer);
 
-    clearGameObjects();
+    clearInterval(
+        spawnTimer
+    );
+
+    clearInterval(
+        powerTimer
+    );
+
+    clearInterval(
+        timeTimer
+    );
+
+    clearInterval(
+        bossTimer
+    );
+
+    clearTimeout(
+        comboTimer
+    );
+
+    removeObjects();
 
     score=0;
     level=1;
-    lives=3;
     combo=0;
 
-    slow=false;
-    doubleScore=false;
+    lives =
+        selectedMode===
+        "survival"
+        ? 1
+        : 3;
 
-    missions.pop=0;
-    missions.score=0;
-    missions.combo=0;
+    timeLeft=60;
 
-    running=true;
+    doubleScoreActive=false;
+    slowActive=false;
+
+    gameRunning=true;
     paused=false;
 
-    $("startOverlay").classList.add("hidden");
-    $("overOverlay").classList.add("hidden");
-    $("pauseOverlay").classList.add("hidden");
+    totalGames++;
 
-    $("pauseBtn").textContent="⏸ Pause";
+    startOverlay
+        .classList
+        .add("hidden");
+
+    gameOverOverlay
+        .classList
+        .add("hidden");
+
+    pauseOverlay
+        .classList
+        .add("hidden");
+
+    pauseBtn.textContent =
+        "⏸ Pause";
 
     restartSpawner();
 
     setTimeout(
         createBalloon,
-        300
+        350
     );
 
-    powerTimer=setInterval(()=>{
-        if(running&&!paused&&Math.random()<.42){
-            spawnPower();
-        }
-    },11500);
+    powerTimer =
+        setInterval(
+            ()=>{
 
+                if(
+                    gameRunning &&
+                    !paused &&
+                    Math.random()<.4
+                ){
+                    spawnPowerUp();
+                }
+
+            },
+            11000
+        );
+
+    if(
+        selectedMode===
+        "time"
+    ){
+
+        timeTimer =
+            setInterval(
+                ()=>{
+
+                    if(
+                        paused ||
+                        !gameRunning
+                    ){
+                        return;
+                    }
+
+                    timeLeft--;
+
+                    showTimeOnScreen();
+
+                    if(
+                        timeLeft<=0
+                    ){
+                        endGame(
+                            "⏱ TIME UP!"
+                        );
+                    }
+
+                },
+                1000
+            );
+    }
+
+    if(
+        selectedMode===
+        "survival"
+    ){
+
+        bossTimer =
+            setInterval(
+                ()=>{
+
+                    if(
+                        gameRunning &&
+                        !paused
+                    ){
+                        if(level>=3){
+                            spawnBoss();
+                        }
+                    }
+
+                },
+                20000
+            );
+    }
+
+    checkAchievements();
     updateUI();
 }
 
-function endGame(){
-    if(!running)return;
+function showTimeOnScreen(){
 
-    running=false;
+    if(
+        selectedMode!=="time"
+    ){
+        return;
+    }
 
-    clearInterval(spawnTimer);
-    clearInterval(powerTimer);
-    clearTimeout(comboTimer);
+    const existing =
+        document.getElementById(
+            "timeDisplay"
+        );
 
-    clearGameObjects();
+    if(existing){
+        existing.textContent =
+            "⏱ "+timeLeft+"s";
+        return;
+    }
 
-    if(score>bestScore){
-        bestScore=score;
-        coins+=10;
+    const time =
+        document.createElement(
+            "div"
+        );
+
+    time.id =
+        "timeDisplay";
+
+    time.style.position =
+        "absolute";
+
+    time.style.left =
+        "16px";
+
+    time.style.top =
+        "16px";
+
+    time.style.zIndex =
+        "12";
+
+    time.style.padding =
+        "8px 13px";
+
+    time.style.border =
+        "2px solid rgba(255,255,255,.25)";
+
+    time.style.borderRadius =
+        "999px";
+
+    time.style.background =
+        "rgba(15,23,42,.75)";
+
+    time.style.fontWeight =
+        "bold";
+
+    time.textContent =
+        "⏱ "+timeLeft+"s";
+
+    gameArea.appendChild(
+        time
+    );
+}
+
+function togglePause(){
+
+    if(!gameRunning){
+        return;
+    }
+
+    paused =
+        !paused;
+
+    document.querySelectorAll(
+        "#gameArea .balloon,"+
+        "#gameArea .power,"+
+        "#gameArea .boss"
+    ).forEach(
+        element=>{
+            element.style.animationPlayState =
+                paused
+                ?"paused"
+                :"running";
+        }
+    );
+
+    pauseOverlay
+        .classList
+        .toggle(
+            "hidden",
+            !paused
+        );
+
+    pauseBtn.textContent =
+        paused
+        ?"▶ Resume"
+        :"⏸ Pause";
+}
+
+function endGame(
+    title="GAME OVER 💥"
+){
+
+    if(!gameRunning){
+        return;
+    }
+
+    gameRunning=false;
+
+    clearInterval(
+        spawnTimer
+    );
+
+    clearInterval(
+        powerTimer
+    );
+
+    clearInterval(
+        timeTimer
+    );
+
+    clearInterval(
+        bossTimer
+    );
+
+    clearTimeout(
+        comboTimer
+    );
+
+    removeObjects();
+
+    const oldBest =
+        bestScore;
+
+    if(
+        score>
+        bestScore
+    ){
+        bestScore=
+            score;
+
+        coins +=
+            10;
 
         showToast(
             "🏆 NEW HIGH SCORE! +10 🪙"
@@ -1235,238 +3115,327 @@ function endGame(){
 
     checkAchievements();
 
-    $("overTitle").textContent="GAME OVER 💥";
+    $("gameOverTitle")
+        .textContent =
+        title;
 
-    $("overText").innerHTML=
-        "Final Score: <b>"+score+"</b><br>"+
-        "Level Reached: <b>"+level+"</b><br>"+
-        "Coins: <b>"+coins+" 🪙</b><br>"+
-        "Total Balloons: <b>"+totalPopped+"</b><br><br>"+
-        "Keep playing to unlock more rewards!";
+    $("gameOverText")
+        .innerHTML =
+        "Final Score: <b>"+
+        score+
+        "</b><br>"+
+        "Level: <b>"+
+        level+
+        "</b><br>"+
+        "Coins: <b>"+
+        coins+
+        " 🪙</b><br>"+
+        "Best Score: <b>"+
+        bestScore+
+        "</b><br>"+
+        "Total Balloons: <b>"+
+        totalBalloons+
+        "</b>";
 
-    $("overOverlay").classList.remove("hidden");
+    gameOverOverlay
+        .classList
+        .remove("hidden");
 
     updateUI();
 }
 
-function togglePause(){
-    if(!running)return;
+function goMenu(){
 
-    paused=!paused;
+    gameRunning=false;
+    paused=false;
 
-    document.querySelectorAll(
-        "#gameArea .balloon,#gameArea .power"
-    ).forEach(el=>{
-        el.style.animationPlayState=
-            paused
-            ? "paused"
-            : "running";
-    });
-
-    $("pauseOverlay").classList.toggle(
-        "hidden",
-        !paused
+    clearInterval(
+        spawnTimer
     );
 
-    $("pauseBtn").textContent=
-        paused
-        ? "▶ Resume"
-        : "⏸ Pause";
+    clearInterval(
+        powerTimer
+    );
+
+    clearInterval(
+        timeTimer
+    );
+
+    clearInterval(
+        bossTimer
+    );
+
+    clearTimeout(
+        comboTimer
+    );
+
+    removeObjects();
+
+    gameOverOverlay
+        .classList
+        .add("hidden");
+
+    pauseOverlay
+        .classList
+        .add("hidden");
+
+    startOverlay
+        .classList
+        .remove("hidden");
+
+    pauseBtn.textContent =
+        "⏸ Pause";
+
+    updateUI();
 }
 
-function renderMissions(){
-    const data=[
-        ["🎈 Pop Balloons",missions.pop,30,20],
-        ["⭐ Score Points",missions.score,500,30],
-        ["🔥 Combo",missions.combo,10,25]
-    ];
+/* =========================================================
+   MODE SELECTION
+   ========================================================= */
 
-    $("missions").innerHTML=
-        data.map(item=>{
+document.querySelectorAll(
+    ".mode"
+).forEach(button=>{
 
-            const percent=
-                Math.min(
-                    100,
-                    item[1]/item[2]*100
-                );
+    button.addEventListener(
+        "click",
+        ()=>{
 
-            return `
-                <div class="mission">
-                    <div class="mission-top">
-                        <span>${item[0]}</span>
-                        <b>${Math.min(item[1],item[2])}/${item[2]}</b>
-                    </div>
+            selectedMode =
+                button.dataset.mode;
 
-                    <div class="progress">
-                        <div style="width:${percent}%"></div>
-                    </div>
+            document.querySelectorAll(
+                ".mode"
+            ).forEach(
+                b=>
+                b.classList.remove(
+                    "active"
+                )
+            );
 
-                    <small style="color:#fbbf24">
-                        Reward: ${item[3]} 🪙
-                    </small>
-                </div>
-            `;
-        }).join("");
-}
-
-function checkAchievements(){
-    achievements.forEach(a=>{
-        if(
-            a.test() &&
-            !achieved.includes(a.id)
-        ){
-            achieved.push(a.id);
-            coins+=15;
+            button.classList.add(
+                "active"
+            );
 
             showToast(
-                "🏆 Achievement Unlocked! "+
-                a.name+
-                " +15 🪙"
+                selectedMode.toUpperCase()+
+                " MODE SELECTED"
             );
         }
-    });
+    );
+});
 
-    save();
-}
+/* =========================================================
+   TOP BUTTONS
+   ========================================================= */
 
-function renderAchievements(){
+startBtn.addEventListener(
+    "click",
+    startGame
+);
 
-    $("achievements").innerHTML=
-        achievements.map(a=>{
+againBtn.addEventListener(
+    "click",
+    startGame
+);
 
-            const done=
-                achieved.includes(a.id);
+pauseBtn.addEventListener(
+    "click",
+    togglePause
+);
 
-            return `
-                <div class="achievement ${done?"done":""}">
-                    ${done?"🏆":"🔒"} ${a.name}
-                    <small style="display:block;color:#94a3b8;margin-top:4px">
-                        ${done?"UNLOCKED":"Keep playing to unlock"}
-                    </small>
-                </div>
-            `;
-        }).join("");
-}
+resumeBtn.addEventListener(
+    "click",
+    togglePause
+);
 
-function today(){
-    return new Date().toDateString();
-}
+menuBtn.addEventListener(
+    "click",
+    goMenu
+);
 
-$("dailyBtn").addEventListener("click",()=>{
-    if(daily.date===today()){
-        showToast("🎁 Daily reward already claimed today!");
+overMenuBtn.addEventListener(
+    "click",
+    goMenu
+);
+
+dailyBtn.addEventListener(
+    "click",
+    ()=>{
+
+        const claimed =
+            dailyData.date===
+            todayString();
+
+        if(claimed){
+            showToast(
+                "🎁 Reward already claimed!"
+            );
+        }else{
+            claimDailyDirect();
+        }
+    }
+);
+
+function claimDailyDirect(){
+
+    if(
+        dailyData.date===
+        todayString()
+    ){
         return;
     }
 
-    const reward=
+    const yesterday =
+        new Date();
+
+    yesterday.setDate(
+        yesterday.getDate()-1
+    );
+
+    if(
+        dailyData.date===
+        yesterday.toDateString()
+    ){
+        dailyData.streak++;
+    }else{
+        dailyData.streak=1;
+    }
+
+    const reward =
         25+
         Math.min(
-            daily.streak,
+            dailyData.streak,
             7
         )*5;
 
     coins+=reward;
-    daily.date=today();
-    daily.streak++;
+
+    dailyData.date =
+        todayString();
 
     addXP(10);
 
     showToast(
-        "🎁 Daily Reward! +"+
+        "🎁 DAILY REWARD! +"+
         reward+
-        " Coins"
+        " 🪙"
     );
 
     updateUI();
-});
+}
 
-$("startBtn").addEventListener(
-    "click",
-    startGame
-);
+/* =========================================================
+   SOUND BUTTON
+   ========================================================= */
 
-$("againBtn").addEventListener(
-    "click",
-    startGame
-);
-
-$("pauseBtn").addEventListener(
-    "click",
-    togglePause
-);
-
-$("resumeBtn").addEventListener(
-    "click",
-    togglePause
-);
-
-$("soundBtn").addEventListener(
+soundBtn.addEventListener(
     "click",
     ()=>{
-        sound=!sound;
 
-        $("soundBtn").textContent=
-            sound
+        soundEnabled =
+            !soundEnabled;
+
+        soundBtn.textContent =
+            soundEnabled
             ?"🔊 Sound"
             :"🔇 Muted";
 
         showToast(
-            sound
-            ?"Sound Enabled 🔊"
-            :"Sound Disabled 🔇"
+            soundEnabled
+            ?"Sound Enabled"
+            :"Sound Disabled"
         );
+
+        saveData();
     }
 );
 
-document.querySelectorAll(".shop button").forEach(btn=>{
+/* =========================================================
+   SHOP
+   ========================================================= */
 
-    btn.addEventListener("click",()=>{
+document.querySelectorAll(
+    ".shopItem"
+).forEach(button=>{
 
-        const theme=
-            btn.dataset.theme;
+    button.addEventListener(
+        "click",
+        ()=>{
 
-        const cost=
-            Number(btn.dataset.cost);
+            const theme =
+                button.dataset.theme;
 
-        if(unlocked.includes(theme)){
+            const cost =
+                Number(
+                    button.dataset.cost
+                );
 
-            applyTheme(theme);
+            if(
+                unlockedThemes.includes(
+                    theme
+                )
+            ){
 
-            showToast(
-                "🎨 "+
-                theme.toUpperCase()+
-                " SELECTED"
-            );
+                applyTheme(
+                    theme
+                );
 
-            return;
+                showToast(
+                    "🎨 Theme Selected!"
+                );
+
+                return;
+            }
+
+            if(coins>=cost){
+
+                coins-=cost;
+
+                unlockedThemes.push(
+                    theme
+                );
+
+                applyTheme(
+                    theme
+                );
+
+                showToast(
+                    "🎉 "+
+                    theme.toUpperCase()+
+                    " UNLOCKED!"
+                );
+
+                updateUI();
+
+            }else{
+
+                showToast(
+                    "Need "+
+                    (cost-coins)+
+                    " more coins 🪙"
+                );
+            }
         }
-
-        if(coins>=cost){
-
-            coins-=cost;
-            unlocked.push(theme);
-
-            applyTheme(theme);
-
-            showToast(
-                "🎉 Theme Unlocked!"
-            );
-
-            updateUI();
-
-        }else{
-
-            showToast(
-                "Need "+
-                (cost-coins)+
-                " more coins 🪙"
-            );
-        }
-    });
-
+    );
 });
 
-applyTheme(currentTheme);
+/* =========================================================
+   INITIALIZE
+   ========================================================= */
+
+ensureMissionDay();
+
+applyTheme(
+    currentTheme
+);
+
+soundBtn.textContent =
+    soundEnabled
+    ?"🔊 Sound"
+    :"🔇 Muted";
+
+checkAchievements();
 updateUI();
 </script>
 
